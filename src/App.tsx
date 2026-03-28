@@ -58,7 +58,7 @@ function App() {
 
         <Header />
 
-        <main id="main-content" className="pt-[var(--header-height-mobile)] md:pt-[var(--header-height-desktop)]">
+        <main id="main-content">
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
               <Route path="/shop" element={<Shop />} />
