@@ -73,8 +73,20 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-white/58 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} Blackshaws Road Pharmacy. Independent community pharmacy care.</p>
-          <div className="flex items-center gap-2"><Award className="h-4 w-4 text-[var(--color-red)]" /> <span>Proudly part of Alliance Pharmacy Australia</span></div>
+          <div className="flex flex-col gap-2">
+            <p>© {new Date().getFullYear()} Blackshaws Road Pharmacy. Independent community pharmacy care.</p>
+            <div className="flex items-center gap-3">
+              <Award className="h-4 w-4 text-[var(--color-red)]" />
+              <span>Proud member of Independent Pharmacies Australia</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            {/* IPA logo placeholder - replace with actual logo when available */}
+            <div className="text-xs text-white/60 text-right">
+              <p className="font-semibold">Independent Pharmacies Australia</p>
+              <p className="opacity-70">Here for Good</p>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

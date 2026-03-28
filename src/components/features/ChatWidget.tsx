@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { MessageCircle, X, ChevronDown } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '../ui/Button'
@@ -31,17 +31,37 @@ const faqItems = [
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+
+  // Click outside to close
+  useEffect(() => {
+    if (!isOpen) return
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        panelRef.current && 
+        !panelRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [isOpen])
 
   return (
     <>
       {/* Floating button */}
       <motion.button
+        ref={buttonRef}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        onClick={() => setIsOpen(true)}
+        onClick={() => setIsOpen(prev => !prev)} // toggle
         className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
         style={{ backgroundColor: 'var(--color-accent)' }}
-        aria-label="Open chat"
+        aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
         <MessageCircle className="w-6 h-6 text-white" />
       </motion.button>
@@ -50,10 +70,11 @@ export function ChatWidget() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            ref={panelRef}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-24 right-8 z-50 w-80 sm:w-96 max-h-[500px] bg-[var(--color-surface)] rounded-2xl shadow-2xl border border-[var(--color-border)] overflow-hidden"
+            className="fixed bottom-24 right-8 z-50 w-80 sm:w-96 max-h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
           >
             {/* Header */}
             <div
@@ -61,12 +82,12 @@ export function ChatWidget() {
               style={{ backgroundColor: 'var(--color-accent)' }}
             >
               <div>
-                <h3 className="font-semibold text-white">Ask a Pharmacist</h3>
-                <p className="text-sm text-white/80">General health information</p>
+                <h3 className="font-semibold" style={{ color: '#1a1a1a' }}>Ask a Pharmacist</h3>
+                <p className="text-sm" style={{ color: '#1a1a1a', opacity: 0.8 }}>General health information</p>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-white hover:text-white/80"
+                className="text-[#1a1a1a] hover:opacity-80"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />
@@ -75,25 +96,26 @@ export function ChatWidget() {
 
             {/* Content */}
             <div className="p-4 overflow-y-auto max-h-96">
-              <p className="text-sm text-[var(--color-muted)] mb-4">
+              <p className="text-sm text-gray-600 mb-4">
                 Find answers to common questions below, or send us a message and we'll get back to you during business hours.
               </p>
 
               {/* FAQ accordion */}
               <div className="space-y-2">
                 {faqItems.map((item, index) => (
-                  <div key={index} className="border border-[var(--color-border)] rounded-xl overflow-hidden">
+                  <div key={index} className="border border-gray-200 rounded-xl overflow-hidden">
                     <button
                       onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                      className="w-full flex items-center justify-between p-3 text-left text-sm font-medium hover:bg-[var(--color-bg)] transition-colors"
+                      className="w-full flex items-center justify-between p-3 text-left text-sm font-medium hover:bg-gray-50 transition-colors"
                     >
-                      <span>{item.question}</span>
+                      <span className="text-gray-900">{item.question}</span>
                       <ChevronDown
                         className={`w-4 h-4 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
+                        style={{ color: 'var(--color-navy)' }}
                       />
                     </button>
                     {openFaq === index && (
-                      <div className="p-3 bg-[var(--color-bg)] text-sm text-[var(--color-muted)] border-t border-[var(--color-border)]">
+                      <div className="p-3 bg-gray-50 text-sm text-gray-600 border-t border-gray-200">
                         {item.answer}
                       </div>
                     )}
@@ -102,8 +124,8 @@ export function ChatWidget() {
               </div>
 
               {/* Contact form teaser */}
-              <div className="mt-6 p-4 rounded-xl" style={{ backgroundColor: 'var(--color-bg)' }}>
-                <p className="text-sm text-[var(--color-muted)] mb-3">
+              <div className="mt-6 p-4 rounded-xl bg-gray-50">
+                <p className="text-sm text-gray-600 mb-3">
                   Still have questions? Send us a message.
                 </p>
                 <Button
@@ -111,7 +133,6 @@ export function ChatWidget() {
                   size="sm"
                   className="w-full"
                   onClick={() => {
-                    // Could open a modal or redirect to contact form
                     window.location.href = '#location'
                   }}
                 >
@@ -120,7 +141,7 @@ export function ChatWidget() {
               </div>
 
               {/* Disclaimer */}
-              <p className="text-xs text-[var(--color-muted)] mt-4 text-center">
+              <p className="text-xs text-gray-500 mt-4 text-center">
                 This chat provides general information only and does not replace professional medical advice. For urgent concerns, please call emergency services.
               </p>
             </div>
