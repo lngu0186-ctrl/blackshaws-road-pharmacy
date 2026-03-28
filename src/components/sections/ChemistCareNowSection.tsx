@@ -1,5 +1,5 @@
 import { Shield, Pill, Syringe, Heart, Stethoscope, Baby, BadgeCheck } from 'lucide-react'
-import { Card } from '../ui/Card'
+
 import { useInView } from 'framer-motion'
 import { useRef, useEffect, useState, useCallback } from 'react'
 import { Button } from '../ui/Button'
