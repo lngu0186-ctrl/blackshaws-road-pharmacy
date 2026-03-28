@@ -61,13 +61,17 @@ export function Header() {
         </div>
       </div>
 
-      <div className={cn('transition-all duration-300', scrolled || !isHome ? 'border-b border-[var(--color-border)] bg-[rgba(255,253,250,0.94)] backdrop-blur-xl shadow-[0_20px_40px_-36px_rgba(16,24,63,0.55)]' : 'bg-[rgba(255,253,250,0.82)] backdrop-blur-xl')}>
-        <div className="container-custom flex h-[var(--header-height-mobile)] items-center justify-between gap-4 md:h-[var(--header-height-desktop)]">
-          <div className="flex items-center gap-3 md:gap-5">
+      <div className={cn('transition-all duration-300', scrolled || !isHome ? 'border-b border-[var(--color-border)] bg-[rgba(255,253,250,0.96)] backdrop-blur-xl shadow-[0_20px_40px_-36px_rgba(16,24,63,0.55)]' : 'bg-[rgba(255,253,250,0.88)] backdrop-blur-xl')}>
+        <div className="container-custom flex h-[var(--header-height-mobile)] items-center justify-between gap-3 md:h-[var(--header-height-desktop)] md:gap-4">
+          <div className="flex min-w-0 items-center gap-2.5 md:gap-5">
             <button onClick={() => setMobileMenuOpen(true)} className="icon-btn md:hidden" aria-label="Open menu">
               <Menu className="h-5 w-5" />
             </button>
-            <Logo className="h-[var(--logo-max-height-mobile)] max-w-[220px] md:h-[var(--logo-max-height)] md:max-w-[320px]" />
+            <Logo
+              className="h-[var(--logo-max-height-mobile)] max-w-[210px] md:h-[var(--logo-max-height)] md:max-w-[340px]"
+              imageClassName="origin-left"
+              priority
+            />
           </div>
 
           <nav className="hidden items-center gap-8 md:flex">
@@ -156,8 +160,9 @@ export function Header() {
 
       <MobileDrawer isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)}>
         <div className="space-y-6">
-          <div className="rounded-[28px] bg-[var(--color-navy-deep)] p-5 text-white">
-            <p className="text-xs uppercase tracking-[0.25em] text-white/65">Blackshaws Road Pharmacy</p>
+          <div className="rounded-[28px] bg-[linear-gradient(145deg,var(--color-navy-deep),var(--color-navy))] p-5 text-white shadow-[0_28px_70px_-42px_rgba(16,24,63,0.75)]">
+            <Logo variant="dark" className="h-12 max-w-[220px]" imageClassName="drop-shadow-[0_10px_25px_rgba(0,0,0,0.28)]" priority />
+            <p className="mt-4 text-xs uppercase tracking-[0.25em] text-white/65">Blackshaws Road Pharmacy</p>
             <p className="mt-2 text-lg font-semibold">Trusted local care, prescriptions, services and online shopping.</p>
           </div>
           <div className="space-y-1">

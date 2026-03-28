@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Button } from '../ui/Button'
 import { Clock3, MapPin, Phone, ShieldCheck } from 'lucide-react'
+import { Logo } from '../layout/Logo'
 
 export function HeroSection() {
   return (
@@ -25,11 +26,16 @@ export function HeroSection() {
               <span className="badge-soft">Alliance Pharmacy member</span>
             </div>
 
-            <div className="mt-7">
-              <img src="/logo-dark.svg" alt="Blackshaws Road Pharmacy" className="h-auto w-full max-w-[250px] sm:max-w-[290px] md:max-w-[340px]" />
+            <div className="mt-6 md:mt-7">
+              <Logo
+                variant="dark"
+                className="h-[4.5rem] max-w-[280px] sm:h-[5rem] sm:max-w-[340px] md:h-[5.8rem] md:max-w-[420px]"
+                imageClassName="drop-shadow-[0_16px_40px_rgba(0,0,0,0.22)]"
+                priority
+              />
             </div>
 
-            <h1 className="mt-8 max-w-4xl text-white">Premium everyday pharmacy care for Altona North and the west.</h1>
+            <h1 className="mt-7 max-w-4xl text-white md:mt-8">Premium everyday pharmacy care for Altona North and the west.</h1>
             <p className="mt-6 text-lg leading-relaxed text-white/78 md:text-xl">Prescriptions, trusted pharmacist advice, vaccinations, medication reviews and a curated online health range — all delivered with the calm confidence of a long-standing local pharmacy.</p>
 
             <div className="mt-8 flex flex-wrap gap-3 text-sm text-white/76">
