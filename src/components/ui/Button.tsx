@@ -21,18 +21,18 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             'btn-ghost': variant === 'ghost',
             'btn-red': variant === 'red',
             'btn-sage': variant === 'sage',
-            'px-4 py-2 text-sm': size === 'sm',
-            'px-8 py-3': size === 'md',
-            'px-10 py-4 text-lg': size === 'lg',
+            'min-h-10 px-4 text-sm': size === 'sm',
+            'min-h-12 px-6 text-[0.95rem]': size === 'md',
+            'min-h-14 px-7 text-base': size === 'lg',
           },
-          className
+          className,
         )}
         {...props}
       >
         {children}
       </button>
     )
-  }
+  },
 )
 
 Button.displayName = 'Button'

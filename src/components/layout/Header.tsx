@@ -1,7 +1,6 @@
-/** Header — main site header with three-zone layout (brand | nav | utilities+CTA). */
-import { useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import { Menu, ShoppingBag, Phone, ChevronDown } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { Menu, ShoppingBag, Phone, ChevronDown, Clock3, MapPin } from 'lucide-react'
 import { Logo } from './Logo'
 import { MobileDrawer } from './MobileDrawer'
 import { useCartStore } from '../../stores/cartStore'
@@ -12,11 +11,10 @@ import type { Service } from '../../data/services'
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/services', label: 'Services' },
-  { href: '#vaccination', label: 'Vaccinations' },
-  { href: '#chemist-care', label: 'Chemist Care' },
   { href: '/shop', label: 'Shop' },
-  { href: '#about', label: 'About' },
-  { href: '#location', label: 'Contact' },
+  { href: '/#vaccination', label: 'Vaccinations' },
+  { href: '/#chemist-care', label: 'Chemist Care' },
+  { href: '/#location', label: 'Contact' },
 ]
 
 const topServices: Service[] = [
@@ -29,205 +27,104 @@ const topServices: Service[] = [
 ] as any
 
 export function Header() {
+  const location = useLocation()
   const scrolled = useScrolled(10)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false)
-  const servicesDropdownRef = useRef<HTMLDivElement>(null)
   const cartCount = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0))
   const openCart = useCartStore((s) => s.openCart)
 
+  const isHome = location.pathname === '/'
+  const activeHref = useMemo(() => navLinks.find((link) => link.href === location.pathname)?.href, [location.pathname])
+
   return (
-    <header
-      className={cn(
-        'sticky top-0 z-50 h-[var(--header-height-desktop)] bg-[var(--header-bg)] transition-shadow duration-200',
-        scrolled ? 'shadow-[0_1px_0_var(--header-border)]' : ''
-      )}
-    >
-      <div
-        className="h-full px-[var(--header-px)] flex items-center justify-between"
-        style={{ gap: 'var(--nav-gap)' }}
-      >
-        {/* LEFT: Logo */}
-        <Logo className="h-[var(--logo-max-height)]" />
-
-        {/* CENTER: Primary Navigation (desktop) */}
-        <nav className="hidden md:flex items-center gap-[var(--nav-gap)]">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              to={link.href}
-              className={cn(
-                'nav-link',
-                link.href === window.location.pathname ? 'nav-link-active' : ''
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
-          {/* Services Dropdown */}
-          <div className="relative" ref={servicesDropdownRef}>
-            <button
-              className="nav-link flex items-center gap-1"
-              onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
-              aria-expanded={servicesDropdownOpen}
-            >
-              Services
-              <ChevronDown className={`w-4 h-4 transition-transform ${servicesDropdownOpen ? 'rotate-180' : ''}`} />
-            </button>
-            {servicesDropdownOpen && (
-              <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
-                <Link
-                  to="/services"
-                  className="block px-6 py-3 hover:bg-gray-50 font-semibold"
-                  style={{ color: 'var(--color-navy)' }}
-                  onClick={() => setServicesDropdownOpen(false)}
-                >
-                  View All Services
-                </Link>
-                <div className="border-t border-gray-100 my-1" />
-                {topServices.map((service) => (
-                  <Link
-                    key={service.slug}
-                    to={`/services/${service.slug}`}
-                    className="block px-6 py-2 text-sm hover:bg-gray-50"
-                    style={{ color: 'var(--color-gray-600)' }}
-                    onClick={() => setServicesDropdownOpen(false)}
-                  >
-                    {service.title}
-                  </Link>
-                ))}
-              </div>
-            )}
+    <header className="sticky top-0 z-50">
+      <div className="hidden md:block border-b border-white/10 bg-[var(--color-navy-deep)] text-white">
+        <div className="container-custom flex items-center justify-between py-2 text-[0.8rem] text-white/80">
+          <div className="flex items-center gap-5">
+            <span className="inline-flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> 310A Blackshaws Road, Altona North</span>
+            <span className="inline-flex items-center gap-2"><Clock3 className="h-3.5 w-3.5" /> Community pharmacy care, 7 days</span>
           </div>
-        </nav>
-
-        {/* RIGHT: Utilities + CTA (desktop) */}
-        <div className="hidden md:flex items-center" style={{ gap: 'var(--utility-gap)' }}>
-          {/* Phone */}
-          <a href="tel:+61393913257" className="nav-link text-[var(--font-utility)] text-[var(--utility-icon-color)]">
-            (03) 9391 3257
-          </a>
-
-          {/* Cart */}
-          <button
-            onClick={openCart}
-            className="icon-btn relative"
-            aria-label={`Shopping cart with ${cartCount} items`}
-          >
-            <ShoppingBag className="w-5 h-5" />
-            {cartCount > 0 && (
-              <span
-                className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center text-xs font-bold rounded-full"
-                style={{ backgroundColor: 'var(--color-red)', color: 'white' }}
-              >
-                {cartCount > 9 ? '9+' : cartCount}
-              </span>
-            )}
-          </button>
-
-          {/* Book Vaccination CTA */}
-          {/* TODO: Replace with inline VaccinationBookingModal when ready */}
-          <a
-            href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-header-primary"
-          >
-            Book Vaccination
-          </a>
-        </div>
-
-        {/* MOBILE: Hamburger, Logo, Cart, Book */}
-        <div className="md:hidden flex items-center gap-3">
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="icon-btn"
-            aria-label="Open menu"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
-          <Logo className="h-[var(--logo-max-height-mobile)]" />
-          <button
-            onClick={openCart}
-            className="icon-btn relative"
-            aria-label={`Cart with ${cartCount} items`}
-          >
-            <ShoppingBag className="w-5 h-5" />
-            {cartCount > 0 && (
-              <span
-                className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center text-xs font-bold rounded-full"
-                style={{ backgroundColor: 'var(--color-red)', color: 'white' }}
-              >
-                {cartCount > 9 ? '9+' : cartCount}
-              </span>
-            )}
-          </button>
-          <a
-            href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-header-primary text-xs px-3"
-          >
-            Book
+          <a href="tel:+61393913257" className="inline-flex items-center gap-2 font-semibold text-white hover:text-white/85">
+            <Phone className="h-3.5 w-3.5" /> (03) 9391 3257
           </a>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      <div className={cn('transition-all duration-300', scrolled || !isHome ? 'border-b border-[var(--color-border)] bg-[rgba(255,253,250,0.94)] backdrop-blur-xl shadow-[0_20px_40px_-36px_rgba(16,24,63,0.55)]' : 'bg-[rgba(255,253,250,0.82)] backdrop-blur-xl')}>
+        <div className="container-custom flex h-[var(--header-height-mobile)] items-center justify-between gap-4 md:h-[var(--header-height-desktop)]">
+          <div className="flex items-center gap-3 md:gap-5">
+            <button onClick={() => setMobileMenuOpen(true)} className="icon-btn md:hidden" aria-label="Open menu">
+              <Menu className="h-5 w-5" />
+            </button>
+            <Logo className="h-[var(--logo-max-height-mobile)] md:h-[var(--logo-max-height)]" />
+          </div>
+
+          <nav className="hidden items-center gap-8 md:flex">
+            {navLinks.map((link) => (
+              <Link key={link.href} to={link.href} className={cn('nav-link', activeHref === link.href ? 'nav-link-active' : '')}>
+                {link.label}
+              </Link>
+            ))}
+
+            <div className="relative">
+              <button className="nav-link flex items-center gap-1" onClick={() => setServicesDropdownOpen((v) => !v)} aria-expanded={servicesDropdownOpen}>
+                Popular services <ChevronDown className={cn('h-4 w-4 transition-transform', servicesDropdownOpen && 'rotate-180')} />
+              </button>
+              {servicesDropdownOpen && (
+                <div className="absolute right-0 top-full mt-4 w-[22rem] rounded-[24px] border border-[var(--color-border)] bg-white p-3 shadow-[0_32px_80px_-38px_rgba(16,24,63,0.45)]">
+                  <Link to="/services" className="mb-2 block rounded-2xl bg-[var(--color-navy-soft)] px-4 py-3 font-semibold text-[var(--color-navy)]" onClick={() => setServicesDropdownOpen(false)}>
+                    Explore all pharmacy services
+                  </Link>
+                  <div className="grid gap-1">
+                    {topServices.map((service) => (
+                      <Link key={service.slug} to={`/services/${service.slug}`} className="rounded-2xl px-4 py-3 text-sm text-[var(--color-text-muted)] transition hover:bg-[var(--color-surface-alt)] hover:text-[var(--color-navy)]" onClick={() => setServicesDropdownOpen(false)}>
+                        {service.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </nav>
+
+          <div className="flex items-center gap-2 md:gap-3">
+            <a href="tel:+61393913257" className="hidden rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-semibold text-[var(--color-navy)] md:inline-flex">
+              Call the pharmacy
+            </a>
+            <button onClick={openCart} className="icon-btn relative" aria-label={`Shopping cart with ${cartCount} items`}>
+              <ShoppingBag className="h-5 w-5" />
+              {cartCount > 0 && <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-red)] text-[10px] font-bold text-white">{cartCount > 9 ? '9+' : cartCount}</span>}
+            </button>
+            <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer" className="btn-header-primary text-sm">
+              Book vaccination
+            </a>
+          </div>
+        </div>
+      </div>
+
       <MobileDrawer isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)}>
-        <div className="space-y-2">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              to={link.href}
-              className="block py-4 text-lg font-medium border-b border-gray-100"
-              style={{ color: 'var(--color-navy)' }}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div className="border-t border-gray-200 pt-4 mt-4">
-            <p className="text-sm font-semibold mb-2" style={{ color: 'var(--color-navy)' }}>
-              Services
-            </p>
-            <Link
-              to="/services"
-              className="block py-3 text-base"
-              style={{ color: 'var(--color-gray-600)' }}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              View All Services
-            </Link>
-            {topServices.map((service) => (
-              <Link
-                key={service.slug}
-                to={`/services/${service.slug}`}
-                className="block py-2 text-sm"
-                style={{ color: 'var(--color-gray-600)' }}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {service.title}
+        <div className="space-y-6">
+          <div className="rounded-[28px] bg-[var(--color-navy-deep)] p-5 text-white">
+            <p className="text-xs uppercase tracking-[0.25em] text-white/65">Blackshaws Road Pharmacy</p>
+            <p className="mt-2 text-lg font-semibold">Trusted local care, prescriptions, services and online shopping.</p>
+          </div>
+          <div className="space-y-1">
+            {navLinks.map((link) => (
+              <Link key={link.href} to={link.href} className="block rounded-2xl px-4 py-3 text-base font-semibold text-[var(--color-navy)] hover:bg-[var(--color-navy-soft)]" onClick={() => setMobileMenuOpen(false)}>
+                {link.label}
               </Link>
             ))}
           </div>
-          <div className="border-t border-gray-200 pt-4 mt-4 space-y-3">
-            <a
-              href="tel:+61393913257"
-              className="flex items-center gap-2 text-base"
-              style={{ color: 'var(--color-navy)' }}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <Phone className="w-4 h-4" />
-              (03) 9391 3257
-            </a>
-            <p className="text-sm" style={{ color: 'var(--color-gray-600)' }}>
-              310A Blackshaws Road, Altona North
-            </p>
-            {/* TODO: confirm exact hours with client */}
-            <p className="text-sm" style={{ color: 'var(--color-gray-600)' }}>
-              Mon–Fri 9am–6pm · Sat 9am–1pm · Sun Closed
-            </p>
+          <div className="rounded-[24px] bg-[var(--color-surface-alt)] p-4">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-red)]">Popular services</p>
+            <div className="space-y-1">
+              {topServices.map((service) => (
+                <Link key={service.slug} to={`/services/${service.slug}`} className="block rounded-xl px-3 py-2 text-sm text-[var(--color-text-muted)] hover:bg-white hover:text-[var(--color-navy)]" onClick={() => setMobileMenuOpen(false)}>
+                  {service.title}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </MobileDrawer>

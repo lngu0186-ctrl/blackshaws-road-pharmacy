@@ -1,27 +1,24 @@
-'use client'
-
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { Grid, Activity, Baby, Heart, Sparkles, User, Bandage, HeartPulse, Scale, Wind, Shield, Stethoscope } from 'lucide-react'
+import { Grid, Activity, Baby, Heart, Sparkles, User, Bandage, HeartPulse, Scale, Wind, Shield, Stethoscope, ArrowRight } from 'lucide-react'
 import { PHARMACY_CATEGORIES, getActiveCategories, categorizeProduct } from '../../utils/productCategories'
 import { getAllProducts, type Product } from '../../services/shopify'
 import { useInView } from 'framer-motion'
-import { useRef } from 'react'
 
 const iconMap: Record<string, any> = {
-  'pill': Grid,
-  'activity': Activity,
-  'baby': Baby,
-  'sparkles': Sparkles,
-  'heart': Heart,
-  'user': User,
-  'bandage': Bandage,
+  pill: Grid,
+  activity: Activity,
+  baby: Baby,
+  sparkles: Sparkles,
+  heart: Heart,
+  user: User,
+  bandage: Bandage,
   'heart-pulse': HeartPulse,
-  'scale': Scale,
-  'tooth': Stethoscope, // Use Stethoscope as fallback for dental
-  'wind': Wind,
-  'shield': Shield,
-  'stethoscope': Stethoscope,
+  scale: Scale,
+  tooth: Stethoscope,
+  wind: Wind,
+  shield: Shield,
+  stethoscope: Stethoscope,
 }
 
 export function ShopCategories() {
@@ -43,93 +40,36 @@ export function ShopCategories() {
     })()
   }, [])
 
-  const activeCategories = useMemo(() => {
-    if (products.length === 0) return PHARMACY_CATEGORIES.slice(0, 8)
-    return getActiveCategories(products)
-  }, [products])
+  const activeCategories = useMemo(() => (products.length === 0 ? PHARMACY_CATEGORIES.slice(0, 8) : getActiveCategories(products)), [products])
 
   return (
-    <section ref={ref} className="section-padding" style={{ backgroundColor: 'var(--color-off-white)' }}>
+    <section ref={ref} className="section-padding bg-alt">
       <div className="container-custom">
-        <div
-          className="text-center mb-16"
-          style={{
-            opacity: isInView ? 1 : 0,
-            transform: `translateY(${isInView ? 0 : '20px'})`,
-            transition: 'opacity 0.6s ease, transform 0.6s ease',
-          }}
-        >
-          <p className="section-label" style={{ color: 'var(--color-navy)' }}>SHOP BY CATEGORY</p>
-          <h2 className="mb-4" style={{ color: 'var(--color-navy)' }}>
-            Explore Our Full Range
-          </h2>
-          <p className="text-lg text-[var(--color-gray-600)] max-w-2xl mx-auto">
-            From vitamins to skincare, baby care to medical devices. Browse our comprehensive selection of health and wellness products.
-          </p>
+        <div className="mb-14 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="section-label" style={{ color: 'var(--color-navy)' }}>Shop with confidence</p>
+            <h2 className="max-w-3xl text-[var(--color-navy)]">A more considered health and wellness range.</h2>
+          </div>
+          <p className="max-w-xl text-base text-[var(--color-text-muted)]">Browse everyday pharmacy essentials, practitioner-led health products and family wellness categories in a calmer, more premium storefront experience.</p>
         </div>
 
-        {loading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="animate-pulse bg-white rounded-2xl p-6 border" style={{ borderColor: 'var(--color-gray-200)' }}>
-                <div className="w-12 h-12 rounded-xl bg-gray-200 mb-4" />
-                <div className="h-5 bg-gray-200 rounded w-3/4 mb-2" />
-                <div className="h-4 bg-gray-200 rounded w-full" />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-            style={{
-              opacity: isInView ? 1 : 0,
-              transform: `translateY(${isInView ? 0 : '30px'})`,
-              transition: 'opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s',
-            }}
-          >
+        {loading ? <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">{Array.from({ length: 8 }).map((_, i) => <div key={i} className="h-56 animate-pulse rounded-[28px] bg-white/80" />)}</div> : (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" style={{ opacity: isInView ? 1 : 0, transform: `translateY(${isInView ? 0 : '20px'})`, transition: 'opacity 0.6s ease, transform 0.6s ease' }}>
             {activeCategories.map((category) => {
               const IconComponent = iconMap[category.icon || 'grid'] || Grid
-              const productCount = products.filter(p => categorizeProduct(p).includes(category.id)).length
-
+              const productCount = products.filter((p) => categorizeProduct(p).includes(category.id)).length
               return (
-                <Link
-                  key={category.id}
-                  to={`/shop?category=${category.slug}`}
-                  className="group block bg-white rounded-2xl p-6 border transition-all hover:shadow-lg hover:border-red-200"
-                  style={{ borderColor: 'var(--color-gray-200)' }}
-                >
-                  <div
-                    className="w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition-colors"
-                    style={{ backgroundColor: 'var(--color-red)/10', color: 'var(--color-red)' }}
-                  >
-                    <IconComponent className="w-7 h-7" />
+                <Link key={category.id} to={`/shop?category=${category.slug}`} className="group rounded-[28px] border border-[var(--color-border)] bg-white p-6 shadow-[0_24px_60px_-46px_rgba(16,24,63,0.2)] transition hover:-translate-y-1 hover:border-[rgba(192,57,43,0.24)] hover:shadow-[0_28px_70px_-40px_rgba(16,24,63,0.25)]">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-[20px] bg-[var(--color-red-soft)] text-[var(--color-red)]"><IconComponent className="h-7 w-7" /></div>
+                  <h3 className="mt-6 text-xl font-semibold text-[var(--color-navy)] group-hover:text-[var(--color-red)]">{category.name}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-muted)]">{category.description}</p>
+                  <div className="mt-6 flex items-center justify-between text-sm font-semibold text-[var(--color-navy)]">
+                    <span>{productCount > 0 ? `${productCount} products` : 'Browse range'}</span>
+                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 group-hover:text-red-600 transition-colors" style={{ color: 'var(--color-navy)' }}>
-                    {category.name}
-                  </h3>
-                  <p className="text-sm text-[var(--color-gray-600)] mb-4 line-clamp-2">
-                    {category.description}
-                  </p>
-                  {productCount > 0 && (
-                    <p className="text-xs font-medium" style={{ color: 'var(--color-red)' }}>
-                      {productCount} product{productCount !== 1 ? 's' : ''}
-                    </p>
-                  )}
                 </Link>
               )
             })}
-
-            {/* View all categories card */}
-            <Link
-              to="/shop"
-              className="group bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-6 text-white flex flex-col items-center justify-center text-center hover:shadow-lg transition-all"
-            >
-              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5 bg-white/10">
-                <Grid className="w-7 h-7" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">View All</h3>
-              <p className="text-sm text-white/80">Browse complete catalog with filters and search</p>
-            </Link>
           </div>
         )}
       </div>

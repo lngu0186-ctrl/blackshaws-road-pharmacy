@@ -1,103 +1,72 @@
-'use client'
-
-import { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '../ui/Button'
+import { Clock3, MapPin, Phone, ShieldCheck } from 'lucide-react'
 
 export function HeroSection() {
-  const [mounted, setMounted] = useState(false)
-  const heroRef = useRef(null)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
-
   return (
-    <section
-      ref={heroRef}
-      className="relative min-h-[85vh] md:min-h-screen flex items-center overflow-hidden"
-      style={{ backgroundColor: 'var(--color-navy-deep)' }}
-    >
-      {/* Hero Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
-        {/* Use gradient as base, image on top if available */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-navy)] to-[var(--color-navy-deep)]" />
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
-          style={{
-            backgroundImage: 'url(/hero.png)',
-            backgroundAttachment: 'fixed',
-          }}
-        />
-        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(20, 31, 82, 0.65)' }} />
+    <section className="relative overflow-hidden bg-[var(--color-navy-deep)] text-white">
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_32%),linear-gradient(135deg,rgba(16,24,63,0.95),rgba(27,42,107,0.92))]" />
+        <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: 'url(/hero.png)' }} />
+        <div className="absolute -left-28 top-16 h-72 w-72 rounded-full bg-[var(--color-red)]/15 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
       </div>
 
-      {/* Content */}
-      <div className="container-custom relative z-10 py-24">
-        <div className="max-w-4xl">
-          {/* EST. 1968 Badge */}
-          <div className="mb-6">
-            <span className="badge-red" style={{ backgroundColor: 'var(--color-red)' }}>EST. 1968</span>
-            <span className="ml-3 text-white/80 text-sm font-medium tracking-wider">
-              Alliance Pharmacy Member
-            </span>
+      <div className="container-custom relative z-10 py-18 md:py-24">
+        <div className="grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="max-w-4xl">
+            <div className="flex flex-wrap gap-3">
+              <span className="badge-red">EST. 1968</span>
+              <span className="badge-soft">Alliance Pharmacy member</span>
+            </div>
+
+            <div className="mt-7">
+              <img src="/logo-dark.svg" alt="Blackshaws Road Pharmacy" className="h-18 w-auto md:h-24" style={{ maxWidth: '330px' }} />
+            </div>
+
+            <h1 className="mt-8 max-w-4xl text-white">Premium everyday pharmacy care for Altona North and the west.</h1>
+            <p className="mt-6 text-lg leading-relaxed text-white/78 md:text-xl">Prescriptions, trusted pharmacist advice, vaccinations, medication reviews and a curated online health range — all delivered with the calm confidence of a long-standing local pharmacy.</p>
+
+            <div className="mt-8 flex flex-wrap gap-3 text-sm text-white/76">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2"><MapPin className="h-4 w-4" /> 310A Blackshaws Road, Altona North</span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2"><Clock3 className="h-4 w-4" /> Open 7 days</span>
+              <a href="tel:0393913257" className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 hover:bg-white/8"><Phone className="h-4 w-4" /> (03) 9391 3257</a>
+            </div>
+
+            <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+              <Link to="/shop"><Button variant="red" size="lg">Shop online now</Button></Link>
+              <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer"><Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">Book a vaccination</Button></a>
+              <a href="#services"><Button variant="ghost" size="lg" className="text-white hover:bg-white/10">Explore pharmacy services</Button></a>
+            </div>
           </div>
 
-          {/* Logo Image */}
-          <div className="mb-8">
-            <img
-              src="/logo-white.svg"
-              alt="Blackshaws Road Pharmacy"
-              className="h-20 md:h-24 w-auto"
-              style={{ maxWidth: '320px' }}
-            />
-          </div>
-
-          {/* Main Headline */}
-          <h1 className="text-white mb-6 leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-            Altona North's Trusted
-            <br />
-            <span style={{ color: 'var(--color-red)' }}>Community Pharmacy</span>
-          </h1>
-
-          {/* Contact info line */}
-          <div className="flex flex-wrap items-center gap-4 mb-8 text-white/90">
-            <a href="tel:0393913257" className="hover:text-white transition-colors">
-              <span className="font-semibold">(03) 9391 3257</span>
-            </a>
-            <span className="text-white/60">|</span>
-            <span>0406 692 267</span>
-            <span className="text-white/60">|</span>
-            <span>310A Blackshaws Road, Altona North</span>
-            <span className="text-white/60">|</span>
-            <span>Open 7 days from 8am</span>
-          </div>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button variant="primary" size="lg" asChild>
-              <a href="#services">Our Services</a>
-            </Button>
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-[var(--color-navy-deep)]" asChild>
-              <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer">
-                Book a Vaccination →
-              </a>
-            </Button>
-            <Button variant="primary" size="lg" className="!bg-[var(--color-red)] !border-[var(--color-red)] hover:!bg-red-700 text-white" asChild>
-              <Link to="/shop">
-                Shop Online Now →
-              </Link>
-            </Button>
+          <div className="premium-panel rounded-[32px] p-6 text-[var(--color-text-dark)] md:p-8">
+            <div className="inline-flex items-center gap-2 rounded-full bg-[var(--color-red-soft)] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-red)]"><ShieldCheck className="h-4 w-4" /> trusted local healthcare</div>
+            <h2 className="mt-5 text-3xl text-[var(--color-navy-deep)] md:text-4xl">Designed for convenience. Grounded in care.</h2>
+            <div className="mt-6 space-y-4">
+              {[
+                'Accredited vaccination and pharmacist consultation services',
+                'Medication support for families, seniors and complex care needs',
+                'Online shopping paired with real in-store pharmacy expertise',
+              ].map((item) => (
+                <div key={item} className="flex items-start gap-3 rounded-2xl bg-white/80 p-4">
+                  <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[var(--color-red)]" />
+                  <p className="text-sm leading-relaxed text-[var(--color-text-muted)]">{item}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 grid gap-4 rounded-[24px] bg-[var(--color-navy-deep)] p-5 text-white sm:grid-cols-2">
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-white/60">Need a script filled?</p>
+                <p className="mt-2 text-lg font-semibold">Speak to the team about prescriptions and repeats.</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-white/60">Need an appointment?</p>
+                <p className="mt-2 text-lg font-semibold">Vaccinations and key services are easy to book online.</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Alliance reference */}
-      <div className="absolute bottom-8 right-8 text-white/40 text-sm font-medium text-right">
-        <div>Alliance Pharmacy</div>
-        <div className="text-xs">Australia&apos;s leading independent network</div>
       </div>
     </section>
   )
