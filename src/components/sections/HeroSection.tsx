@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Button } from '../ui/Button'
+import { BrandLogo } from '../BrandLogo'
 import { Clock3, MapPin, Phone, ShieldCheck } from 'lucide-react'
 
 export function HeroSection() {
