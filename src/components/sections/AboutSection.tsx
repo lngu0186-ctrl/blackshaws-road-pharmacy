@@ -2,11 +2,11 @@
 
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { Quote, Users, Shield } from 'lucide-react'
+import { Users } from 'lucide-react'
 
 export function AboutSection() {
-  const quoteRef = useRef(null)
-  const isQuoteInView = useInView(quoteRef, { once: true, margin: '-100px' })
+  const introRef = useRef(null)
+  const isIntroInView = useInView(introRef, { once: true, margin: '-100px' })
 
   const historyRef = useRef(null)
   const isHistoryInView = useInView(historyRef, { once: true, margin: '-100px' })
@@ -17,36 +17,28 @@ export function AboutSection() {
   return (
     <section id="about" className="section-padding bg-alt">
       <div className="container-custom">
-        {/* Quote block - text left, Alliance card right */}
+        {/* Intro: headline + two paragraphs */}
         <div
-          ref={quoteRef}
-          className="grid lg:grid-cols-2 gap-16 items-center mb-24"
+          ref={introRef}
+          className="max-w-3xl mb-16"
           style={{
-            opacity: isQuoteInView ? 1 : 0,
-            transform: `translateY(${isQuoteInView ? 0 : '30px'})`,
+            opacity: isIntroInView ? 1 : 0,
+            transform: `translateY(${isIntroInView ? 0 : '30px'})`,
             transition: 'opacity 0.8s ease, transform 0.8s ease',
           }}
         >
-          <div>
-            <Quote className="w-12 h-12 mb-6" style={{ color: 'var(--color-red)' }} />
-            <blockquote className="text-3xl md:text-4xl font-serif leading-tight mb-6" style={{ color: 'var(--color-navy)' }}>
-              "Your health is personal. So is our care."
-            </blockquote>
-            <p className="text-[var(--color-gray-600)] text-lg italic">
-              — 55 years of putting Altona North first
-            </p>
-          </div>
-          <div className="relative h-80 md:h-96 rounded-2xl overflow-hidden shadow-lg" style={{ backgroundColor: 'var(--color-navy)' }}>
-            <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
-              <Shield className="w-20 h-20 mb-6" style={{ color: 'var(--color-red)' }} />
-              <h3 className="text-2xl font-serif font-bold mb-2 text-white">Alliance Pharmacy</h3>
-              <p className="text-white/80 mb-6">Member Since 2015</p>
-              <div className="w-16 h-1" style={{ backgroundColor: 'var(--color-red)' }} />
-            </div>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6" style={{ color: 'var(--color-navy)' }}>
+            Your local pharmacy, backed by national strength
+          </h2>
+          <p className="text-lg text-[var(--color-gray-600)] leading-relaxed mb-5">
+            Since 1968, Blackshaws Road Pharmacy has been a trusted part of the Altona North community. As a proud member of Independent Pharmacies Australia (IPA), we combine the personaltouch of an independent local pharmacy with the resources and clinical rigour of Australia's largest independent pharmacy network.
+          </p>
+          <p className="text-lg text-[var(--color-gray-600)] leading-relaxed">
+            Whether it&apos;s everyday healthcare, prescription management, vaccinations, or our Chemist Care Now service, you&apos;ll always find expert advice and genuine care from people who know your name.
+          </p>
         </div>
 
-        {/* History section - text right, image left */}
+        {/* History block */}
         <div
           ref={historyRef}
           className="grid lg:grid-cols-2 gap-16 items-center mb-24"
@@ -56,42 +48,40 @@ export function AboutSection() {
             transition: 'opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s',
           }}
         >
-          <div className="order-2 lg:order-1 relative h-80 rounded-2xl overflow-hidden border border-[var(--color-gray-200)] bg-white shadow-md">
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[var(--color-navy-light)] to-[var(--color-red)] opacity-10" />
+          <div className="order-2 lg:order-1">
+            <h3 className="text-2xl md:text-3xl font-serif font-bold mb-6" style={{ color: 'var(--color-navy)' }}>
+              55+ years of community health
+            </h3>
+            <p className="text-[var(--color-gray-600)] mb-4 leading-relaxed">
+              Founded in 1968, we&apos;ve grown with the community, adapting to new health challenges while never losing sight of what makes a pharmacy great: trust, accessibility, and compassionate care.
+            </p>
+            <p className="text-[var(--color-gray-600)] mb-4 leading-relaxed">
+              Today, our team of registered pharmacists brings together decades of combined experience. We don&apos;t just dispense medication — we listen, advise, and support you through every health journey.
+            </p>
+          </div>
+          <div className="order-1 lg:order-2 relative h-80 rounded-2xl overflow-hidden border border-[var(--color-gray-200)] bg-white shadow-md">
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
               <img
-                src="/logo-black.png"
+                src="/logo.svg"
                 alt="Blackshaws Road Pharmacy"
-                className="h-16 w-auto mb-4 opacity-40"
-                style={{ maxWidth: '220px', objectFit: 'contain' }}
+                className="h-16 w-auto mb-4 opacity-50"
+                style={{ maxWidth: '220px' }}
               />
               <p className="text-5xl font-serif font-bold mb-2" style={{ color: 'var(--color-navy)' }}>1968</p>
-              <p className="text-sm text-[var(--color-gray-600)] uppercase tracking-wider">Where It All Began</p>
+              <p className="text-sm text-[var(--color-gray-600)] uppercase tracking-wider">Your trusted local pharmacy</p>
               <div className="mt-6 flex items-center gap-2">
                 <span className="px-3 py-1 text-xs font-semibold rounded-full" style={{ backgroundColor: 'var(--color-red)', color: 'white' }}>
-                  55+ Years
+                  Est. 1968
                 </span>
                 <span className="px-3 py-1 text-xs font-semibold rounded-full" style={{ backgroundColor: 'var(--color-navy)', color: 'white' }}>
-                  Locally Owned
+                  Independent & proud
                 </span>
               </div>
             </div>
           </div>
-          <div className="order-1 lg:order-2">
-            <h3 style={{ color: 'var(--color-navy)' }}>Over 55 Years of Community Care</h3>
-            <p className="text-[var(--color-gray-600)] mb-4 leading-relaxed">
-              Blackshaws Road Pharmacy opened in 1968, built on a simple belief: healthcare should be personal, accessible, and delivered with integrity. For five generations, we&apos;ve been a trusted part of the Altona North community.
-            </p>
-            <p className="text-[var(--color-gray-600)] mb-4 leading-relaxed">
-              Today, we combine that heritage with modern clinical expertise. Our pharmacists are not just medication experts — they&apos;re your health partners, dedicated to providing evidence-based care with genuine compassion.
-            </p>
-            <p className="text-[var(--color-gray-600)] text-sm italic">
-              We&apos;re proud to be a member of Alliance Pharmacy, Australia&apos;s leading independent pharmacy network, giving us access to cutting-edge clinical programs and training to serve you better.
-            </p>
-          </div>
         </div>
 
-        {/* Team section - alternating */}
+        {/* Team & IPA */}
         <div
           ref={teamRef}
           className="grid lg:grid-cols-2 gap-16 items-center"
@@ -102,19 +92,21 @@ export function AboutSection() {
           }}
         >
           <div>
-            <h3 style={{ color: 'var(--color-navy)' }}>Meet Our Experienced Team</h3>
+            <h3 className="text-2xl md:text-3xl font-serif font-bold mb-6" style={{ color: 'var(--color-navy)' }}>
+              Expert pharmacists you can trust
+            </h3>
             <p className="text-[var(--color-gray-600)] mb-4 leading-relaxed">
-              Our pharmacy team is more than a group of professionals — we&apos;re your neighbours. We know many of our customers by name, and we take pride in the relationships we&apos;ve built over decades.
+              Our pharmacists are registered with AHPRA and undergo continuous professional development to stay at the forefront of clinical practice. From immunisations to medication reviews, from chronic disease management to specialist compounding — we bring expertise and empathy to every consultation.
             </p>
             <p className="text-[var(--color-gray-600)] mb-4 leading-relaxed">
-              All our pharmacists are registered with AHPRA and participate in ongoing professional development. From immunisations to medication reviews, from chronic disease management to wellness advice — we bring clinical excellence and genuine care to every interaction.
+              As an IPA member, we&apos;re part of a nationwide network that shares best practices, clinical protocols, and training resources. This means you receive local,personal service backed by national standards of excellence.
             </p>
             <div className="flex flex-wrap gap-3 mt-6">
               <div className="px-4 py-2 bg-white rounded-lg border border-[var(--color-gray-200)] text-sm font-medium" style={{ color: 'var(--color-navy)' }}>
                 AHPRA Registered
               </div>
               <div className="px-4 py-2 bg-white rounded-lg border border-[var(--color-gray-200)] text-sm font-medium" style={{ color: 'var(--color-navy)' }}>
-                Alliance Pharmacy
+                Independent Pharmacies Australia
               </div>
               <div className="px-4 py-2 bg-white rounded-lg border border-[var(--color-gray-200)] text-sm font-medium" style={{ color: 'var(--color-navy)' }}>
                 Accredited Immunisers

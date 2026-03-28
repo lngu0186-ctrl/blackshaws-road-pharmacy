@@ -18,7 +18,7 @@ export function HeroSection() {
         <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-white/6 blur-3xl" />
       </div>
 
-      <div className="container-custom relative z-10 py-18 md:py-24">
+      <div className="container-custom relative z-10 py-8 md:py-12">
         <div className="grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="max-w-4xl">
             <div className="flex flex-wrap gap-3">
