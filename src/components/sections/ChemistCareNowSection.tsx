@@ -1,7 +1,7 @@
 import { Shield, Pill, Syringe, Heart, Stethoscope, Baby, BadgeCheck } from 'lucide-react'
 import { Card } from '../ui/Card'
 import { useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Button } from '../ui/Button'
 
 interface ChemistCareNowSectionProps { id?: string }
@@ -18,28 +18,70 @@ const chemistCareServices = [
 export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setPrefersReducedMotion(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   return (
-    <section id={id} className="section-padding bg-[var(--color-sage-soft)]">
-      <div className="container-custom" ref={ref}>
+    <section id={id} className="section-padding relative isolate overflow-hidden" style={{ background: 'var(--color-navy-deep)' }}>
+      {/* Video background layer */}
+      {!prefersReducedMotion ? (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/chemist-care-now-logo.png"
+          className="absolute inset-0 h-full w-full object-cover pointer-events-none"
+          style={{ zIndex: -3, opacity: 0.32 }}
+          aria-hidden="true"
+        >
+          <source src="/chemist-care-bg.mp4" type="video/mp4" />
+        </video>
+      ) : (
+        /* Reduced-motion fallback — static tinted background */
+        <div className="absolute inset-0" style={{ zIndex: -3, background: 'var(--color-navy-deep)' }} aria-hidden="true" />
+      )}
+
+      {/* Overlay stack for readability */}
+      <div className="absolute inset-0" style={{ zIndex: -2, background: 'linear-gradient(180deg, rgba(16,24,63,0.82) 0%, rgba(16,24,63,0.68) 40%, rgba(16,24,63,0.78) 100%)' }} aria-hidden="true" />
+      <div className="absolute inset-0" style={{ zIndex: -1, background: 'radial-gradient(ellipse at 30% 50%, rgba(16,24,63,0.5) 0%, transparent 70%)' }} aria-hidden="true" />
+
+      <div className="container-custom relative" ref={ref}>
         <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div>
-            <span className="badge-navy" style={{ background: 'rgba(16,24,63,0.1)' }}>Victorian Government-backed care</span>
-            <h2 className="mt-5 text-[var(--color-navy-deep)]">Chemist Care Now, delivered with faster access and trusted pharmacy judgement.</h2>
-            <p className="mt-5 text-lg text-[var(--color-text-muted)]">For eligible everyday conditions, the pharmacy can provide an easier path to treatment while keeping advice clinically grounded, private and community-focused.</p>
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-white/80 backdrop-blur-sm">Victorian Government-backed care</span>
 
-            <div className="mt-8 rounded-[30px] bg-white p-6 shadow-[0_30px_70px_-48px_rgba(16,24,63,0.28)]">
-              <h3 className="text-2xl text-[var(--color-navy)]">What patients can expect</h3>
+            {/* Official Chemist Care Now logo */}
+            <img
+              src="/chemist-care-now-logo.png"
+              alt="Chemist Care Now"
+              className="mt-6 h-14 w-auto md:h-18"
+              style={{ objectFit: 'contain', display: 'block' }}
+              loading="lazy"
+            />
+
+            <h2 className="mt-5 text-white">Delivered with faster access and trusted pharmacy judgement.</h2>
+            <p className="mt-5 text-lg text-white/72">For eligible everyday conditions, the pharmacy can provide an easier path to treatment while keeping advice clinically grounded, private and community-focused.</p>
+
+            <div className="mt-8 rounded-[30px] bg-white/10 p-6 shadow-[0_30px_70px_-48px_rgba(0,0,0,0.5)] backdrop-blur-md">
+              <h3 className="text-2xl text-white">What patients can expect</h3>
               <div className="mt-5 space-y-4">
                 {['Private consultations that typically take 15–30 minutes', 'Most eligible Chemist Care Now consultations are free', 'Clear pharmacist guidance on when GP or urgent review is needed', 'Convenient access for common conditions without compromising safety'].map((item) => (
                   <div key={item} className="flex items-start gap-3">
-                    <BadgeCheck className="mt-0.5 h-5 w-5 text-[var(--color-sage)]" />
-                    <p className="text-sm leading-relaxed text-[var(--color-text-muted)]">{item}</p>
+                    <BadgeCheck className="mt-0.5 h-5 w-5 text-[#3b82f6]" />
+                    <p className="text-sm leading-relaxed text-white/80">{item}</p>
                   </div>
                 ))}
               </div>
               <a href="https://www.betterhealth.vic.gov.au/chemist-care-now" target="_blank" rel="noopener noreferrer" className="mt-6 inline-block">
-                <Button variant="sage" size="lg">Learn more at Better Health Victoria</Button>
+                <Button variant="primary" size="lg">Learn more at Better Health Victoria</Button>
               </a>
             </div>
           </div>
@@ -58,15 +100,15 @@ function ChemistCareCard({ icon: Icon, title, description, index }: { icon: Reac
   const isInView = useInView(cardRef, { once: true, margin: '-50px' })
 
   return (
-    <Card ref={cardRef} className="flex h-full flex-col bg-white" style={{ opacity: isInView ? 1 : 0, transform: `translateY(${isInView ? 0 : '20px'})`, transition: `opacity 0.5s ease ${index * 0.07}s, transform 0.5s ease ${index * 0.07}s` }}>
+    <Card ref={cardRef} className="flex h-full flex-col bg-white/10 backdrop-blur-md border border-white/10" style={{ opacity: isInView ? 1 : 0, transform: `translateY(${isInView ? 0 : '20px'})`, transition: `opacity 0.5s ease ${index * 0.07}s, transform 0.5s ease ${index * 0.07}s` }}>
       <div className="flex items-start gap-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-[18px] bg-[var(--color-sage-soft)] text-[var(--color-sage)]"><Icon className="h-6 w-6" /></div>
+        <div className="flex h-12 w-12 items-center justify-center rounded-[18px] bg-white/12 text-[#3b82f6]"><Icon className="h-6 w-6" /></div>
         <div>
-          <h3 className="text-xl text-[var(--color-navy)]">{title}</h3>
-          <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">{description}</p>
+          <h3 className="text-xl text-white">{title}</h3>
+          <p className="mt-3 text-sm leading-relaxed text-white/70">{description}</p>
         </div>
       </div>
-      <div className="mt-5 border-t border-[var(--color-border)] pt-4 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-sage)]">Available now · Ask the pharmacist</div>
+      <div className="mt-5 border-t border-white/10 pt-4 text-xs font-semibold uppercase tracking-[0.16em] text-[#3b82f6]/80">Available now · Ask the pharmacist</div>
     </Card>
   )
 }
