@@ -12,10 +12,10 @@ export function HeroSection() {
           className="absolute inset-0 bg-cover bg-[center_20%] md:bg-[center_30%]"
           style={{ backgroundImage: 'url(/hero-pharmacy.png)' }}
         />
-        {/* Primary navy overlay — strong enough for text legibility */}
-        <div className="absolute inset-0 bg-[var(--color-navy-deep)]/82 md:bg-[var(--color-navy-deep)]/76" />
-        {/* Gradient mask — extra darkening on the left text zone, lighter on right */}
-        <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(16,24,63,0.92)_0%,rgba(16,24,63,0.7)_55%,rgba(16,24,63,0.55)_100%)]" />
+        {/* Primary navy overlay — lighter to let storefront show */}
+        <div className="absolute inset-0 bg-[var(--color-navy-deep)]/68 md:bg-[var(--color-navy-deep)]/58" />
+        {/* Gradient mask — darkens left text zone, lets image breathe on right */}
+        <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(16,24,63,0.82)_0%,rgba(16,24,63,0.5)_50%,rgba(16,24,63,0.32)_100%)]" />
         {/* Subtle warm vignette at edges */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(10,14,38,0.5)_100%)]" />
         {/* Soft brand-colour glow accents */}
