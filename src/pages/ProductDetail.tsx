@@ -194,7 +194,7 @@ export default function ProductDetail() {
   const categorySlug = categorizeProduct(product).length > 0 ? categorizeProduct(product)[0] : null
   const categoryName = categorySlug ? PHARMACY_CATEGORIES.find((c) => c.id === categorySlug)?.name : 'Shop'
 
-  const allProducts = useProductStore((s) => s.products)
+
 
   const relatedProducts = useMemo(() => {
     if (!product || allProducts.length === 0) return []
