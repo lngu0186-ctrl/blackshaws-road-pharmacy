@@ -17,17 +17,16 @@ import ProductDetail from './pages/ProductDetail'
 import Services from './pages/Services'
 import ServiceDetail from './pages/ServiceDetail'
 import { ShopCategories } from './components/sections/ShopCategories'
+import { useCartSync } from './hooks/useCartSync'
 import './App.css'
 
 function App() {
+  useCartSync()
+
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-white">
-        {/* Skip to content link for accessibility */}
-        <a
-          href="#main-content"
-          className="skip-link"
-        >
+        <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
 
@@ -56,14 +55,8 @@ function App() {
         </main>
 
         <Footer />
-
-        {/* Floating chat widget */}
         <ChatWidget />
-
-        {/* Global Cart Drawer */}
         <CartDrawer />
-
-        {/* Toast notifications */}
         <ToastContainer />
       </div>
     </BrowserRouter>
@@ -71,4 +64,3 @@ function App() {
 }
 
 export default App
-

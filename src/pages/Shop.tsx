@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { ShoppingBag, Search, X, Home, Grid, List } from 'lucide-react'
-import { useCart } from '../context/CartContext'
+import { useCartStore } from '../stores/cartStore'
 import { useToast } from '../context/ToastContext'
 import { getAllProducts, type Product } from '../services/shopify'
 import {
@@ -31,7 +31,8 @@ export default function Shop() {
   const [showMobileFilters, setShowMobileFilters] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
 
-  const { addItem } = useCart()
+  const addItem = useCartStore((s) => s.addItem)
+  const openCart = useCartStore((s) => s.openCart)
   const { showToast } = useToast()
 
   useEffect(() => {
@@ -140,6 +141,20 @@ export default function Shop() {
   }
   const handleLoadMore = () => {
     setCurrentPage(prev => prev + 1)
+  }
+
+  const handleAddToCart = async (product: Product) => {
+    const firstVariant = product.variants.edges[0]?.node
+    if (!firstVariant) return
+    await addItem({
+      product,
+      variantId: firstVariant.id,
+      variantTitle: firstVariant.title,
+      price: firstVariant.price,
+      quantity: 1,
+      selectedOptions: firstVariant.selectedOptions || [],
+    })
+    openCart()
   }
 
   if (loading) {
@@ -457,7 +472,7 @@ export default function Shop() {
                               size="sm"
                               onClick={(e) => {
                                 e.preventDefault()
-                                if (firstVariant?.id) addItem(firstVariant.id, 1)
+                                handleAddToCart(product)
                               }}
                               disabled={!isAvailable}
                               className="opacity-0 group-hover:opacity-100 transition-opacity"

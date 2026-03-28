@@ -1,26 +1,116 @@
-import { GraphQLClient, gql } from 'graphql-request'
+// Shopify Storefront API Service
 
-const domain = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN
-const token = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN
+// Shopify Storefront API Configuration
+const SHOPIFY_API_VERSION = '2025-07'
+const SHOPIFY_STORE_PERMANENT_DOMAIN = 'blackshaws-road-pharmacy.myshopify.com'
+const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`
+const SHOPIFY_STOREFRONT_TOKEN = '7049490ac9a0923d80e14dbe95587f54'
 
-const shopifyConfigured = !!(domain && token)
-
-if (!shopifyConfigured) {
-  console.warn('Shopify Storefront API credentials not found — shop features will be unavailable')
+// ─── Types ───────────────────────────────────────────────────────
+export interface ShopifyProduct {
+  id: string
+  handle: string
+  title: string
+  description: string
+  descriptionHtml?: string
+  productType: string
+  vendor: string
+  tags: string[]
+  publishedAt: string
+  updatedAt: string
+  images: {
+    edges: {
+      node: {
+        url: string
+        altText: string
+        width?: number
+        height?: number
+      }
+    }[]
+  }
+  variants: {
+    edges: {
+      node: {
+        id: string
+        title: string
+        sku: string
+        availableForSale: boolean
+        price: {
+          amount: string
+          currencyCode: string
+        }
+        compareAtPrice?: {
+          amount: string
+          currencyCode: string
+        }
+        selectedOptions: { name: string; value: string }[]
+        image?: {
+          url: string
+          altText: string
+          width: number
+          height: number
+        }
+      }
+    }[]
+  }
+  priceRange: {
+    minVariantPrice: {
+      amount: string
+      currencyCode: string
+    }
+    maxVariantPrice: {
+      amount: string
+      currencyCode: string
+    }
+  }
+  collections: {
+    edges: {
+      node: {
+        id: string
+        title: string
+        handle: string
+      }
+    }[]
+  }
+  options?: {
+    name: string
+    values: string[]
+  }[]
 }
 
-const endpoint = shopifyConfigured ? `https://${domain}/api/2024-01/graphql.json` : ''
+export type Product = ShopifyProduct
 
-const client = shopifyConfigured
-  ? new GraphQLClient(endpoint, {
-      headers: {
-        'X-Shopify-Storefront-Access-Token': token,
-      },
-    })
-  : null
+// ─── Storefront API Helper ──────────────────────────────────────
+export async function storefrontApiRequest(query: string, variables: Record<string, unknown> = {}) {
+  const response = await fetch(SHOPIFY_STOREFRONT_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
+    },
+    body: JSON.stringify({ query, variables }),
+  })
 
-// GraphQL Queries
-const GET_ALL_PRODUCTS = gql`
+  if (response.status === 402) {
+    console.error('Shopify: Payment required — your store needs an active billing plan.')
+    return null
+  }
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
+
+  const data = await response.json()
+
+  if (data.errors) {
+    throw new Error(`Shopify API error: ${data.errors.map((e: { message: string }) => e.message).join(', ')}`)
+  }
+
+  return data
+}
+
+// ─── Product Queries ────────────────────────────────────────────
+const GET_ALL_PRODUCTS = `
   query getAllProducts($first: Int!, $after: String) {
     products(first: $first, after: $after) {
       pageInfo {
@@ -102,7 +192,7 @@ const GET_ALL_PRODUCTS = gql`
   }
 `
 
-const GET_PRODUCT_BY_HANDLE = gql`
+const GET_PRODUCT_BY_HANDLE = `
   query getProductByHandle($handle: String!) {
     product(handle: $handle) {
       id
@@ -172,440 +262,89 @@ const GET_PRODUCT_BY_HANDLE = gql`
           }
         }
       }
-    }
-  }
-`
-
-const CREATE_CART = gql`
-  mutation createCart {
-    cartCreate {
-      cart {
-        id
-        checkoutUrl
+      options {
+        name
+        values
       }
     }
   }
 `
 
-const ADD_TO_CART = gql`
-  mutation addToCart($cartId: ID!, $variantId: ID!, $quantity: Int!) {
-    cartLinesAdd(cartId: $cartId, lines: [{ merchandiseId: $variantId, quantity: $quantity }]) {
-      cart {
-        id
-        lines(first: 100) {
-          edges {
-            node {
-              id
-              quantity
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                  price {
-                    amount
-                    currencyCode
-                  }
-                  product {
-                    title
-                    handle
-                    images(first: 1) {
-                      edges {
-                        node {
-                          url
-                          altText
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-          totalQuantity
-        }
-        cost {
-          totalAmount {
-            amount
-            currencyCode
-          }
-        }
-        checkoutUrl
-      }
-      userErrors {
-        field
-        message
-      }
-    }
-  }
-`
-
-const REMOVE_FROM_CART = gql`
-  mutation removeFromCart($cartId: ID!, $lineItemId: ID!) {
-    cartLinesRemove(cartId: $cartId, lineIds: [$lineItemId]) {
-      cart {
-        id
-        lines(first: 100) {
-          edges {
-            node {
-              id
-              quantity
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                  price {
-                    amount
-                    currencyCode
-                  }
-                  product {
-                    title
-                    handle
-                    images(first: 1) {
-                      edges {
-                        node {
-                          url
-                          altText
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-          totalQuantity
-        }
-        cost {
-          totalAmount {
-            amount
-            currencyCode
-          }
-        }
-        checkoutUrl
-      }
-      userErrors {
-        field
-        message
-      }
-    }
-  }
-`
-
-const UPDATE_CART_ITEM = gql`
-  mutation updateCartItem($cartId: ID!, $lineItemId: ID!, $quantity: Int!) {
-    cartLinesUpdate(cartId: $cartId, lines: [{ id: $lineItemId, quantity: $quantity }]) {
-      cart {
-        id
-        lines(first: 100) {
-          edges {
-            node {
-              id
-              quantity
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                  price {
-                    amount
-                    currencyCode
-                  }
-                  product {
-                    title
-                    handle
-                    images(first: 1) {
-                      edges {
-                        node {
-                          url
-                          altText
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-          totalQuantity
-        }
-        cost {
-          totalAmount {
-            amount
-            currencyCode
-          }
-        }
-        checkoutUrl
-      }
-      userErrors {
-        field
-        message
-      }
-    }
-  }
-`
-
-const GET_CART = gql`
-  query getCart($cartId: ID!) {
-    cart(id: $cartId) {
-      id
-      lines(first: 100) {
-        edges {
-          node {
-            id
-            quantity
-            merchandise {
-              ... on ProductVariant {
-                id
-                title
-                price {
-                  amount
-                  currencyCode
-                }
-                product {
-                  title
-                  handle
-                  images(first: 1) {
-                    edges {
-                      node {
-                        url
-                        altText
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        totalQuantity
-      }
-      cost {
-        totalAmount {
-          amount
-          currencyCode
-        }
-      }
-      checkoutUrl
-    }
-  }
-`
-
-export interface CartLineItem {
-  id: string
-  quantity: number
-  merchandise: {
-    id: string
-    title: string
-    price: {
-      amount: string
-      currencyCode: string
-    }
-    product: {
-      title: string
-      handle: string
-      images: {
-        edges: {
-          node: {
-            url: string
-            altText: string
-          }
-        }[]
-      }
-    }
-  }
-}
-
-export interface Cart {
-  id: string
-  lines: {
-    edges: CartLineItem[]
-  }
-  totalQuantity: number
-  cost: {
-    totalAmount: {
-      amount: string
-      currencyCode: string
-    }
-  }
-  checkoutUrl: string
-}
-
-export interface ShopifyProduct {
-  id: string
-  handle: string
-  title: string
-  description: string
-  descriptionHtml?: string
-  productType: string
-  vendor: string
-  tags: string[]
-  publishedAt: string
-  updatedAt: string
-  images: {
-    edges: {
-      node: {
-        url: string
-        altText: string
-        width?: number
-        height?: number
-      }
-    }[]
-  }
-  variants: {
-    edges: {
-      node: {
-        id: string
-        title: string
-        sku: string
-        availableForSale: boolean
-        price: {
-          amount: string
-          currencyCode: string
-        }
-        compareAtPrice?: {
-          amount: string
-          currencyCode: string
-        }
-        selectedOptions: { name: string; value: string }[]
-        image?: {
-          url: string
-          altText: string
-          width: number
-          height: number
-        }
-      }
-    }[]
-  }
-  priceRange: {
-    minVariantPrice: {
-      amount: string
-      currencyCode: string
-    }
-    maxVariantPrice: {
-      amount: string
-      currencyCode: string
-    }
-  }
-  collections: {
-    edges: {
-      node: {
-        id: string
-        title: string
-        handle: string
-      }
-    }[]
-  }
-}
-
-export type Product = ShopifyProduct
-
+// ─── Product Functions ──────────────────────────────────────────
 export async function getAllProducts(): Promise<ShopifyProduct[]> {
-  if (!client) return []
-  try {
-    const allProducts: ShopifyProduct[] = []
-    let hasNextPage = true
-    let endCursor: string | null = null
-    const pageSize = 250
+  const allProducts: ShopifyProduct[] = []
+  let hasNextPage = true
+  let endCursor: string | null = null
 
-    while (hasNextPage) {
-      const variables = { first: pageSize, after: endCursor } as { first: number; after: string | null }
-      const data = await client.request<{ products: { edges: { node: ShopifyProduct }[]; pageInfo: { hasNextPage: boolean; endCursor: string | null } } }>(GET_ALL_PRODUCTS, variables)
-      
-      allProducts.push(...data.products.edges.map((edge): ShopifyProduct => edge.node))
-      hasNextPage = data.products.pageInfo.hasNextPage
-      endCursor = data.products.pageInfo.endCursor
-    }
+  while (hasNextPage) {
+    const data = await storefrontApiRequest(GET_ALL_PRODUCTS, {
+      first: 250,
+      after: endCursor,
+    })
 
-    return allProducts
-  } catch (error) {
-    console.error('Shopify getAllProducts error:', error)
-    throw error
+    if (!data) return allProducts
+
+    const products = data.data.products
+    allProducts.push(...products.edges.map((edge: { node: ShopifyProduct }) => edge.node))
+    hasNextPage = products.pageInfo.hasNextPage
+    endCursor = products.pageInfo.endCursor
   }
+
+  return allProducts
 }
 
 export async function getProductByHandle(handle: string): Promise<ShopifyProduct | null> {
-  if (!client) return null
-  try {
-    const data = await client.request<{ product: ShopifyProduct }>(GET_PRODUCT_BY_HANDLE, { handle })
-    return data.product
-  } catch (error) {
-    console.error('Shopify getProductByHandle error:', error)
-    throw error
-  }
+  const data = await storefrontApiRequest(GET_PRODUCT_BY_HANDLE, { handle })
+  if (!data) return null
+  return data.data.product
 }
 
-export async function createCart(): Promise<Cart> {
-  if (!client) throw new Error('Shopify not configured')
-  try {
-    const data = await client.request<{ cartCreate: { cart: Cart } }>(CREATE_CART)
-    return data.cartCreate.cart
-  } catch (error) {
-    console.error('Shopify createCart error:', error)
-    throw error
+// ─── Cart Queries & Mutations ───────────────────────────────────
+export const CART_QUERY = `
+  query cart($id: ID!) {
+    cart(id: $id) { id totalQuantity }
   }
-}
+`
 
-export async function addToCart(cartId: string, variantId: string, quantity: number = 1): Promise<Cart> {
-  if (!client) throw new Error('Shopify not configured')
-  try {
-    const data = await client.request<{ cartLinesAdd: { cart: Cart; userErrors: { field: string; message: string }[] } }>(ADD_TO_CART, {
-      cartId,
-      variantId,
-      quantity,
-    })
-    if (data.cartLinesAdd.userErrors?.length > 0) {
-      throw new Error(data.cartLinesAdd.userErrors[0].message)
+export const CART_CREATE_MUTATION = `
+  mutation cartCreate($input: CartInput!) {
+    cartCreate(input: $input) {
+      cart {
+        id
+        checkoutUrl
+        lines(first: 100) { edges { node { id merchandise { ... on ProductVariant { id } } } } }
+      }
+      userErrors { field message }
     }
-    return data.cartLinesAdd.cart
-  } catch (error) {
-    console.error('Shopify addToCart error:', error)
-    throw error
   }
-}
+`
 
-export async function removeFromCart(cartId: string, lineItemId: string): Promise<Cart> {
-  if (!client) throw new Error('Shopify not configured')
-  try {
-    const data = await client.request<{ cartLinesRemove: { cart: Cart; userErrors: { field: string; message: string }[] } }>(REMOVE_FROM_CART, {
-      cartId,
-      lineItemId,
-    })
-    if (data.cartLinesRemove.userErrors?.length > 0) {
-      throw new Error(data.cartLinesRemove.userErrors[0].message)
+export const CART_LINES_ADD_MUTATION = `
+  mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+    cartLinesAdd(cartId: $cartId, lines: $lines) {
+      cart {
+        id
+        lines(first: 100) { edges { node { id merchandise { ... on ProductVariant { id } } } } }
+      }
+      userErrors { field message }
     }
-    return data.cartLinesRemove.cart
-  } catch (error) {
-    console.error('Shopify removeFromCart error:', error)
-    throw error
   }
-}
+`
 
-export async function updateCartItem(cartId: string, lineItemId: string, quantity: number): Promise<Cart> {
-  if (!client) throw new Error('Shopify not configured')
-  try {
-    const data = await client.request<{ cartLinesUpdate: { cart: Cart; userErrors: { field: string; message: string }[] } }>(UPDATE_CART_ITEM, {
-      cartId,
-      lineItemId,
-      quantity,
-    })
-    if (data.cartLinesUpdate.userErrors?.length > 0) {
-      throw new Error(data.cartLinesUpdate.userErrors[0].message)
+export const CART_LINES_UPDATE_MUTATION = `
+  mutation cartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+    cartLinesUpdate(cartId: $cartId, lines: $lines) {
+      cart { id }
+      userErrors { field message }
     }
-    return data.cartLinesUpdate.cart
-  } catch (error) {
-    console.error('Shopify updateCartItem error:', error)
-    throw error
   }
-}
+`
 
-export async function getCart(cartId: string): Promise<Cart> {
-  if (!client) throw new Error('Shopify not configured')
-  try {
-    const data = await client.request<{ cart: Cart }>(GET_CART, { cartId })
-    return data.cart
-  } catch (error) {
-    console.error('Shopify getCart error:', error)
-    throw error
+export const CART_LINES_REMOVE_MUTATION = `
+  mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
+    cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+      cart { id }
+      userErrors { field message }
+    }
   }
-}
-
-export { client }
+`

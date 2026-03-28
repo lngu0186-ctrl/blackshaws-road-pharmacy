@@ -4,7 +4,7 @@ import { Menu, X, Phone, ShoppingBag, ChevronDown } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { ThemeToggle } from '../ui/ThemeToggle'
 import { cn } from '../../utils/cn'
-import { useCart } from '../../context/CartContext'
+import { useCartStore } from '../../stores/cartStore'
 import { Link } from 'react-router-dom'
 import type { Service } from '../../data/services'
 
@@ -30,7 +30,8 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false)
   const servicesDropdownRef = useRef<HTMLDivElement>(null)
-  const { cartCount, openCart } = useCart()
+  const cartCount = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0))
+  const openCart = useCartStore((s) => s.openCart)
 
   useEffect(() => {
     const handleScroll = () => {
