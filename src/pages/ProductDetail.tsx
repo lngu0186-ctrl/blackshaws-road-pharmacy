@@ -1,17 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ShoppingBag, Minus, Plus, Check, ArrowLeft } from 'lucide-react'
+import { useProductStore } from '../stores/productStore'
+import { formatPrice, getProductImageUrl, isOnSale, getSalePrice } from '../utils/categoryMapping'
 import { useCartStore } from '../stores/cartStore'
 import { useToast } from '../context/ToastContext'
 import { getProductByHandle, type ShopifyProduct as Product } from '../services/shopify'
-import {
-  formatPrice,
-  getProductImageUrl,
-  isOnSale,
-  getSalePrice,
-  categorizeProduct,
-  PHARMACY_CATEGORIES,
-} from '../utils/productCategories'
+import { categorizeProduct, PHARMACY_CATEGORIES } from '../utils/productCategories'
 import { Button } from '../components/ui/Button'
 
 interface ProductVariant {
@@ -193,10 +188,25 @@ export default function ProductDetail() {
   const onSale = isOnSale(product)
   const salePrice = onSale ? getSalePrice(product) : null
   const regularPrice = product.priceRange.minVariantPrice
-  const mainImage = getProductImageUrl(product, 800, 800, selectedVariant?.image || undefined)
+  const mainImage = getProductImageUrl(product, 800, 800, selectedVariant?.image?.url || undefined)
 
   const categorySlug = categorizeProduct(product).length > 0 ? categorizeProduct(product)[0] : null
   const categoryName = categorySlug ? PHARMACY_CATEGORIES.find((c) => c.id === categorySlug)?.name : 'Shop'
+
+  const allProducts = useProductStore((s) => s.products)
+
+  const relatedProducts = useMemo(() => {
+    if (!product || allProducts.length === 0) return []
+    // Get categories of current product
+    const productCats = categorizeProduct(product)
+    if (productCats.length === 0) return []
+    // Find other products that share any category
+    const related = allProducts
+      .filter(p => p.id !== product.id && categorizeProduct(p).some(cat => productCats.includes(cat)))
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 4)
+    return related
+  }, [product, allProducts])
 
   return (
     <div className="section-padding bg-white">
@@ -268,7 +278,7 @@ export default function ProductDetail() {
                     style={{ borderColor: 'var(--color-red)' }}
                   >
                     <img
-                      src={getProductImageUrl(product, 150, 150, img.node)}
+                      src={getProductImageUrl(product, 150, 150, img.node.url)}
                       alt={img.node.altText || `${product.title} image ${idx + 1}`}
                       className="w-full h-full object-cover"
                       loading="lazy"
@@ -437,6 +447,31 @@ export default function ProductDetail() {
             </div>
           </div>
         </div>
+
+        {/* Related Products */}
+        {relatedProducts.length > 0 && (
+          <div className="mt-16">
+            <h2 className="text-2xl font-bold mb-8" style={{ color: 'var(--color-navy)' }}>You May Also Like</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {relatedProducts.map(related => (
+                <Link key={related.id} to={`/shop/${related.handle}`} className="product-card group">
+                  <div className="aspect-square rounded-xl overflow-hidden bg-gray-100 mb-3">
+                    <img
+                      src={getProductImageUrl(related, 300, 300)}
+                      alt={related.images?.edges[0]?.node?.altText || related.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                  <h3 className="font-medium text-sm line-clamp-2 mb-2">{related.title}</h3>
+                  <p className="text-sm font-bold" style={{ color: 'var(--color-navy)' }}>
+                    {formatPrice(related.priceRange.minVariantPrice.amount, related.priceRange.minVariantPrice.currencyCode)}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
