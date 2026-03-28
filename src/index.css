@@ -31,10 +31,10 @@
   --color-offwhite: #f6f4ef;
   --color-secondary: #243989;
 
-  --header-height-desktop: 84px;
-  --header-height-mobile: 72px;
-  --logo-max-height: 46px;
-  --logo-max-height-mobile: 38px;
+  --header-height-desktop: 88px;
+  --header-height-mobile: 76px;
+  --logo-max-height: 50px;
+  --logo-max-height-mobile: 42px;
   --radius-card: 28px;
   --radius-card-mobile: 22px;
 }

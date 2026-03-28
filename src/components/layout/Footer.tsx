@@ -1,4 +1,5 @@
 import { Phone, Mail, Award, Shield, MapPin, ArrowUpRight, Clock3 } from 'lucide-react'
+import { Logo } from './Logo'
 
 const footerLinks = {
   services: [
@@ -28,8 +29,8 @@ export function Footer() {
       <div className="container-custom py-16 md:py-20">
         <div className="mb-14 grid gap-10 rounded-[32px] border border-white/10 bg-white/5 p-8 backdrop-blur-sm lg:grid-cols-[1.3fr_0.8fr_0.8fr_0.9fr]">
           <div>
-            <img src="/logo-dark.svg" alt="Blackshaws Road Pharmacy" className="h-auto w-full max-w-[240px]" />
-            <p className="mt-6 text-base leading-relaxed text-white/74">A trusted Altona North pharmacy blending expert community care with convenient everyday health support, vaccinations and online shopping.</p>
+            <Logo variant="dark" className="h-16 max-w-[260px] md:h-[4.5rem] md:max-w-[320px]" imageClassName="drop-shadow-[0_14px_34px_rgba(0,0,0,0.28)]" />
+            <p className="mt-7 max-w-[34rem] text-base leading-relaxed text-white/74">A trusted Altona North pharmacy blending expert community care with convenient everyday health support, vaccinations and online shopping.</p>
             <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
               <Shield className="h-4 w-4 text-[var(--color-red)]" /> Alliance Pharmacy member since 1968
             </div>
