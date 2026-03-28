@@ -39,7 +39,6 @@ export function VaccinationBooking() {
   const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // In a real app, this would send to a booking API
-    console.log('Booking:', { vaccine: selectedVaccine, date: selectedDate, ...formData })
     setBooked(true)
   }
 

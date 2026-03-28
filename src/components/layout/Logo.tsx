@@ -1,3 +1,4 @@
+/** Logo — renders official pharmacy logo linked to homepage. */
 import { Link } from 'react-router-dom'
 
 interface LogoProps {
@@ -12,9 +13,10 @@ export function Logo({ className }: LogoProps) {
       className={`inline-flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--nav-link-active)] ${className}`}
     >
       <picture>
+        <source srcSet="/logo.svg" type="image/svg+xml" />
         <source srcSet="/logo.webp" type="image/webp" />
         <img
-          src="/logo.png"
+          src="/logo.svg"
           alt="Blackshaws Road Pharmacy"
           height={44}
           style={{

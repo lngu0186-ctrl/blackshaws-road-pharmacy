@@ -1,10 +1,10 @@
+/** Header — main site header with three-zone layout (brand | nav | utilities+CTA). */
 import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Menu, ShoppingBag, Phone, ChevronDown } from 'lucide-react'
 import { Logo } from './Logo'
 import { MobileDrawer } from './MobileDrawer'
 import { useCartStore } from '../../stores/cartStore'
-import { ThemeToggle } from '../ui/ThemeToggle'
 import { useScrolled } from '../../hooks/useScrolled'
 import { cn } from '../../utils/cn'
 import type { Service } from '../../data/services'
@@ -104,7 +104,7 @@ export function Header() {
         {/* RIGHT: Utilities + CTA (desktop) */}
         <div className="hidden md:flex items-center" style={{ gap: 'var(--utility-gap)' }}>
           {/* Phone */}
-          <a href="tel:0393913257" className="nav-link text-[var(--font-utility)] text-[var(--utility-icon-color)]">
+          <a href="tel:+61393913257" className="nav-link text-[var(--font-utility)] text-[var(--utility-icon-color)]">
             (03) 9391 3257
           </a>
 
@@ -125,10 +125,8 @@ export function Header() {
             )}
           </button>
 
-          {/* Theme toggle (if used) */}
-          <ThemeToggle />
-
           {/* Book Vaccination CTA */}
+          {/* TODO: Replace with inline VaccinationBookingModal when ready */}
           <a
             href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist"
             target="_blank"
@@ -215,7 +213,7 @@ export function Header() {
           </div>
           <div className="border-t border-gray-200 pt-4 mt-4 space-y-3">
             <a
-              href="tel:0393913257"
+              href="tel:+61393913257"
               className="flex items-center gap-2 text-base"
               style={{ color: 'var(--color-navy)' }}
               onClick={() => setMobileMenuOpen(false)}
@@ -226,8 +224,9 @@ export function Header() {
             <p className="text-sm" style={{ color: 'var(--color-gray-600)' }}>
               310A Blackshaws Road, Altona North
             </p>
+            {/* TODO: confirm exact hours with client */}
             <p className="text-sm" style={{ color: 'var(--color-gray-600)' }}>
-              Open 7 days from 8am
+              Mon–Fri 9am–6pm · Sat 9am–1pm · Sun Closed
             </p>
           </div>
         </div>

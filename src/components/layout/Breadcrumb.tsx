@@ -1,3 +1,4 @@
+/** Breadcrumb — navigation trail with optional auto-generation from route. */
 import { Link, useLocation } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 import { cn } from '../../utils/cn'

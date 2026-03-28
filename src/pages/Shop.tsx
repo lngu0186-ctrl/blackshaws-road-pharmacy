@@ -46,7 +46,6 @@ export default function Shop() {
         const data = await getAllProducts() // fetch all products
         setProducts(data)
         setGlobalProducts(data) // populate global store for other pages
-        console.log(`Fetched ${data.length} products from Shopify`)
       } catch (err) {
         console.error('Failed to fetch products:', err)
         setError('Unable to load products. Please try again later.')

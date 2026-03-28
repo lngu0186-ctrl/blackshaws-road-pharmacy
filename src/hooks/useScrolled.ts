@@ -1,3 +1,4 @@
+/** useScrolled — returns true when window.scrollY exceeds threshold (default 10px). */
 import { useState, useEffect } from 'react'
 
 export function useScrolled(threshold = 10): boolean {

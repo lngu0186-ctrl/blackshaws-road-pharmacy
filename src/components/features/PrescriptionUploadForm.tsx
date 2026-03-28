@@ -18,7 +18,7 @@ export function PrescriptionUploadForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // In a real app, this would upload to a secure server
-    console.log('Prescription upload:', formData, uploadedFile)
+    // Debug logging removed for production
     setSubmitted(true)
   }
 

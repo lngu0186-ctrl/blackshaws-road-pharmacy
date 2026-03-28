@@ -1,3 +1,4 @@
+/** MobileDrawer — left slide-in navigation drawer with focus trap for mobile. */
 import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
