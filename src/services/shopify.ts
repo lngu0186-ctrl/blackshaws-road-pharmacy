@@ -111,8 +111,8 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
 
 // ─── Product Queries ────────────────────────────────────────────
 const GET_ALL_PRODUCTS = `
-  query getAllProducts($first: Int!, $after: String) {
-    products(first: $first, after: $after) {
+  query getAllProducts($first: Int!, $after: String, $query: String) {
+    products(first: $first, after: $after, query: $query) {
       pageInfo {
         hasNextPage
         endCursor
