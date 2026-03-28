@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ShoppingBag, Minus, Plus, Check, ArrowLeft } from 'lucide-react'
+import { ShoppingBag, Minus, Plus, Check, ArrowLeft, Lock, ShieldCheck } from 'lucide-react'
 import { useProductStore } from '../stores/productStore'
 import { formatPrice, getProductImageUrl, isOnSale, getSalePrice } from '../utils/categoryMapping'
 import { useCartStore } from '../stores/cartStore'
@@ -393,6 +393,24 @@ export default function ProductDetail() {
               <ShoppingBag className="w-5 h-5 mr-3" />
               {isLoading ? 'Adding...' : selectedVariant?.availableForSale ? 'Add to Cart' : 'Out of Stock'}
             </Button>
+
+            {/* TGA Disclaimer */}
+            <p className="text-xs text-gray-500 mt-4 max-w-md leading-relaxed">
+              <strong>Therapeutic Goods:</strong> Always read the label. Follow directions for use. 
+              If symptoms persist, consult your healthcare practitioner. This product may not be suitable for everyone.
+            </p>
+
+            {/* Trust Badges */}
+            <div className="flex items-center gap-6 mt-4 text-xs text-gray-600">
+              <div className="flex items-center gap-1.5">
+                <Lock className="w-4 h-4" style={{ color: 'var(--color-navy)' }} />
+                <span>Secure Checkout</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4" style={{ color: 'var(--color-navy)' }} />
+                <span>AACP Accredited</span>
+              </div>
+            </div>
 
             <div className="mt-10 p-6 rounded-2xl bg-gray-50 border" style={{ borderColor: 'var(--color-gray-200)' }}>
               <h4 className="font-semibold text-lg mb-4" style={{ color: 'var(--color-navy)' }}>Product Details</h4>

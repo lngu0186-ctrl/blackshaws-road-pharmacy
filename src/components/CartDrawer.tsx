@@ -127,6 +127,11 @@ export default function CartDrawer() {
             <p className="text-xs text-[var(--color-gray-600)] mb-4">
               Shipping and taxes calculated at checkout.
             </p>
+            {/* TGA / health disclaimer */}
+            <p className="text-xs text-gray-500 mb-4 leading-relaxed">
+              <strong>Therapeutic Goods:</strong> Always read the label and follow directions for use. 
+              Consult your healthcare practitioner if symptoms persist.
+            </p>
             <Button
               variant="primary"
               size="lg"
