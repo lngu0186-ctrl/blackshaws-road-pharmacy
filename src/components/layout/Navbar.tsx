@@ -4,7 +4,7 @@ import { Menu, X, Phone, ShoppingBag, ChevronDown } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { ThemeToggle } from '../ui/ThemeToggle'
 import { cn } from '../../utils/cn'
-import { useCart } from '../../context/CartContext'
+import { useCartStore } from '../../stores/cartStore'
 import { Link } from 'react-router-dom'
 import type { Service } from '../../data/services'
 
