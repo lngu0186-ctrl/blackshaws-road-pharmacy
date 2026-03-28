@@ -92,7 +92,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
   })
 
   if (response.status === 402) {
-    toast?.('Shopify: Payment required — your store needs an active billing plan.', 'error')
+    console.error('Shopify: Payment required — your store needs an active billing plan.')
     return null
   }
 

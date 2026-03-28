@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ShoppingBag, Minus, Plus, Check } from 'lucide-react'
-import { useCart } from '../context/CartContext'
+import { useCartStore } from '../stores/cartStore'
 import { useToast } from '../context/ToastContext'
 import { getProductByHandle, type ShopifyProduct as Product } from '../services/shopify'
 import {
@@ -39,7 +39,9 @@ export default function ProductDetail() {
   const [error, setError] = useState<string | null>(null)
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null)
   const [quantity, setQuantity] = useState(1)
-  const { addItem, openCart } = useCart()
+  const addItem = useCartStore((s) => s.addItem)
+  const openCart = useCartStore((s) => s.openCart)
+  const isLoading = useCartStore((s) => s.isLoading)
   const { showToast } = useToast()
 
   useEffect(() => {
@@ -69,19 +71,16 @@ export default function ProductDetail() {
     window.scrollTo(0, 0)
   }, [handle, showToast])
 
-  // Update meta tags and structured data when product loads
   useEffect(() => {
     if (!product) return
 
     const title = `${product.title} | Blackshaws Road Pharmacy`
     const description = product.description.replace(/<[^>]*>/g, '').slice(0, 160) || 'Shop online at Blackshaws Road Pharmacy for quality health products.'
     const image = getProductImageUrl(product, 1200, 630)
-    const canonical = `https://blackshaws-pharmacy.vercel.app/shop/${product.handle}`
+    const canonical = `https://blackshawsroadpharmacy.lovable.app/shop/${product.handle}`
 
-    // Set document title
     document.title = title
 
-    // Meta description
     let metaDesc = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
     if (!metaDesc) {
       metaDesc = document.createElement('meta')
@@ -90,7 +89,6 @@ export default function ProductDetail() {
     }
     metaDesc.setAttribute('content', description)
 
-    // Canonical URL
     let linkCanonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null
     if (!linkCanonical) {
       linkCanonical = document.createElement('link')
@@ -99,7 +97,6 @@ export default function ProductDetail() {
     }
     if (linkCanonical) linkCanonical.href = canonical
 
-    // Open Graph tags
     const setOgTag = (property: string, content: string) => {
       let el = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement | null
       if (!el) {
@@ -116,7 +113,6 @@ export default function ProductDetail() {
     setOgTag('og:url', canonical)
     setOgTag('og:type', 'product')
 
-    // Structured data
     const schema = {
       '@context': 'https://schema.org/',
       '@type': 'Product',
@@ -142,17 +138,19 @@ export default function ProductDetail() {
     script.type = 'application/ld+json'
     script.textContent = JSON.stringify(schema)
     document.head.appendChild(script)
-
-    // Cleanup function
-    return () => {
-      // Note: we don't remove tags because they persist; this is a SPA
-    }
   }, [product])
 
   const handleAddToCart = async () => {
-    if (!selectedVariant) return
+    if (!selectedVariant || !product) return
     try {
-      await addItem(selectedVariant.id, quantity)
+      await addItem({
+        product,
+        variantId: selectedVariant.id,
+        variantTitle: selectedVariant.title,
+        price: selectedVariant.price,
+        quantity,
+        selectedOptions: selectedVariant.selectedOptions || [],
+      })
       showToast('Item added to cart', 'success')
       openCart()
     } catch (err) {
@@ -197,7 +195,6 @@ export default function ProductDetail() {
   const regularPrice = product.priceRange.minVariantPrice
   const mainImage = getProductImageUrl(product, 800, 800, selectedVariant?.image || undefined)
 
-  // Build breadcrumb items based on categories
   const categorySlug = categorizeProduct(product).length > 0 ? categorizeProduct(product)[0] : null
   const categoryName = categorySlug ? PHARMACY_CATEGORIES.find((c) => c.id === categorySlug)?.name : 'Shop'
 
@@ -207,21 +204,14 @@ export default function ProductDetail() {
         {/* Breadcrumb */}
         <nav className="mb-8 text-sm">
           <ol className="flex items-center gap-2 flex-wrap">
-            <li>
-              <Link to="/" className="text-gray-500 hover:text-red-600 transition-colors">Home</Link>
-            </li>
+            <li><Link to="/" className="text-gray-500 hover:text-red-600 transition-colors">Home</Link></li>
             <li className="text-gray-400">/</li>
-            <li>
-              <Link to="/shop" className="text-gray-500 hover:text-red-600 transition-colors">Shop</Link>
-            </li>
+            <li><Link to="/shop" className="text-gray-500 hover:text-red-600 transition-colors">Shop</Link></li>
             {categorySlug && (
               <>
                 <li className="text-gray-400">/</li>
                 <li>
-                  <Link
-                    to={`/shop?category=${categorySlug}`}
-                    className="text-gray-500 hover:text-red-600 transition-colors"
-                  >
+                  <Link to={`/shop?category=${categorySlug}`} className="text-gray-500 hover:text-red-600 transition-colors">
                     {categoryName}
                   </Link>
                 </li>
@@ -258,7 +248,6 @@ export default function ProductDetail() {
               )}
             </div>
 
-            {/* Thumbnails */}
             {product.images.edges.length > 1 && (
               <div className="grid grid-cols-4 gap-3">
                 {product.images.edges.slice(0, 4).map((img, idx) => (
@@ -280,17 +269,14 @@ export default function ProductDetail() {
 
           {/* Product Details */}
           <div>
-            {/* Vendor */}
             <p className="text-sm font-medium text-[var(--color-gray-500)] mb-2 uppercase tracking-wide">
               {product.vendor}
             </p>
 
-            {/* Title */}
             <h1 className="text-3xl md:text-4xl font-serif font-bold mb-6 leading-tight" style={{ color: 'var(--color-navy)' }}>
               {product.title}
             </h1>
 
-            {/* Price */}
             <div className="mb-8">
               <div className="flex items-baseline gap-3">
                 {onSale && salePrice ? (
@@ -309,19 +295,15 @@ export default function ProductDetail() {
                 )}
               </div>
               {product.variants.edges.length > 1 && (
-                <p className="text-sm text-[var(--color-gray-500)] mt-2">
-                  Price may vary by variant
-                </p>
+                <p className="text-sm text-[var(--color-gray-500)] mt-2">Price may vary by variant</p>
               )}
             </div>
 
-            {/* Description */}
             <div
               className="prose prose-sm max-w-none mb-8 text-[var(--color-gray-700)] leading-relaxed"
               dangerouslySetInnerHTML={{ __html: product.descriptionHtml || product.description }}
             />
 
-            {/* Variant Selector */}
             {hasVariants && (
               <div className="mb-8">
                 <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-navy)' }}>Options</h3>
@@ -345,7 +327,6 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* Quantity Selector */}
             <div className="mb-8">
               <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-navy)' }}>Quantity</h3>
               <div className="flex items-center gap-4">
@@ -379,19 +360,17 @@ export default function ProductDetail() {
               </div>
             </div>
 
-            {/* Add to Cart Button */}
             <Button
               variant="primary"
               size="lg"
               onClick={handleAddToCart}
-              disabled={!selectedVariant?.availableForSale}
+              disabled={!selectedVariant?.availableForSale || isLoading}
               className="w-full md:w-auto text-lg py-4 px-8"
             >
               <ShoppingBag className="w-5 h-5 mr-3" />
-              {selectedVariant?.availableForSale ? 'Add to Cart' : 'Out of Stock'}
+              {isLoading ? 'Adding...' : selectedVariant?.availableForSale ? 'Add to Cart' : 'Out of Stock'}
             </Button>
 
-            {/* Product Info */}
             <div className="mt-10 p-6 rounded-2xl bg-gray-50 border" style={{ borderColor: 'var(--color-gray-200)' }}>
               <h4 className="font-semibold text-lg mb-4" style={{ color: 'var(--color-navy)' }}>Product Details</h4>
               <dl className="space-y-3 text-sm">
@@ -426,11 +405,8 @@ export default function ProductDetail() {
               </dl>
             </div>
 
-            {/* Important Notice */}
             <div className="mt-6 p-6 rounded-2xl bg-red-50 border border-red-100">
-              <h4 className="font-semibold mb-3" style={{ color: 'var(--color-red)' }}>
-                Pharmacy Information
-              </h4>
+              <h4 className="font-semibold mb-3" style={{ color: 'var(--color-red)' }}>Pharmacy Information</h4>
               <ul className="space-y-2 text-sm text-gray-700">
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-600" />
@@ -438,11 +414,11 @@ export default function ProductDetail() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-600" />
-                  <span>Some products may require professional advice — our pharmacists are here to help</span>
+                  <span>Speak to our pharmacists for advice on this product</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-600" />
-                  <span>Free delivery on orders over $50 (within local area)</span>
+                  <span>Free click &amp; collect available from our Altona North store</span>
                 </li>
               </ul>
             </div>
