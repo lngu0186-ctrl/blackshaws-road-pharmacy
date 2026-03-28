@@ -499,6 +499,7 @@ export interface ShopifyProduct {
 export type Product = ShopifyProduct
 
 export async function getAllProducts(): Promise<ShopifyProduct[]> {
+  if (!client) return []
   try {
     const allProducts: ShopifyProduct[] = []
     let hasNextPage = true
@@ -522,6 +523,7 @@ export async function getAllProducts(): Promise<ShopifyProduct[]> {
 }
 
 export async function getProductByHandle(handle: string): Promise<ShopifyProduct | null> {
+  if (!client) return null
   try {
     const data = await client.request<{ product: ShopifyProduct }>(GET_PRODUCT_BY_HANDLE, { handle })
     return data.product
@@ -532,6 +534,7 @@ export async function getProductByHandle(handle: string): Promise<ShopifyProduct
 }
 
 export async function createCart(): Promise<Cart> {
+  if (!client) throw new Error('Shopify not configured')
   try {
     const data = await client.request<{ cartCreate: { cart: Cart } }>(CREATE_CART)
     return data.cartCreate.cart
@@ -542,6 +545,7 @@ export async function createCart(): Promise<Cart> {
 }
 
 export async function addToCart(cartId: string, variantId: string, quantity: number = 1): Promise<Cart> {
+  if (!client) throw new Error('Shopify not configured')
   try {
     const data = await client.request<{ cartLinesAdd: { cart: Cart; userErrors: { field: string; message: string }[] } }>(ADD_TO_CART, {
       cartId,
@@ -559,6 +563,7 @@ export async function addToCart(cartId: string, variantId: string, quantity: num
 }
 
 export async function removeFromCart(cartId: string, lineItemId: string): Promise<Cart> {
+  if (!client) throw new Error('Shopify not configured')
   try {
     const data = await client.request<{ cartLinesRemove: { cart: Cart; userErrors: { field: string; message: string }[] } }>(REMOVE_FROM_CART, {
       cartId,
@@ -575,6 +580,7 @@ export async function removeFromCart(cartId: string, lineItemId: string): Promis
 }
 
 export async function updateCartItem(cartId: string, lineItemId: string, quantity: number): Promise<Cart> {
+  if (!client) throw new Error('Shopify not configured')
   try {
     const data = await client.request<{ cartLinesUpdate: { cart: Cart; userErrors: { field: string; message: string }[] } }>(UPDATE_CART_ITEM, {
       cartId,
@@ -592,6 +598,7 @@ export async function updateCartItem(cartId: string, lineItemId: string, quantit
 }
 
 export async function getCart(cartId: string): Promise<Cart> {
+  if (!client) throw new Error('Shopify not configured')
   try {
     const data = await client.request<{ cart: Cart }>(GET_CART, { cartId })
     return data.cart
