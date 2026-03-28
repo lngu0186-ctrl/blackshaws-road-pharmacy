@@ -67,6 +67,17 @@ export default function ProductDetail() {
     window.scrollTo(0, 0)
   }, [handle, showToast])
 
+  const relatedProducts = useMemo(() => {
+    if (!product || allProducts.length === 0) return []
+    const productCats = categorizeProduct(product)
+    if (productCats.length === 0) return []
+    const related = allProducts
+      .filter(p => p.id !== product.id && categorizeProduct(p).some(cat => productCats.includes(cat)))
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 4)
+    return related
+  }, [product, allProducts])
+
   useEffect(() => {
     if (!product) return
 
