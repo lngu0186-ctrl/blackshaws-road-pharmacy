@@ -1,5 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Header } from './components/layout/Header'
 import { HeroSection } from './components/sections/HeroSection'
 import { ShopCategories } from './components/sections/ShopCategories'
