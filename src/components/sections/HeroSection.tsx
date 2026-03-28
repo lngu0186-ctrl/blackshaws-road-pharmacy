@@ -7,10 +7,20 @@ export function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-[var(--color-navy-deep)] text-white">
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_32%),linear-gradient(135deg,rgba(16,24,63,0.95),rgba(27,42,107,0.92))]" />
-        <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: 'url(/hero.png)' }} />
-        <div className="absolute -left-28 top-16 h-72 w-72 rounded-full bg-[var(--color-red)]/15 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
+        {/* Pharmacy storefront background — positioned to show signage while keeping text zones clear */}
+        <div
+          className="absolute inset-0 bg-cover bg-[center_20%] md:bg-[center_30%]"
+          style={{ backgroundImage: 'url(/hero-pharmacy.png)' }}
+        />
+        {/* Primary navy overlay — strong enough for text legibility */}
+        <div className="absolute inset-0 bg-[var(--color-navy-deep)]/82 md:bg-[var(--color-navy-deep)]/76" />
+        {/* Gradient mask — extra darkening on the left text zone, lighter on right */}
+        <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(16,24,63,0.92)_0%,rgba(16,24,63,0.7)_55%,rgba(16,24,63,0.55)_100%)]" />
+        {/* Subtle warm vignette at edges */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(10,14,38,0.5)_100%)]" />
+        {/* Soft brand-colour glow accents */}
+        <div className="absolute -left-28 top-16 h-72 w-72 rounded-full bg-[var(--color-red)]/10 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-white/6 blur-3xl" />
       </div>
 
       <div className="container-custom relative z-10 py-18 md:py-24">
