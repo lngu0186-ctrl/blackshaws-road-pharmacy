@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Button } from '../ui/Button'
+import { BrandLogo } from '../BrandLogo'
 import { Clock3, MapPin, Phone, ShieldCheck } from 'lucide-react'
 
 export function HeroSection() {
@@ -21,7 +22,7 @@ export function HeroSection() {
             </div>
 
             <div className="mt-7">
-              <img src="/logo-dark.svg" alt="Blackshaws Road Pharmacy" className="h-18 w-auto md:h-24" style={{ maxWidth: '330px' }} />
+              <BrandLogo variant="light" className="h-18 w-auto md:h-24" style={{ maxWidth: '330px' }} />
             </div>
 
             <h1 className="mt-8 max-w-4xl text-white">Premium everyday pharmacy care for Altona North and the west.</h1>

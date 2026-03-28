@@ -60,10 +60,10 @@ export function AboutSection() {
             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[var(--color-navy-light)] to-[var(--color-red)] opacity-10" />
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
               <img
-                src="/logo-dark.svg"
+                src="/logo-black.png"
                 alt="Blackshaws Road Pharmacy"
                 className="h-16 w-auto mb-4 opacity-40"
-                style={{ maxWidth: '220px' }}
+                style={{ maxWidth: '220px', objectFit: 'contain' }}
               />
               <p className="text-5xl font-serif font-bold mb-2" style={{ color: 'var(--color-navy)' }}>1968</p>
               <p className="text-sm text-[var(--color-gray-600)] uppercase tracking-wider">Where It All Began</p>
