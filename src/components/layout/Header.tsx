@@ -10,10 +10,10 @@ import type { Service } from '../../data/services'
 
 const navLinks = [
   { href: '/', label: 'Home' },
+  { href: '/prescriptions', label: 'Prescriptions' },
   { href: '/services', label: 'Services' },
   { href: '/shop', label: 'Shop' },
-  { href: '/#vaccination', label: 'Vaccinations' },
-  { href: '/#chemist-care', label: 'Chemist Care' },
+  { href: '/faq', label: 'FAQ' },
   { href: '/#location', label: 'Contact' },
 ]
 
@@ -122,6 +122,20 @@ export function Header() {
               {topServices.map((service) => (
                 <Link key={service.slug} to={`/services/${service.slug}`} className="block rounded-xl px-3 py-2 text-sm text-[var(--color-text-muted)] hover:bg-white hover:text-[var(--color-navy)]" onClick={() => setMobileMenuOpen(false)}>
                   {service.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-[24px] border border-[var(--color-border)] p-4">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-red)]">Helpful links</p>
+            <div className="space-y-1">
+              {[
+                { href: '/prescriptions', label: 'Upload a prescription' },
+                { href: '/faq', label: 'Read FAQs' },
+                { href: '/patient-info', label: 'Patient information' },
+              ].map((link) => (
+                <Link key={link.href} to={link.href} className="block rounded-xl px-3 py-2 text-sm text-[var(--color-text-muted)] hover:bg-[var(--color-navy-soft)] hover:text-[var(--color-navy)]" onClick={() => setMobileMenuOpen(false)}>
+                  {link.label}
                 </Link>
               ))}
             </div>

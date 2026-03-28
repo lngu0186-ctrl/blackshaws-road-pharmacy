@@ -9,7 +9,7 @@ const resources = [
   {
     name: 'Better Health Victoria',
     description:
-      'Victorian Government health informationincluding the Chemist Care Now program details and eligibility requirements.',
+      'Victorian Government health information including the Chemist Care Now program details and eligibility requirements.',
     url: 'https://www.betterhealth.vic.gov.au',
     features: ['Chemist Care Now program', 'Victorian health services', 'Official government advice'],
   },

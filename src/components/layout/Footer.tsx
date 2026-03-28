@@ -2,14 +2,16 @@ import { Phone, Mail, Award, Shield, MapPin, ArrowUpRight, Clock3 } from 'lucide
 
 const footerLinks = {
   services: [
+    { label: 'Upload a prescription', href: '/prescriptions' },
     { label: 'Vaccinations', href: '/#vaccination' },
     { label: 'Chemist Care Now', href: '/#chemist-care' },
     { label: 'Medication Reviews', href: '/services/medscheck' },
-    { label: 'Health Checks', href: '/services' },
   ],
   explore: [
     { label: 'Shop online', href: '/shop' },
     { label: 'All services', href: '/services' },
+    { label: 'FAQ', href: '/faq' },
+    { label: 'Patient information', href: '/patient-info' },
     { label: 'Practitioner-only range', href: 'https://blackshawspharmacy.com.au/collections/practitioner-only-range', target: '_blank' },
   ],
   resources: [
@@ -62,7 +64,10 @@ export function Footer() {
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-white/60">Need help choosing a service?</p>
             <h4 className="mt-3 font-serif text-2xl">Speak with the pharmacy team.</h4>
             <p className="mt-3 text-sm text-white/72">We can guide you on bookings, prescriptions, vaccination eligibility and the right in-pharmacy care pathway.</p>
-            <a href="tel:0393913257" className="mt-5 inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-[var(--color-navy-deep)]">Call (03) 9391 3257</a>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <a href="tel:0393913257" className="inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-[var(--color-navy-deep)]">Call (03) 9391 3257</a>
+              <a href="/faq" className="inline-flex rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:bg-white/8">Read FAQs</a>
+            </div>
           </div>
         </div>
 
