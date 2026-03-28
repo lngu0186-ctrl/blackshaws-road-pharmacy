@@ -1,8 +1,7 @@
-import { useEffect, useState, useMemo, useRef } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Grid, Activity, Baby, Heart, Sparkles, User, Bandage, HeartPulse, Scale, Wind, Shield, Stethoscope, ArrowRight } from 'lucide-react'
-import { PHARMACY_CATEGORIES, getActiveCategories, categorizeProduct } from '../../utils/productCategories'
-import { getAllProducts, type Product } from '../../services/shopify'
+import { PHARMACY_CATEGORIES } from '../../utils/productCategories'
 import { useInView } from 'framer-motion'
 
 const iconMap: Record<string, any> = {
@@ -21,26 +20,11 @@ const iconMap: Record<string, any> = {
   stethoscope: Stethoscope,
 }
 
+const displayCategories = PHARMACY_CATEGORIES.slice(0, 8)
+
 export function ShopCategories() {
-  const [products, setProducts] = useState<Product[]>([])
-  const [loading, setLoading] = useState(true)
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-  useEffect(() => {
-    ;(async () => {
-      try {
-        const data = await getAllProducts()
-        setProducts(data)
-      } catch (err) {
-        console.error('Failed to load products for categories:', err)
-      } finally {
-        setLoading(false)
-      }
-    })()
-  }, [])
-
-  const activeCategories = useMemo(() => (products.length === 0 ? PHARMACY_CATEGORIES.slice(0, 8) : getActiveCategories(products)), [products])
 
   return (
     <section ref={ref} className="section-padding bg-alt">
