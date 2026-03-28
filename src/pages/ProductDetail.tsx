@@ -242,6 +242,8 @@ export default function ProductDetail() {
                 src={mainImage}
                 alt={selectedVariant?.image?.altText || product.images?.edges[0]?.node?.altText || product.title}
                 className="w-full h-full object-cover"
+                loading="eager"
+                decoding="sync"
               />
               {onSale && (
                 <span className="absolute top-4 left-4 bg-red-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-md">
@@ -269,6 +271,8 @@ export default function ProductDetail() {
                       src={getProductImageUrl(product, 150, 150, img.node)}
                       alt={img.node.altText || `${product.title} image ${idx + 1}`}
                       className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </button>
                 ))}

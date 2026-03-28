@@ -445,6 +445,8 @@ export default function Shop() {
                             src={imageUrl}
                             alt={product.images?.edges[0]?.node?.altText || product.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                            decoding="async"
                           />
                           {onSale && <span className="sale-badge">Sale</span>}
                           {!isAvailable && (
