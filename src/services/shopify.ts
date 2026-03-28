@@ -3,17 +3,21 @@ import { GraphQLClient, gql } from 'graphql-request'
 const domain = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN
 const token = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN
 
-if (!domain || !token) {
-  throw new Error('Shopify Storefront API credentials not found in environment variables')
+const shopifyConfigured = !!(domain && token)
+
+if (!shopifyConfigured) {
+  console.warn('Shopify Storefront API credentials not found — shop features will be unavailable')
 }
 
-const endpoint = `https://${domain}/api/2024-01/graphql.json`
+const endpoint = shopifyConfigured ? `https://${domain}/api/2024-01/graphql.json` : ''
 
-const client = new GraphQLClient(endpoint, {
-  headers: {
-    'X-Shopify-Storefront-Access-Token': token,
-  },
-})
+const client = shopifyConfigured
+  ? new GraphQLClient(endpoint, {
+      headers: {
+        'X-Shopify-Storefront-Access-Token': token,
+      },
+    })
+  : null
 
 // GraphQL Queries
 const GET_ALL_PRODUCTS = gql`
