@@ -38,6 +38,7 @@ export default function ProductDetail() {
   const openCart = useCartStore((s) => s.openCart)
   const isLoading = useCartStore((s) => s.isLoading)
   const { showToast } = useToast()
+  const allProducts = useProductStore((s) => s.products)
 
   useEffect(() => {
     const fetchProduct = async () => {
