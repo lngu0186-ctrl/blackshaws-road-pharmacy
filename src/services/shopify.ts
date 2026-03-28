@@ -111,8 +111,8 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
 
 // ─── Product Queries ────────────────────────────────────────────
 const GET_ALL_PRODUCTS = `
-  query getAllProducts($first: Int!, $after: String) {
-    products(first: $first, after: $after) {
+  query getAllProducts($first: Int!, $after: String, $query: String) {
+    products(first: $first, after: $after, query: $query) {
       pageInfo {
         hasNextPage
         endCursor
@@ -271,7 +271,7 @@ const GET_PRODUCT_BY_HANDLE = `
 `
 
 // ─── Product Functions ──────────────────────────────────────────
-export async function getAllProducts(): Promise<ShopifyProduct[]> {
+export async function getAllProducts(query?: string): Promise<ShopifyProduct[]> {
   const allProducts: ShopifyProduct[] = []
   let hasNextPage = true
   let endCursor: string | null = null
@@ -280,6 +280,7 @@ export async function getAllProducts(): Promise<ShopifyProduct[]> {
     const data = await storefrontApiRequest(GET_ALL_PRODUCTS, {
       first: 250,
       after: endCursor,
+      query: query || null,
     })
 
     if (!data) return allProducts
