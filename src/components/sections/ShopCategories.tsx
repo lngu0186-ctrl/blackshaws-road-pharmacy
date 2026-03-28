@@ -53,3 +53,7 @@ export function ShopCategories() {
             )
           })}
         </div>
+      </div>
+    </section>
+  )
+}
