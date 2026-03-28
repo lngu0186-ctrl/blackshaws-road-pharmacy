@@ -1,0 +1,35 @@
+/* Service Detail Page Styles */
+
+.service-detail-page {
+  min-height: 100vh;
+}
+
+.service-detail-page .prose {
+  line-height: 1.7;
+}
+
+.service-detail-page .prose p {
+  margin-bottom: 1.25rem;
+}
+
+.service-detail-page .booking-cta a {
+  text-decoration: none;
+}
+
+/* Sticky sidebar on desktop */
+@media (min-width: 1024px) {
+  .service-detail-page .sticky {
+    top: 6rem;
+  }
+}
+
+/* Icons colour override */
+.service-detail-page .text-red-500 {
+  --tw-text-opacity: 1;
+  color: var(--color-red) !important;
+}
+
+/* Smooth scroll behaviour */
+html {
+  scroll-behavior: smooth;
+}

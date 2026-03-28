@@ -1,0 +1,287 @@
+/* Google Fonts - Authority + Modern */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Design System - Blackshaws Road Pharmacy Brand */
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  /* Font families */
+  --font-display: 'Crimson Pro', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Brand Colors - LOCKED */
+  --color-navy: #1B2A6B;
+  --color-navy-deep: #141F52;
+  --color-red: #C0392B;
+  --color-red-hover: #A93226;
+  --color-white: #FFFFFF;
+  --color-off-white: #F4F4F6;
+  --color-text-dark: #1C1C1A;
+  --color-text-muted: #6B7280;
+  --color-sage: #5B7B5E; /* Chemist Care Now only */
+}
+
+/* Base styles */
+:root {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  color: var(--color-text-dark);
+  background-color: var(--color-white);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Typography scale */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+p {
+  max-width: 70ch;
+}
+
+/* Utility classes */
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-red);
+  margin-bottom: 0.75rem;
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to right, var(--color-gray-200), transparent);
+  margin: 4rem 0;
+}
+
+/* Button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 200ms ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--color-navy);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-navy-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(27, 42, 107, 0.3);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border-color: white;
+  color: white;
+}
+
+.btn-outline:hover {
+  background-color: white;
+  color: var(--color-navy-deep);
+  transform: translateY(-2px);
+}
+
+.btn-red {
+  background-color: var(--color-red);
+  color: white;
+}
+
+.btn-red:hover {
+  background-color: var(--color-red-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3);
+}
+
+.btn-sage {
+  background-color: var(--color-sage);
+  color: white;
+}
+
+.btn-sage:hover {
+  background-color: #4A6A4D;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(91, 123, 94, 0.3);
+}
+
+/* Card styles */
+.card {
+  background-color: var(--color-white);
+  border: 1px solid #E8E4DE;
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 200ms ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  border-color: var(--color-navy);
+}
+
+/* Container */
+.container-custom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animate-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animate-delay-300 {
+  animation-delay: 300ms;
+}
+
+/* Sticky nav blur */
+.nav-blur {
+  backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid #E8E4DE;
+}
+
+.nav-blur-scrolled {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Skip to content link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-navy);
+  color: white;
+  padding: 8px 16px;
+  z-index: 100;
+  transition: top 0.3s;
+  border-radius: 0 0 4px 0;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Focus visible styles */
+:focus-visible {
+  outline: 3px solid var(--color-red);
+  outline-offset: 2px;
+}
+
+/* Background alternation */
+.bg-alt {
+  background-color: var(--color-off-white);
+}
+
+/* Section spacing */
+.section-padding {
+  padding: 6rem 0;
+}
+
+.section-padding-lg {
+  padding: 8rem 0;
+}
+
+/* Hero overlay - removed, using inline style now */
+
+/* Red accent badge */
+.badge-red {
+  background-color: var(--color-red);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-block;
+}
+
+/* Tab styles */
+.tab-active {
+  border-bottom: 3px solid var(--color-sage);
+  color: var(--color-sage);
+}
+
+/* Chemist Care Now cards - use sage accent */
+.ccn-card .text-xs.font-medium {
+  color: var(--color-sage);
+}
+
+.ccn-card:hover {
+  border-color: var(--color-sage);
+  box-shadow: 0 8px 24px rgba(91, 123, 94, 0.15);
+}
+
+/* Dark mode not needed - brand is light/navy focused */
