@@ -7,6 +7,7 @@ import { useCartStore } from '../../stores/cartStore'
 import { useScrolled } from '../../hooks/useScrolled'
 import { cn } from '../../utils/cn'
 import type { Service } from '../../data/services'
+import type { ReactNode } from 'react'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -14,7 +15,7 @@ const navLinks = [
   { href: '/services', label: 'Services' },
   { href: '/shop', label: 'Shop' },
   { href: '/faq', label: 'FAQ' },
-  { href: '/#location', label: 'Contact' },
+  { href: '/#location', label: 'Contact', isAnchor: true },
 ]
 
 const topServices: Service[] = [
@@ -26,6 +27,20 @@ const topServices: Service[] = [
   { title: 'UTI Treatment', slug: 'uti-treatment' },
 ] as any
 
+function NavItem({ href, isActive, isAnchor, children }: { href: string; isActive?: boolean; isAnchor?: boolean; children: ReactNode }) {
+  const className = cn('nav-link', isActive ? 'nav-link-active' : '')
+
+  if (isAnchor) return <a href={href} className={className}>{children}</a>
+  return <Link to={href} className={className}>{children}</Link>
+}
+
+function MobileNavItem({ href, isAnchor, onClick, children }: { href: string; isAnchor?: boolean; onClick: () => void; children: ReactNode }) {
+  const className = 'block rounded-2xl px-4 py-3 text-base font-semibold text-[var(--color-navy)] hover:bg-[var(--color-navy-soft)]'
+
+  if (isAnchor) return <a href={href} className={className} onClick={onClick}>{children}</a>
+  return <Link to={href} className={className} onClick={onClick}>{children}</Link>
+}
+
 export function Header() {
   const location = useLocation()
   const scrolled = useScrolled(10)
@@ -35,7 +50,7 @@ export function Header() {
   const openCart = useCartStore((s) => s.openCart)
 
   const isHome = location.pathname === '/'
-  const activeHref = useMemo(() => navLinks.find((link) => link.href === location.pathname)?.href, [location.pathname])
+  const activeHref = useMemo(() => navLinks.find((link) => !link.isAnchor && link.href === location.pathname)?.href, [location.pathname])
 
   return (
     <header className="sticky top-0 z-50">
@@ -57,14 +72,14 @@ export function Header() {
             <button onClick={() => setMobileMenuOpen(true)} className="icon-btn md:hidden" aria-label="Open menu">
               <Menu className="h-5 w-5" />
             </button>
-            <Logo className="h-[var(--logo-max-height-mobile)] md:h-[var(--logo-max-height)]" />
+            <Logo className="h-[var(--logo-max-height-mobile)] max-w-[220px] md:h-[var(--logo-max-height)] md:max-w-[320px]" />
           </div>
 
           <nav className="hidden items-center gap-8 md:flex">
             {navLinks.map((link) => (
-              <Link key={link.href} to={link.href} className={cn('nav-link', activeHref === link.href ? 'nav-link-active' : '')}>
+              <NavItem key={link.href} href={link.href} isActive={activeHref === link.href} isAnchor={link.isAnchor}>
                 {link.label}
-              </Link>
+              </NavItem>
             ))}
 
             <div className="relative">
@@ -97,7 +112,8 @@ export function Header() {
               {cartCount > 0 && <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-red)] text-[10px] font-bold text-white">{cartCount > 9 ? '9+' : cartCount}</span>}
             </button>
             <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer" className="btn-header-primary text-sm">
-              Book vaccination
+              <span className="hidden sm:inline">Book vaccination</span>
+              <span className="sm:hidden">Book</span>
             </a>
           </div>
         </div>
@@ -111,9 +127,9 @@ export function Header() {
           </div>
           <div className="space-y-1">
             {navLinks.map((link) => (
-              <Link key={link.href} to={link.href} className="block rounded-2xl px-4 py-3 text-base font-semibold text-[var(--color-navy)] hover:bg-[var(--color-navy-soft)]" onClick={() => setMobileMenuOpen(false)}>
+              <MobileNavItem key={link.href} href={link.href} isAnchor={link.isAnchor} onClick={() => setMobileMenuOpen(false)}>
                 {link.label}
-              </Link>
+              </MobileNavItem>
             ))}
           </div>
           <div className="rounded-[24px] bg-[var(--color-surface-alt)] p-4">

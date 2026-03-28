@@ -183,7 +183,7 @@ export default function Shop() {
                 const salePrice = onSale ? getSalePrice(product) : null
                 const regularPrice = product.priceRange.minVariantPrice
                 return (
-                  <Link key={product.id} to={`/shop/${product.handle}`} className="product-card overflow-hidden rounded-[30px] border border-[var(--color-border)] bg-white shadow-[0_24px_60px_-46px_rgba(16,24,63,0.18)]">
+                  <Link key={product.id} to={`/shop/${product.handle}`} className="product-card group overflow-hidden rounded-[26px] border border-[var(--color-border)] bg-white shadow-[0_24px_60px_-46px_rgba(16,24,63,0.18)]">
                     <div className={`product-image-container ${viewMode === 'list' ? 'w-48 h-48 flex-shrink-0' : 'aspect-square'}`}>
                       <img src={imageUrl} alt={product.images?.edges[0]?.node?.altText || product.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" />
                       {onSale && <span className="sale-badge">Sale</span>}

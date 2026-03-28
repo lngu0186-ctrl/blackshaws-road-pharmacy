@@ -21,7 +21,7 @@ export function HeroSection() {
             </div>
 
             <div className="mt-7">
-              <img src="/logo-dark.svg" alt="Blackshaws Road Pharmacy" className="h-18 w-auto md:h-24" style={{ maxWidth: '330px' }} />
+              <img src="/logo-dark.svg" alt="Blackshaws Road Pharmacy" className="h-auto w-full max-w-[250px] sm:max-w-[290px] md:max-w-[340px]" />
             </div>
 
             <h1 className="mt-8 max-w-4xl text-white">Premium everyday pharmacy care for Altona North and the west.</h1>
