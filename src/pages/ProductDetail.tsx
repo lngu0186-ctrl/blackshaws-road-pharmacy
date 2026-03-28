@@ -206,20 +206,6 @@ export default function ProductDetail() {
   const categoryName = categorySlug ? PHARMACY_CATEGORIES.find((c) => c.id === categorySlug)?.name : 'Shop'
 
 
-
-  const relatedProducts = useMemo(() => {
-    if (!product || allProducts.length === 0) return []
-    // Get categories of current product
-    const productCats = categorizeProduct(product)
-    if (productCats.length === 0) return []
-    // Find other products that share any category
-    const related = allProducts
-      .filter(p => p.id !== product.id && categorizeProduct(p).some(cat => productCats.includes(cat)))
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 4)
-    return related
-  }, [product, allProducts])
-
   return (
     <div className="section-padding bg-white">
       <div className="container-custom">
