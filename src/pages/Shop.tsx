@@ -15,6 +15,7 @@ import {
 } from '../utils/categoryMapping'
 import { useProductStore } from '../stores/productStore'
 import { Button } from '../components/ui/Button'
+import { Breadcrumb } from '../components/layout/Breadcrumb'
 import './Shop.css'
 
 const PRODUCTS_PER_PAGE = 48
@@ -190,6 +191,15 @@ export default function Shop() {
 
   return (
     <div className="shop-page bg-gray-50 min-h-screen">
+      {/* Breadcrumb */}
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Shop' }
+        ]}
+        className="bg-white border-b"
+      />
+
       {/* Header */}
       <div className="bg-white border-b" style={{ borderColor: 'var(--color-gray-200)' }}>
         <div className="container-custom py-8">

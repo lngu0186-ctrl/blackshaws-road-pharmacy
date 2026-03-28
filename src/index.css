@@ -20,6 +20,33 @@
   --color-text-dark: #1C1C1A;
   --color-text-muted: #6B7280;
   --color-sage: #5B7B5E; /* Chemist Care Now only */
+
+  /* Header Design Tokens */
+  --header-height-desktop: 72px;
+  --header-height-mobile: 60px;
+  --header-px: 32px;
+  --header-px-mobile: 16px;
+  --nav-gap: 32px;
+  --utility-gap: 16px;
+
+  --logo-max-height: 44px;
+  --logo-max-height-mobile: 36px;
+  --btn-height-primary: 40px;
+  --btn-height-secondary: 36px;
+  --icon-container-size: 36px;
+  --icon-size: 18px;
+  --nav-link-size: 0.875rem;
+  --badge-height: 24px;
+
+  --header-bg: #FFFFFF;
+  --header-bg-scrolled: rgba(255, 255, 255, 0.95);
+  --header-border: rgba(0, 0, 0, 0.06);
+  --nav-link-color: #374151;
+  --nav-link-hover: #1e3a5f;
+  --nav-link-active: #1e3a5f;
+  --utility-icon-color: #4B5563;
+  --cta-bg: var(--color-navy);
+  --cta-text: #FFFFFF;
 }
 
 /* Base styles */
@@ -35,6 +62,73 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Header-specific utility classes */
+.btn-header-primary {
+  height: var(--btn-height-primary);
+  padding: 0 20px;
+  font-size: var(--font-cta);
+  font-weight: 600;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cta-bg);
+  color: var(--cta-text);
+  border: none;
+  cursor: pointer;
+  transition: all 200ms ease;
+  text-decoration: none;
+}
+
+.btn-header-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(27, 42, 107, 0.25);
+}
+
+.icon-btn {
+  width: var(--icon-container-size);
+  height: var(--icon-container-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: var(--utility-icon-color);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+
+.icon-btn:hover {
+  background-color: #F3F4F6;
+}
+
+.icon-btn svg {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+/* Nav link utility */
+.nav-link {
+  font-size: var(--nav-link-size);
+  font-weight: 500;
+  color: var(--nav-link-color);
+  text-decoration: none;
+  transition: color 200ms ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: var(--nav-link-hover);
+}
+
+.nav-link-active {
+  color: var(--nav-link-active);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 /* Typography scale */

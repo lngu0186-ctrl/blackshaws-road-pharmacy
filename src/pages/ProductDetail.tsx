@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ShoppingBag, Minus, Plus, Check } from 'lucide-react'
+import { ShoppingBag, Minus, Plus, Check, ArrowLeft } from 'lucide-react'
 import { useCartStore } from '../stores/cartStore'
 import { useToast } from '../context/ToastContext'
 import { getProductByHandle, type ShopifyProduct as Product } from '../services/shopify'
@@ -202,7 +202,7 @@ export default function ProductDetail() {
     <div className="section-padding bg-white">
       <div className="container-custom">
         {/* Breadcrumb */}
-        <nav className="mb-8 text-sm">
+        <nav className="mb-6 text-sm">
           <ol className="flex items-center gap-2 flex-wrap">
             <li><Link to="/" className="text-gray-500 hover:text-red-600 transition-colors">Home</Link></li>
             <li className="text-gray-400">/</li>
@@ -223,6 +223,15 @@ export default function ProductDetail() {
             </li>
           </ol>
         </nav>
+
+        {/* Back to Shop */}
+        <Link
+          to="/shop"
+          className="inline-flex items-center text-sm text-gray-500 hover:text-gray-900 mb-6 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4 mr-1" />
+          Back to Shop
+        </Link>
 
         {/* Product Grid */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">

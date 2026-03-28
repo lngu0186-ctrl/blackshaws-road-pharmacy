@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Navbar } from './components/layout/Navbar'
+import { Header } from './components/layout/Header'
 import { HeroSection } from './components/sections/HeroSection'
+import { ShopCategories } from './components/sections/ShopCategories'
 import { TrustBar } from './components/sections/TrustBar'
 import { ChemistCareNowSection } from './components/sections/ChemistCareNowSection'
 import { VaccinationsSection } from './components/sections/VaccinationsSection'
@@ -16,7 +17,6 @@ import Shop from './pages/Shop'
 import ProductDetail from './pages/ProductDetail'
 import Services from './pages/Services'
 import ServiceDetail from './pages/ServiceDetail'
-import { ShopCategories } from './components/sections/ShopCategories'
 import { useCartSync } from './hooks/useCartSync'
 import './App.css'
 
@@ -30,9 +30,9 @@ function App() {
           Skip to main content
         </a>
 
-        <Navbar />
+        <Header />
 
-        <main id="main-content">
+        <main id="main-content" className="pt-[var(--header-height-mobile)] md:pt-[var(--header-height-desktop)]">
           <Routes>
             <Route path="/shop" element={<Shop />} />
             <Route path="/shop/:handle" element={<ProductDetail />} />
