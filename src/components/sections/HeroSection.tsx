@@ -22,8 +22,10 @@ export function HeroSection() {
     >
       {/* Hero Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
+        {/* Use gradient as base, image on top if available */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-navy)] to-[var(--color-navy-deep)]" />
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{
             backgroundImage: 'url(/hero.png)',
             backgroundAttachment: 'fixed',

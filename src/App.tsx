@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Header } from './components/layout/Header'
 import { HeroSection } from './components/sections/HeroSection'
@@ -10,14 +10,10 @@ import { ServicesSection } from './components/sections/ServicesSection'
 import { AboutSection } from './components/sections/AboutSection'
 import { HealthInfoSection } from './components/sections/HealthInfoSection'
 import { LocationSection } from './components/sections/LocationSection'
-import { Footer } from './components/layout/Footer'
-import { ChatWidget } from './components/features/ChatWidget'
-import CartDrawer from './components/CartDrawer'
-import ToastContainer from './components/ToastContainer'
 import { useCartSync } from './hooks/useCartSync'
 import './App.css'
 
-// Lazy-load pages for code splitting
+// Lazy-load pages
 const Shop = lazy(() => import('./pages/Shop'))
 const ProductDetail = lazy(() => import('./pages/ProductDetail'))
 const Services = lazy(() => import('./pages/Services'))
@@ -36,6 +32,22 @@ function LoadingFallback() {
 
 function App() {
   useCartSync()
+  const [DeferredFooter, setDeferredFooter] = useState<React.ComponentType | null>(null)
+  const [DeferredChat, setDeferredChat] = useState<React.ComponentType | null>(null)
+  const [DeferredCart, setDeferredCart] = useState<React.ComponentType | null>(null)
+  const [DeferredToast, setDeferredToast] = useState<React.ComponentType | null>(null)
+
+  useEffect(() => {
+    // Defer loading of below-the-fold components until after first paint
+    const timer = setTimeout(() => {
+      import('./components/layout/Footer').then(mod => setDeferredFooter(() => mod.Footer))
+      import('./components/features/ChatWidget').then(mod => setDeferredChat(() => mod.ChatWidget))
+      import('./components/CartDrawer').then(mod => setDeferredCart(() => mod.default))
+      import('./components/ToastContainer').then(mod => setDeferredToast(() => mod.default))
+    }, 2000) // 2s defer - adjust as needed
+
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <BrowserRouter>
@@ -70,10 +82,10 @@ function App() {
           </Suspense>
         </main>
 
-        <Footer />
-        <ChatWidget />
-        <CartDrawer />
-        <ToastContainer />
+        {DeferredFooter && <DeferredFooter />}
+        {DeferredChat && <DeferredChat />}
+        {DeferredCart && <DeferredCart />}
+        {DeferredToast && <DeferredToast />}
       </div>
     </BrowserRouter>
   )
