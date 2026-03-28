@@ -29,36 +29,31 @@ export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
   }, [])
 
   return (
-    <section id={id} className="section-padding relative isolate overflow-hidden" style={{ background: 'var(--color-navy-deep)' }}>
+    <section id={id} className="section-padding relative overflow-hidden" style={{ background: 'var(--color-navy-deep)' }}>
       {/* Video background layer */}
-      {!prefersReducedMotion ? (
+      {!prefersReducedMotion && (
         <video
           autoPlay
           muted
           loop
           playsInline
-          poster="/chemist-care-now-logo.png"
           className="absolute inset-0 h-full w-full object-cover pointer-events-none"
-          style={{ zIndex: -3, opacity: 0.32 }}
+          style={{ opacity: 0.25 }}
           aria-hidden="true"
         >
           <source src="/chemist-care-bg.mp4" type="video/mp4" />
         </video>
-      ) : (
-        /* Reduced-motion fallback — static tinted background */
-        <div className="absolute inset-0" style={{ zIndex: -3, background: 'var(--color-navy-deep)' }} aria-hidden="true" />
       )}
 
-      {/* Overlay stack for readability */}
-      <div className="absolute inset-0" style={{ zIndex: -2, background: 'linear-gradient(180deg, rgba(16,24,63,0.82) 0%, rgba(16,24,63,0.68) 40%, rgba(16,24,63,0.78) 100%)' }} aria-hidden="true" />
-      <div className="absolute inset-0" style={{ zIndex: -1, background: 'radial-gradient(ellipse at 30% 50%, rgba(16,24,63,0.5) 0%, transparent 70%)' }} aria-hidden="true" />
+      {/* Overlay for readability */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(16,24,63,0.78) 0%, rgba(16,24,63,0.62) 40%, rgba(16,24,63,0.75) 100%)' }} aria-hidden="true" />
 
-      <div className="container-custom relative" ref={ref}>
+      {/* Content */}
+      <div className="container-custom relative z-10" ref={ref}>
         <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-white/80 backdrop-blur-sm">Victorian Government-backed care</span>
 
-            {/* Official Chemist Care Now logo */}
             <img
               src="/chemist-care-now-logo.png"
               alt="Chemist Care Now"
@@ -100,15 +95,15 @@ function ChemistCareCard({ icon: Icon, title, description, index }: { icon: Reac
   const isInView = useInView(cardRef, { once: true, margin: '-50px' })
 
   return (
-    <Card ref={cardRef} className="flex h-full flex-col bg-white/10 backdrop-blur-md border border-white/10" style={{ opacity: isInView ? 1 : 0, transform: `translateY(${isInView ? 0 : '20px'})`, transition: `opacity 0.5s ease ${index * 0.07}s, transform 0.5s ease ${index * 0.07}s` }}>
+    <Card ref={cardRef} className="flex h-full flex-col bg-white" style={{ opacity: isInView ? 1 : 0, transform: `translateY(${isInView ? 0 : '20px'})`, transition: `opacity 0.5s ease ${index * 0.07}s, transform 0.5s ease ${index * 0.07}s` }}>
       <div className="flex items-start gap-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-[18px] bg-white/12 text-[#3b82f6]"><Icon className="h-6 w-6" /></div>
+        <div className="flex h-12 w-12 items-center justify-center rounded-[18px] bg-[var(--color-sage-soft)] text-[var(--color-sage)]"><Icon className="h-6 w-6" /></div>
         <div>
-          <h3 className="text-xl text-white">{title}</h3>
-          <p className="mt-3 text-sm leading-relaxed text-white/70">{description}</p>
+          <h3 className="text-xl text-[var(--color-navy)]">{title}</h3>
+          <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">{description}</p>
         </div>
       </div>
-      <div className="mt-5 border-t border-white/10 pt-4 text-xs font-semibold uppercase tracking-[0.16em] text-[#3b82f6]/80">Available now · Ask the pharmacist</div>
+      <div className="mt-5 border-t border-[var(--color-border)] pt-4 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-sage)]">Available now · Ask the pharmacist</div>
     </Card>
   )
 }
