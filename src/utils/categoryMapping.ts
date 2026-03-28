@@ -276,5 +276,18 @@ export const CATEGORIES: Category[] = [
       { id: 'childrens-health', label: "Children's Health", keywords: ['children\'s health', 'kids health', 'child vitamins', 'infant pain relief', 'children\'s cold', 'kids allergy', 'kids supplement', 'children\'s health'] },
     ],
   },
+  {
+    id: 'pharmacy-essentials',
+    label: 'Pharmacy Essentials',
+    keywords: ['pharmacy', 'essential', 'basics', 'first aid', 'pain relief', 'cold', 'flu', 'fever', 'bandage', 'plaster', 'thermometer', 'paracetamol', 'aspirin', 'ibuprofen', 'antihistamine', 'loratadine', 'cetirizine', 'naproxen', 'doxylamine', 'phenylephrine', 'pseudoephedrine', 'cough medicine', 'lozenge', 'throat spray', 'antiseptic', 'antiseptic cream', 'betadine', 'straws', 'sunburn', 'burn gel', 'blister care', 'callus remover', 'corn remover', 'foot care', 'blood pressure', 'blood glucose', 'diabetes', 'monitoring', 'health check', 'basic health', ' Misc', 'miscellaneous'],
+    subcategories: [
+      { id: 'pain-relief', label: 'Pain Relief', keywords: ['pain relief', 'paracetamol', 'aspirin', 'ibuprofen', 'naproxen', 'diclofenac', 'nurofen', 'panadol', 'pain killer', 'headache', 'migraine', 'muscle pain', 'joint pain', 'period pain', 'toothache'] },
+      { id: 'cold-flu', label: 'Cold & Flu', keywords: ['cold', 'flu', 'cough', 'sore throat', 'lozenge', 'throat spray', 'cough medicine', 'decongestant', 'nasal spray', 'expectorant', 'flu medicine', 'cold & flu', 'cold relief', 'flu relief'] },
+      { id: 'first-aid', label: 'First Aid', keywords: ['first aid', 'bandage', 'plaster', 'band-aid', 'antiseptic', 'antiseptic cream', 'betadine', 'wound wash', 'saline', 'scissors', 'tape', 'gauze', 'cotton', 'cotton bud', 'steri-strip', 'gloves', 'mask', 'first aid kit', 'wound care'] },
+      { id: 'medical-devices', label: 'Medical Devices', keywords: ['thermometer', 'blood pressure monitor', 'bp machine', 'glucometer', 'blood glucose', 'scale', 'body scale', 'fitness tracker', 'pedometer', 'massager', 'tens', 'nebuliser', 'inhaler', 'spacer', 'face mask', 'covid test'] },
+      { id: 'allergy', label: 'Allergy & Hayfever', keywords: ['allergy', 'hayfever', 'antihistamine', 'loratadine', 'cetirizine', 'fexofenadine', 'nasal spray', 'eye drops', 'allergy relief'] },
+      { id: 'digestive-relief', label: 'Digestive Relief', keywords: ['nausea', 'vomiting', 'motion sickness', 'travel sickness', 'indigestion', 'heartburn', 'reflux', 'gas', 'bloating', 'constipation', 'diarrhea', 'laxative', 'probiotic', 'digestive enzyme', 'anti-diarrheal'] },
+    ],
+  },
   // Note: The classification will always match at least one category above.
 ]

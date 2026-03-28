@@ -475,7 +475,7 @@ export default function Shop() {
                                 handleAddToCart(product)
                               }}
                               disabled={!isAvailable}
-                              className="opacity-0 group-hover:opacity-100 transition-opacity"
+                              className="opacity-100 transition-opacity"
                             >
                               <ShoppingBag className="w-4 h-4 mr-2" />
                               Add
