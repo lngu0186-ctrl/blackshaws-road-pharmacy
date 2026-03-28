@@ -13,6 +13,7 @@ import {
   getSalePrice,
   buildCategoryIndex,
 } from '../utils/categoryMapping'
+import { useProductStore } from '../stores/productStore'
 import { Button } from '../components/ui/Button'
 import './Shop.css'
 
@@ -35,12 +36,15 @@ export default function Shop() {
   const openCart = useCartStore((s) => s.openCart)
   const { showToast } = useToast()
 
+  const { setProducts: setGlobalProducts } = useProductStore()
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true)
         const data = await getAllProducts() // fetch all products
         setProducts(data)
+        setGlobalProducts(data) // populate global store for other pages
         console.log(`Fetched ${data.length} products from Shopify`)
       } catch (err) {
         console.error('Failed to fetch products:', err)
@@ -51,7 +55,7 @@ export default function Shop() {
       }
     }
     fetchProducts()
-  }, [showToast])
+  }, [showToast, setGlobalProducts])
 
   useEffect(() => {
     const params = new URLSearchParams()
