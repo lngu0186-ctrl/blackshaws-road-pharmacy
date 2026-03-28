@@ -1,4 +1,4 @@
-import { toast } from '../components/ToastContainer'
+// Shopify Storefront API Service
 
 // Shopify Storefront API Configuration
 const SHOPIFY_API_VERSION = '2025-07'
