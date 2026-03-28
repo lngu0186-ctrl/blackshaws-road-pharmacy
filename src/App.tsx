@@ -10,6 +10,9 @@ import { ServicesSection } from './components/sections/ServicesSection'
 import { AboutSection } from './components/sections/AboutSection'
 import { HealthInfoSection } from './components/sections/HealthInfoSection'
 import { LocationSection } from './components/sections/LocationSection'
+import { PrescriptionPathwaySection } from './components/sections/PrescriptionPathwaySection'
+import { PatientTrustSection } from './components/sections/PatientTrustSection'
+import { FaqPreviewSection } from './components/sections/FaqPreviewSection'
 import { useCartSync } from './hooks/useCartSync'
 import './App.css'
 
@@ -18,6 +21,9 @@ const Shop = lazy(() => import('./pages/Shop'))
 const ProductDetail = lazy(() => import('./pages/ProductDetail'))
 const Services = lazy(() => import('./pages/Services'))
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'))
+const Prescription = lazy(() => import('./pages/Prescription'))
+const FAQ = lazy(() => import('./pages/FAQ'))
+const PatientInfo = lazy(() => import('./pages/PatientInfo'))
 
 function LoadingFallback() {
   return (
@@ -65,15 +71,21 @@ function App() {
               <Route path="/shop/:handle" element={<ProductDetail />} />
               <Route path="/services" element={<Services />} />
               <Route path="/services/:slug" element={<ServiceDetail />} />
+              <Route path="/prescriptions" element={<Prescription />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/patient-info" element={<PatientInfo />} />
               <Route path="/" element={
                 <>
                   <HeroSection />
-                  <ShopCategories />
                   <TrustBar />
+                  <ShopCategories />
+                  <PrescriptionPathwaySection />
+                  <ServicesSection />
                   <ChemistCareNowSection id="chemist-care" />
                   <VaccinationsSection />
-                  <ServicesSection />
+                  <PatientTrustSection />
                   <AboutSection />
+                  <FaqPreviewSection />
                   <HealthInfoSection />
                   <LocationSection />
                 </>
