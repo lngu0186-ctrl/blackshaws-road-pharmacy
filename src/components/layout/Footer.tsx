@@ -67,9 +67,12 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-white/58 md:flex-row md:items-center md:justify-between">
+          <div className="mt-12 flex flex-col gap-6 border-t border-white/10 pt-8 text-sm text-white/58 md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} Blackshaws Road Pharmacy. Independent community pharmacy care.</p>
-          <div className="flex items-center gap-2"><Award className="h-4 w-4 text-[var(--color-red)]" /> <span>Proudly part of Alliance Pharmacy Australia</span></div>
+          <div className="flex items-center gap-3">
+            <img src="/ipa-logo.png" alt="Independent Pharmacies Australia" className="h-10 w-auto brightness-0 invert opacity-70" />
+            <span>Proud member of Independent Pharmacies Australia</span>
+          </div>
         </div>
       </div>
     </footer>
