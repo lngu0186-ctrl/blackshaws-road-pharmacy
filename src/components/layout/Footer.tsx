@@ -1,4 +1,5 @@
 import { Phone, Mail, Award, Shield, MapPin, ArrowUpRight, Clock3 } from 'lucide-react'
+import { BrandLogo } from '../BrandLogo'
 
 const footerLinks = {
   services: [
