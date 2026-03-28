@@ -39,7 +39,7 @@ export default function Shop() {
     const fetchProducts = async () => {
       try {
         setLoading(true)
-        const data = await getAllProducts('product_type:"Vitamins & Supplements"')
+        const data = await getAllProducts() // fetch all products
         setProducts(data)
         console.log(`Fetched ${data.length} products from Shopify`)
       } catch (err) {
