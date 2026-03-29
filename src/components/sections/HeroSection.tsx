@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '../ui/Button'
 import { BrandLogo } from '../BrandLogo'
 import { Clock3, MapPin, Phone } from 'lucide-react'
-import iphoneFrame from '@/assets/iphone-frame.png'
+const iphoneFrame = '/iphone-frame.png'
 
 export function HeroSection() {
   return (
