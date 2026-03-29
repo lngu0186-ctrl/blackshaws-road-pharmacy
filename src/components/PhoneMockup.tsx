@@ -76,12 +76,12 @@ export function PhoneMockup() {
                   ePrescription
                 </p>
               </div>
-              <p className="mt-2 text-[0.8rem] leading-relaxed text-[var(--color-text-muted)]">
-                <strong className="text-[var(--color-navy-deep)]">EMAIL</strong> us a copy of your
+              <p className="mt-2 text-[0.84rem] font-medium leading-relaxed text-[var(--color-text-dark)]">
+                <strong className="font-bold text-[var(--color-navy-deep)]">EMAIL</strong> us a copy of your
                 prescription. Paper scripts require the original hard-copy upon collection.
               </p>
-              <p className="mt-1.5 text-[0.8rem] leading-relaxed text-[var(--color-text-muted)]">
-                Or <strong className="text-[var(--color-navy-deep)]">TEXT/SMS</strong> us your eScript
+              <p className="mt-1.5 text-[0.84rem] font-medium leading-relaxed text-[var(--color-text-dark)]">
+                Or <strong className="font-bold text-[var(--color-navy-deep)]">TEXT/SMS</strong> us your eScript
                 link.
               </p>
             </div>
