@@ -52,7 +52,7 @@ export function PhoneMockup() {
             {/* Address */}
             <div className="mt-4 flex items-start gap-2.5 rounded-2xl bg-[var(--color-navy-soft)] px-4 py-3">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-navy)]" />
-              <p className="text-[0.85rem] leading-snug text-[var(--color-text-muted)]">
+              <p className="text-[0.88rem] font-medium leading-snug text-[var(--color-text-dark)]">
                 310A Blackshaws Road
                 <br />
                 Altona North, Victoria 3025
@@ -62,9 +62,9 @@ export function PhoneMockup() {
             {/* Call */}
             <div className="mt-2.5 flex items-center gap-2.5 rounded-2xl bg-[var(--color-navy-soft)] px-4 py-3">
               <Phone className="h-4 w-4 shrink-0 text-[var(--color-navy)]" />
-              <p className="text-[0.85rem] leading-snug text-[var(--color-text-muted)]">
+              <p className="text-[0.88rem] font-medium leading-snug text-[var(--color-text-dark)]">
                 Give us a call on{' '}
-                <span className="font-semibold text-[var(--color-navy-deep)]">03 9391 3257</span>
+                <span className="font-bold text-[var(--color-navy-deep)]">03 9391 3257</span>
               </p>
             </div>
 
@@ -76,12 +76,12 @@ export function PhoneMockup() {
                   ePrescription
                 </p>
               </div>
-              <p className="mt-2 text-[0.8rem] leading-relaxed text-[var(--color-text-muted)]">
-                <strong className="text-[var(--color-navy-deep)]">EMAIL</strong> us a copy of your
+              <p className="mt-2 text-[0.84rem] font-medium leading-relaxed text-[var(--color-text-dark)]">
+                <strong className="font-bold text-[var(--color-navy-deep)]">EMAIL</strong> us a copy of your
                 prescription. Paper scripts require the original hard-copy upon collection.
               </p>
-              <p className="mt-1.5 text-[0.8rem] leading-relaxed text-[var(--color-text-muted)]">
-                Or <strong className="text-[var(--color-navy-deep)]">TEXT/SMS</strong> us your eScript
+              <p className="mt-1.5 text-[0.84rem] font-medium leading-relaxed text-[var(--color-text-dark)]">
+                Or <strong className="font-bold text-[var(--color-navy-deep)]">TEXT/SMS</strong> us your eScript
                 link.
               </p>
             </div>
@@ -99,7 +99,7 @@ export function PhoneMockup() {
                   className="flex items-center gap-2 rounded-xl bg-[var(--color-cream)] px-3 py-2.5"
                 >
                   <c.icon className="h-3.5 w-3.5 shrink-0 text-[var(--color-navy)]" />
-                  <span className="truncate text-[0.75rem] text-[var(--color-text-muted)]">{c.label}</span>
+                  <span className="truncate text-[0.78rem] font-medium text-[var(--color-text-dark)]">{c.label}</span>
                 </div>
               ))}
             </div>
@@ -110,7 +110,7 @@ export function PhoneMockup() {
                 <Clock className="h-4 w-4 text-[var(--color-sage)]" />
                 <p className="text-[0.8rem] font-bold text-[var(--color-navy-deep)]">Opening Hours</p>
               </div>
-              <div className="mt-2 space-y-1 text-[0.78rem] text-[var(--color-text-muted)]">
+              <div className="mt-2 space-y-1 text-[0.82rem] font-medium text-[var(--color-text-dark)]">
                 <div className="flex justify-between">
                   <span>Mon – Fri</span>
                   <span className="font-medium text-[var(--color-navy-deep)]">8am – 8pm</span>
