@@ -46,7 +46,7 @@ export function HeroSection() {
             <div className="mt-8 flex flex-wrap gap-3 text-sm text-white/76">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2"><MapPin className="h-4 w-4" /> 310A Blackshaws Road, Altona North</span>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2"><Clock3 className="h-4 w-4" /> Open 7 days</span>
-              <a href="tel:0393913257" className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 hover:bg-white/8"><Phone className="h-4 w-4" /> (03) 9391 3257</a>
+              <a href="tel:0393913257" className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-[var(--color-red-light)] hover:bg-white/8"><Phone className="h-4 w-4" /> (03) 9391 3257</a>
             </div>
 
             <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
