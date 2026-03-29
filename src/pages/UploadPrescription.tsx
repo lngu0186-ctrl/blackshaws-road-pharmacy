@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
-import { supabase } from '../integrations/supabase/client'
+import { supabase } from '@/integrations/supabase/client'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024
 const ACCEPTED_TYPES = ['image/jpeg', 'image/png', 'image/heic', 'image/webp', 'application/pdf']
