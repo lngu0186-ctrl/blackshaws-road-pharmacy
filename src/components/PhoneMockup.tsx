@@ -92,7 +92,6 @@ export function PhoneMockup() {
                 { icon: Phone, label: '03 9391 3257' },
                 { icon: MessageSquare, label: '0406 692 267' },
                 { icon: Phone, label: 'Fax: 03 9391 8099' },
-                { icon: Mail, label: 'online@brp.com.au' },
               ].map((c) => (
                 <div
                   key={c.label}
@@ -102,6 +101,10 @@ export function PhoneMockup() {
                   <span className="truncate text-[0.78rem] font-medium text-[var(--color-text-dark)]">{c.label}</span>
                 </div>
               ))}
+            </div>
+            <div className="mt-2 flex items-center gap-2 rounded-xl bg-[var(--color-cream)] px-3 py-2.5">
+              <Mail className="h-3.5 w-3.5 shrink-0 text-[var(--color-navy)]" />
+              <span className="text-[0.78rem] font-medium text-[var(--color-text-dark)]">online@brp.com.au</span>
             </div>
 
             {/* Hours */}
