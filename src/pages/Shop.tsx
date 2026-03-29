@@ -109,7 +109,7 @@ export default function Shop() {
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
             <div>
               <p className="section-label !text-white/70">Online pharmacy</p>
-              <h1 className="text-white">A more premium way to shop your everyday health essentials.</h1>
+              <h1 className="text-white">Shop your health essentials.</h1>
               <p className="mt-4 max-w-2xl text-lg text-white/76">Browse a curated selection of pharmacy and wellness products with clearer filters, better search and the reassurance of a trusted local pharmacy behind every order.</p>
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
