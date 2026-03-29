@@ -42,7 +42,7 @@ export function PhoneMockup() {
             {/* Pharmacy name */}
             <h3
               className="text-center font-display leading-tight text-[var(--color-navy-deep)]"
-              style={{ fontSize: '1.05rem', letterSpacing: '-0.01em' }}
+              style={{ fontSize: '1.3rem', letterSpacing: '-0.01em' }}
             >
               Blackshaws Road
               <br />
