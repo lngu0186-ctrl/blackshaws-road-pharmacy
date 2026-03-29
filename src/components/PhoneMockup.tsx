@@ -99,7 +99,7 @@ export function PhoneMockup() {
                   className="flex items-center gap-2 rounded-xl bg-[var(--color-cream)] px-3 py-2.5"
                 >
                   <c.icon className="h-3.5 w-3.5 shrink-0 text-[var(--color-navy)]" />
-                  <span className="truncate text-[0.75rem] text-[var(--color-text-muted)]">{c.label}</span>
+                  <span className="truncate text-[0.78rem] font-medium text-[var(--color-text-dark)]">{c.label}</span>
                 </div>
               ))}
             </div>
