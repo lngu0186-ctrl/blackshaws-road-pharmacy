@@ -24,7 +24,7 @@ export function ServicesSection() {
         <div className="mb-12 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="section-label" style={{ color: 'var(--color-navy)' }}>Our core services</p>
-            <h2 className="max-w-3xl text-[var(--color-navy)]">Comprehensive pharmacy services with a more premium, more human experience.</h2>
+            <h2 className="max-w-3xl text-[var(--color-navy)]">Comprehensive pharmacy services with a human touch.</h2>
           </div>
           <p className="max-w-xl text-base text-[var(--color-text-muted)]">From medication support to preventive care, each service is presented clearly so patients can understand what’s available and take the next step confidently.</p>
         </div>
