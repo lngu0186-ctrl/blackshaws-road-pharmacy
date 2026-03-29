@@ -23,7 +23,7 @@ export function VaccinationsSection() {
       <div className="container-custom" ref={ref}>
         <div className="mb-12 max-w-3xl">
           <p className="section-label" style={{ color: 'var(--color-navy)' }}>Immunisation services</p>
-          <h2 className="text-[var(--color-navy)]">Accredited vaccination care with clear guidance for every stage of life.</h2>
+          <h2 className="text-[var(--color-navy)]">Accredited vaccination care for each stage of life.</h2>
           <p className="mt-4 text-lg text-[var(--color-text-muted)]">We provide a more reassuring, easier-to-navigate vaccination experience for families, adults, travellers and high-risk patients — with trusted pharmacist support at every step.</p>
         </div>
 
