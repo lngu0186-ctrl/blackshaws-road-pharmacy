@@ -10,7 +10,7 @@ export function HeroSection() {
       <div className="absolute inset-0">
         {/* Pharmacy storefront background — native img for LCP discoverability */}
         <img
-          src="/hero-pharmacy.webp"
+          src="/lovable-uploads/6b655f5b-d9a3-4c46-9a3f-f1f4396c7ef3.png"
           alt=""
           role="presentation"
           fetchPriority="high"
