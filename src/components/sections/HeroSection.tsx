@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { Button } from '../ui/Button'
 import { BrandLogo } from '../BrandLogo'
-import { Clock3, MapPin, Phone, ShieldCheck } from 'lucide-react'
+import { PhoneMockup } from '../PhoneMockup'
+import { Clock3, MapPin, Phone } from 'lucide-react'
 
 export function HeroSection() {
   return (
