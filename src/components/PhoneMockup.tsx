@@ -104,7 +104,7 @@ export function PhoneMockup() {
             </div>
             <div className="mt-2 flex items-center gap-2 rounded-xl bg-[var(--color-cream)] px-3 py-2.5">
               <Mail className="h-3.5 w-3.5 shrink-0 text-[var(--color-navy)]" />
-              <span className="text-[0.78rem] font-medium text-[var(--color-text-dark)]">online@brp.com.au</span>
+              <span className="text-[0.78rem] font-medium text-[var(--color-text-dark)]">online@blackshawsroadpharmacy.com.au</span>
             </div>
 
             {/* Hours */}
