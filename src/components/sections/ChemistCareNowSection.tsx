@@ -174,7 +174,7 @@ export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
             <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-white/80 backdrop-blur-sm">Victorian Government-backed care</span>
 
             <img
-              src="/chemist-care-now-logo.png"
+              src="/chemist-care-now-logo.webp"
               alt="Chemist Care Now"
               className="mt-6 h-12 w-auto sm:h-14 md:h-16"
               style={{ objectFit: 'contain', display: 'block' }}
