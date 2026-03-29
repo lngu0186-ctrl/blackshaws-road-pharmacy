@@ -40,7 +40,7 @@ export function HeroSection() {
               <BrandLogo variant="light" className="h-18 w-auto md:h-24" style={{ maxWidth: '330px' }} />
             </div>
 
-            <h1 className="mt-8 max-w-4xl text-white">Family Owned Local Chemist since 1968</h1>
+            <h1 className="mt-8 max-w-4xl text-white">A Family Owned Local Chemist since 1968</h1>
             <p className="mt-6 text-lg leading-relaxed text-white/78 md:text-xl">Prescriptions, trusted pharmacist advice, vaccinations, medication reviews and a online health range, all delivered with the confidence of a long-standing local pharmacy.</p>
 
             <div className="mt-8 flex flex-wrap gap-3 text-sm text-white/76">
