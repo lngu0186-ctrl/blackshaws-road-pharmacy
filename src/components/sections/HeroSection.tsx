@@ -64,7 +64,6 @@ export function HeroSection() {
             <p className="text-sm font-semibold text-[var(--color-navy-deep)]">Need a prescription filled?</p>
             <Link to="/upload-prescription" className="mt-3 inline-flex items-center justify-center rounded-full bg-[var(--color-red)] px-6 py-2.5 text-sm font-bold text-white shadow-lg">Upload Prescription</Link>
           </div>
-          </div>
         </div>
       </div>
     </section>
