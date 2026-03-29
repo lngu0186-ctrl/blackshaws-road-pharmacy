@@ -55,7 +55,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div className="premium-panel rounded-[32px] p-6 text-[var(--color-text-dark)] md:p-8">
+          <div className="rounded-[32px] bg-red-light p-6 text-[var(--color-text-dark)] md:p-8">
             <div className="inline-flex items-center gap-2 rounded-full bg-[var(--color-red-soft)] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-red)]"><ShieldCheck className="h-4 w-4" /> trusted local healthcare</div>
             <h2 className="mt-5 text-3xl text-[var(--color-navy-deep)] md:text-4xl">Designed for convenience. Grounded in care.</h2>
             <div className="mt-6 space-y-4">
