@@ -152,7 +152,7 @@ export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
           loop
           playsInline
           preload="metadata"
-          poster="/chemist-care-bg-poster.jpg"
+          poster="/chemist-care-bg-poster.webp"
           className="absolute inset-0 h-full w-full object-cover pointer-events-none"
           style={{ opacity: videoLoaded ? 0.34 : 0 }}
           aria-hidden="true"
