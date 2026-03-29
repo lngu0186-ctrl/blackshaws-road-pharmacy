@@ -18,25 +18,25 @@ export function PhoneMockup() {
         {/* Dark bezel */}
         <div
           style={{
-            borderRadius: '42px',
+            borderRadius: '50px',
             background: '#1a1a1a',
-            padding: '12px 10px',
+            padding: '14px 12px',
             position: 'relative',
           }}
         >
           {/* Dynamic Island */}
-          <div className="mx-auto mb-3 flex h-[28px] w-[100px] items-center justify-center rounded-full bg-black">
-            <div className="h-[8px] w-[8px] rounded-full bg-[#1a1a2e] ring-1 ring-[#2a2a3e]" />
+          <div className="mx-auto mb-3 flex h-[32px] w-[120px] items-center justify-center rounded-full bg-black">
+            <div className="h-[10px] w-[10px] rounded-full bg-[#1a1a2e] ring-1 ring-[#2a2a3e]" />
           </div>
 
-          {/* Screen */}
+          {/* Screen – scrollbar hidden */}
           <div
-            className="custom-scrollbar overflow-y-auto"
+            className="overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             style={{
-              borderRadius: '32px',
+              borderRadius: '38px',
               background: 'linear-gradient(180deg, #fefefe 0%, #f9f8f5 100%)',
-              height: '520px',
-              padding: '20px 16px 16px',
+              height: '780px',
+              padding: '24px 20px 20px',
             }}
           >
             {/* Pharmacy name */}
