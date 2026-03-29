@@ -1,4 +1,5 @@
-import { Pill, Syringe, Beaker, Heart, Calendar, Stethoscope, Shield, ShoppingBag, ArrowRight } from 'lucide-react'
+import { Pill, Syringe, Beaker, Heart, Calendar, Stethoscope, Shield, ShoppingBag, ArrowRight, Leaf, FlaskConical } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { Card } from '../ui/Card'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
@@ -11,6 +12,8 @@ const services = [
   { icon: Heart, title: 'Health Checks & Screening', description: 'Practical screening and monitoring services that support prevention, earlier intervention and better everyday health decisions.' },
   { icon: Calendar, title: 'WebsterPaks & Dose Administration', description: 'Medication packing and dose support for people managing complex schedules, multiple medicines or family care needs.' },
   { icon: Stethoscope, title: 'Minor Ailments & Consultations', description: 'In-pharmacy advice for common conditions, with appropriate referral to GP or urgent care whenever symptoms warrant it.' },
+  { icon: Leaf, title: 'Plant Based Therapies', description: 'Respectful, professional pharmacy support for patients with prescriptions for plant based therapies, focused on safe supply and quality use of medicines.', href: '/plant-based-therapies', linkText: 'Learn more' },
+  { icon: FlaskConical, title: 'Compounding', description: 'Customised medicines prepared to your individual needs, facilitated through our partnership with Burke Road Compounding Pharmacy.', href: '/compounding', linkText: 'Learn more' },
   { icon: ShoppingBag, title: 'Practitioner-Only Products', description: 'A curated online range of premium practitioner-led products supported by a pharmacy that can help patients choose appropriately.', shopLink: 'https://blackshawspharmacy.com.au/collections/practitioner-only-range', shopText: 'Shop practitioner range' },
 ]
 
@@ -37,14 +40,20 @@ export function ServicesSection() {
   )
 }
 
-function ServiceCard({ icon: Icon, title, description, highlight, shopLink, shopText }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; description: string; highlight?: boolean; shopLink?: string; shopText?: string }) {
+function ServiceCard({ icon: Icon, title, description, highlight, shopLink, shopText, href, linkText }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; description: string; highlight?: boolean; shopLink?: string; shopText?: string; href?: string; linkText?: string }) {
   return (
     <Card className={`flex h-full flex-col ${highlight ? 'border-[var(--color-sage)] bg-[linear-gradient(180deg,white,rgba(238,245,239,0.75))]' : ''}`}>
       <div className={`flex h-14 w-14 items-center justify-center rounded-[20px] ${highlight ? 'bg-[var(--color-sage-soft)] text-[var(--color-sage)]' : 'bg-[var(--color-red-soft)] text-[var(--color-red)]'}`}><Icon className="h-7 w-7" /></div>
       <h3 className="mt-6 text-2xl text-[var(--color-navy)]">{title}</h3>
       <p className="mt-4 flex-grow text-sm leading-relaxed text-[var(--color-text-muted)]">{description}</p>
       <div className="mt-6 border-t border-[var(--color-border)] pt-4">
-        {shopLink ? <a href={shopLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-navy)]">{shopText} <ArrowRight className="h-4 w-4" /></a> : <span className={`text-xs font-bold uppercase tracking-[0.18em] ${highlight ? 'text-[var(--color-sage)]' : 'text-[var(--color-red)]'}`}>{highlight ? 'Most consultations free' : 'Local expert support'}</span>}
+        {shopLink ? (
+          <a href={shopLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-navy)]">{shopText} <ArrowRight className="h-4 w-4" /></a>
+        ) : href ? (
+          <Link to={href} className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-navy)]">{linkText || 'Learn more'} <ArrowRight className="h-4 w-4" /></Link>
+        ) : (
+          <span className={`text-xs font-bold uppercase tracking-[0.18em] ${highlight ? 'text-[var(--color-sage)]' : 'text-[var(--color-red)]'}`}>{highlight ? 'Most consultations free' : 'Local expert support'}</span>
+        )}
       </div>
     </Card>
   )

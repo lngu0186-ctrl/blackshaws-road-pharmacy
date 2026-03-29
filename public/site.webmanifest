@@ -1,0 +1,19 @@
+{
+  "name": "Blackshaws Road Pharmacy",
+  "short_name": "Blackshaws Pharmacy",
+  "icons": [
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo-mark-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1b2a6b",
+  "background_color": "#fffdfa",
+  "display": "standalone"
+}

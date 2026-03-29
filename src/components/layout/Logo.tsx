@@ -1,24 +1,33 @@
 /** Logo — renders official pharmacy logo linked to homepage. */
 import { Link } from 'react-router-dom'
-import { BrandLogo } from '../BrandLogo'
+import { cn } from '../../utils/cn'
 
 interface LogoProps {
   className?: string
+  variant?: 'default' | 'dark'
 }
 
-export function Logo({ className }: LogoProps) {
+export function Logo({ className, variant = 'default' }: LogoProps) {
+  const logoSrc = variant === 'dark' ? '/logo-dark.svg' : '/logo.svg'
+
   return (
     <Link
       to="/"
       aria-label="Blackshaws Road Pharmacy — return to homepage"
-      className={`inline-flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--nav-link-active)] ${className}`}
+      className={cn('inline-flex items-center shrink-0 focus-visible:outline-none', className)}
     >
-      <BrandLogo
-        variant="dark"
+      <img
+        src={logoSrc}
+        alt="Blackshaws Road Pharmacy"
+        height={44}
         style={{
-          maxHeight: 'var(--logo-max-height)',
+          maxHeight: '100%',
           width: 'auto',
+          objectFit: 'contain',
+          display: 'block',
         }}
+        fetchPriority="high"
+        decoding="sync"
       />
     </Link>
   )

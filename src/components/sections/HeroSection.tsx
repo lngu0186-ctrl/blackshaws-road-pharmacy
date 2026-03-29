@@ -1,24 +1,18 @@
 import { Link } from 'react-router-dom'
 import { Button } from '../ui/Button'
-import { BrandLogo } from '../BrandLogo'
 import { Clock3, MapPin, Phone, ShieldCheck } from 'lucide-react'
 
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-[var(--color-navy-deep)] text-white">
       <div className="absolute inset-0">
-        {/* Pharmacy storefront background — positioned to show signage while keeping text zones clear */}
         <div
           className="absolute inset-0 bg-cover bg-[center_20%] md:bg-[center_30%]"
           style={{ backgroundImage: 'url(/hero-pharmacy.png)' }}
         />
-        {/* Primary navy overlay — lighter to let storefront show */}
         <div className="absolute inset-0 bg-[var(--color-navy-deep)]/68 md:bg-[var(--color-navy-deep)]/58" />
-        {/* Gradient mask — darkens left text zone, lets image breathe on right */}
         <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(16,24,63,0.82)_0%,rgba(16,24,63,0.5)_50%,rgba(16,24,63,0.32)_100%)]" />
-        {/* Subtle warm vignette at edges */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(10,14,38,0.5)_100%)]" />
-        {/* Soft brand-colour glow accents */}
         <div className="absolute -left-28 top-16 h-72 w-72 rounded-full bg-[var(--color-red)]/10 blur-3xl" />
         <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-white/6 blur-3xl" />
       </div>
@@ -32,7 +26,7 @@ export function HeroSection() {
             </div>
 
             <div className="mt-7">
-              <BrandLogo variant="light" className="h-18 w-auto md:h-24" style={{ maxWidth: '330px' }} />
+              <img src="/logo-dark.svg" alt="Blackshaws Road Pharmacy" className="h-auto w-full max-w-[250px] sm:max-w-[290px] md:max-w-[340px]" />
             </div>
 
             <h1 className="mt-8 max-w-4xl text-white">Premium everyday pharmacy care for Altona North and the west.</h1>

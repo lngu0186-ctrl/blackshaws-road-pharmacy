@@ -460,3 +460,20 @@ export function getServicesByCategory(category: ServiceCategory): Service[] {
 export function getCategories(): ServiceCategory[] {
   return [...new Set(services.map((service) => service.category))]
 }
+
+/**
+ * Returns services grouped by category for navigation/mega menu display
+ */
+export function getServicesGroupedByCategory(): Array<{
+  category: ServiceCategory
+  title: string
+  description: string
+  services: Service[]
+}> {
+  return getCategories().map((category) => ({
+    category,
+    title: serviceCategories[category].title,
+    description: serviceCategories[category].description,
+    services: getServicesByCategory(category),
+  }))
+}

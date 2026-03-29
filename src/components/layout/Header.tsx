@@ -1,41 +1,51 @@
 import { useMemo, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, ShoppingBag, Phone, ChevronDown, Clock3, MapPin } from 'lucide-react'
+import { Menu, ShoppingBag, Phone, ChevronDown, Clock3, MapPin, ArrowRight } from 'lucide-react'
 import { Logo } from './Logo'
 import { MobileDrawer } from './MobileDrawer'
 import { useCartStore } from '../../stores/cartStore'
 import { useScrolled } from '../../hooks/useScrolled'
 import { cn } from '../../utils/cn'
-import type { Service } from '../../data/services'
+import { healthServiceGroups } from '../../data/healthServicesNav'
+import type { ReactNode } from 'react'
 
-const navLinks = [
+const navLinks: Array<{ href: string; label: string; isAnchor?: boolean }> = [
   { href: '/', label: 'Home' },
   { href: '/prescriptions', label: 'Prescriptions' },
-  { href: '/services', label: 'Services' },
+  { href: '/health-services', label: 'Health Services' },
+  { href: '/plant-based-therapies', label: 'Plant Based Therapies' },
+  { href: '/compounding', label: 'Compounding' },
   { href: '/shop', label: 'Shop' },
   { href: '/faq', label: 'FAQ' },
-  { href: '/#location', label: 'Contact' },
+  { href: '/contact', label: 'Contact' },
 ]
 
-const topServices: Service[] = [
-  { title: 'Flu Vaccination', slug: 'flu-vaccination' },
-  { title: 'Medication Review', slug: 'medscheck' },
-  { title: 'Travel Vaccinations', slug: 'travel-vaccinations' },
-  { title: 'Blood Pressure Check', slug: 'blood-pressure-check' },
-  { title: 'Diabetes Care', slug: 'diabetes-management' },
-  { title: 'UTI Treatment', slug: 'uti-treatment' },
-] as any
+
+function NavItem({ href, isActive, isAnchor, children }: { href: string; isActive?: boolean; isAnchor?: boolean; children: ReactNode }) {
+  const className = cn('nav-link', isActive ? 'nav-link-active' : '')
+
+  if (isAnchor) return <a href={href} className={className}>{children}</a>
+  return <Link to={href} className={className}>{children}</Link>
+}
+
+function MobileNavItem({ href, isAnchor, onClick, children }: { href: string; isAnchor?: boolean; onClick: () => void; children: ReactNode }) {
+  const className = 'block rounded-2xl px-4 py-3 text-base font-semibold text-[var(--color-navy)] hover:bg-[var(--color-navy-soft)]'
+
+  if (isAnchor) return <a href={href} className={className} onClick={onClick}>{children}</a>
+  return <Link to={href} className={className} onClick={onClick}>{children}</Link>
+}
 
 export function Header() {
   const location = useLocation()
   const scrolled = useScrolled(10)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false)
+  const [expandedMobileGroup, setExpandedMobileGroup] = useState<string | null>(null)
   const cartCount = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0))
   const openCart = useCartStore((s) => s.openCart)
 
   const isHome = location.pathname === '/'
-  const activeHref = useMemo(() => navLinks.find((link) => link.href === location.pathname)?.href, [location.pathname])
+  const activeHref = useMemo(() => navLinks.find((link) => !link.isAnchor && link.href === location.pathname)?.href, [location.pathname])
 
   return (
     <header className="sticky top-0 z-50">
@@ -57,35 +67,75 @@ export function Header() {
             <button onClick={() => setMobileMenuOpen(true)} className="icon-btn md:hidden" aria-label="Open menu">
               <Menu className="h-5 w-5" />
             </button>
-            <Logo className="h-[var(--logo-max-height-mobile)] md:h-[var(--logo-max-height)]" />
+            <Logo className="h-[var(--logo-max-height-mobile)] max-w-[220px] md:h-[var(--logo-max-height)] md:max-w-[320px]" />
           </div>
 
           <nav className="hidden items-center gap-8 md:flex">
-            {navLinks.map((link) => (
-              <Link key={link.href} to={link.href} className={cn('nav-link', activeHref === link.href ? 'nav-link-active' : '')}>
-                {link.label}
-              </Link>
-            ))}
-
-            <div className="relative">
-              <button className="nav-link flex items-center gap-1" onClick={() => setServicesDropdownOpen((v) => !v)} aria-expanded={servicesDropdownOpen}>
-                Popular services <ChevronDown className={cn('h-4 w-4 transition-transform', servicesDropdownOpen && 'rotate-180')} />
-              </button>
-              {servicesDropdownOpen && (
-                <div className="absolute right-0 top-full mt-4 w-[22rem] rounded-[24px] border border-[var(--color-border)] bg-white p-3 shadow-[0_32px_80px_-38px_rgba(16,24,63,0.45)]">
-                  <Link to="/services" className="mb-2 block rounded-2xl bg-[var(--color-navy-soft)] px-4 py-3 font-semibold text-[var(--color-navy)]" onClick={() => setServicesDropdownOpen(false)}>
-                    Explore all pharmacy services
-                  </Link>
-                  <div className="grid gap-1">
-                    {topServices.map((service) => (
-                      <Link key={service.slug} to={`/services/${service.slug}`} className="rounded-2xl px-4 py-3 text-sm text-[var(--color-text-muted)] transition hover:bg-[var(--color-surface-alt)] hover:text-[var(--color-navy)]" onClick={() => setServicesDropdownOpen(false)}>
-                        {service.title}
-                      </Link>
-                    ))}
+            {navLinks.map((link) => {
+              if (link.href === '/health-services') {
+                return (
+                  <div key={link.href} className="relative">
+                    <button
+                      className="nav-link flex items-center gap-1"
+                      onClick={() => setServicesDropdownOpen((v) => !v)}
+                      aria-expanded={servicesDropdownOpen}
+                    >
+                      {link.label}
+                      <ChevronDown
+                        className={cn('h-4 w-4 transition-transform', servicesDropdownOpen && 'rotate-180')}
+                      />
+                    </button>
+                    {servicesDropdownOpen && (
+                      <div className="absolute right-0 top-full mt-4 w-[40rem] rounded-[24px] bg-[var(--color-navy)] p-6 text-white shadow-[0_32px_80px_-38px_rgba(16,24,63,0.45)]">
+                        <Link
+                          to="/health-services"
+                          className="mb-6 block rounded-xl bg-[var(--color-navy-light)] px-5 py-3 font-semibold flex items-center justify-center gap-2"
+                          onClick={() => setServicesDropdownOpen(false)}
+                        >
+                          View all Health Services <ArrowRight className="h-4 w-4" />
+                        </Link>
+                        <div className="grid grid-cols-5 gap-6">
+                          {healthServiceGroups.map((group) => (
+                            <div key={group.id}>
+                              <h3 className="mb-3 text-sm font-bold uppercase tracking-wider text-[var(--color-red)]">
+                                {group.heading}
+                              </h3>
+                              <ul className="space-y-3">
+                                {group.items.map((item) => {
+                                  const Icon = item.icon
+                                  return (
+                                    <li key={item.href}>
+                                      <Link
+                                        to={item.href}
+                                        className="flex items-start gap-3 text-sm text-white/90 hover:text-white transition"
+                                        onClick={() => setServicesDropdownOpen(false)}
+                                      >
+                                        <Icon className="h-5 w-5 flex-shrink-0 mt-0.5" />
+                                        <span>{item.title}</span>
+                                      </Link>
+                                    </li>
+                                  )
+                                })}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-              )}
-            </div>
+                )
+              }
+              return (
+                <NavItem
+                  key={link.href}
+                  href={link.href}
+                  isActive={activeHref === link.href}
+                  isAnchor={link.isAnchor}
+                >
+                  {link.label}
+                </NavItem>
+              )
+            })}
           </nav>
 
           <div className="flex items-center gap-2 md:gap-3">
@@ -97,7 +147,8 @@ export function Header() {
               {cartCount > 0 && <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-red)] text-[10px] font-bold text-white">{cartCount > 9 ? '9+' : cartCount}</span>}
             </button>
             <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer" className="btn-header-primary text-sm">
-              Book vaccination
+              <span className="hidden sm:inline">Book vaccination</span>
+              <span className="sm:hidden">Book</span>
             </a>
           </div>
         </div>
@@ -111,18 +162,43 @@ export function Header() {
           </div>
           <div className="space-y-1">
             {navLinks.map((link) => (
-              <Link key={link.href} to={link.href} className="block rounded-2xl px-4 py-3 text-base font-semibold text-[var(--color-navy)] hover:bg-[var(--color-navy-soft)]" onClick={() => setMobileMenuOpen(false)}>
+              <MobileNavItem key={link.href} href={link.href} isAnchor={link.isAnchor} onClick={() => setMobileMenuOpen(false)}>
                 {link.label}
-              </Link>
+              </MobileNavItem>
             ))}
           </div>
           <div className="rounded-[24px] bg-[var(--color-surface-alt)] p-4">
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-red)]">Popular services</p>
-            <div className="space-y-1">
-              {topServices.map((service) => (
-                <Link key={service.slug} to={`/services/${service.slug}`} className="block rounded-xl px-3 py-2 text-sm text-[var(--color-text-muted)] hover:bg-white hover:text-[var(--color-navy)]" onClick={() => setMobileMenuOpen(false)}>
-                  {service.title}
-                </Link>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-red)]">Health Services</p>
+            <div className="space-y-3">
+              {healthServiceGroups.map((group) => (
+                <div key={group.id} className="border-b border-[var(--color-border)] last:border-b-0">
+                  <button
+                    className="flex w-full items-center justify-between py-2 text-left font-semibold text-[var(--color-navy)]"
+                    onClick={() => setExpandedMobileGroup(expandedMobileGroup === group.id ? null : group.id)}
+                    aria-expanded={expandedMobileGroup === group.id}
+                  >
+                    {group.heading}
+                    <ChevronDown className={cn('h-4 w-4 transition-transform', expandedMobileGroup === group.id && 'rotate-180')} />
+                  </button>
+                  {expandedMobileGroup === group.id && (
+                    <div className="mt-2 space-y-2 pb-3">
+                      {group.items.map((item) => {
+                        const Icon = item.icon
+                        return (
+                          <Link
+                            key={item.href}
+                            to={item.href}
+                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-[var(--color-text-muted)] hover:bg-[var(--color-navy-soft)] hover:text-[var(--color-navy)]"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            <Icon className="h-4 w-4 flex-shrink-0" />
+                            <span>{item.title}</span>
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </div>
