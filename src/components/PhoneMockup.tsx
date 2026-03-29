@@ -110,7 +110,7 @@ export function PhoneMockup() {
                 <Clock className="h-4 w-4 text-[var(--color-sage)]" />
                 <p className="text-[0.8rem] font-bold text-[var(--color-navy-deep)]">Opening Hours</p>
               </div>
-              <div className="mt-2 space-y-1 text-[0.78rem] text-[var(--color-text-muted)]">
+              <div className="mt-2 space-y-1 text-[0.82rem] font-medium text-[var(--color-text-dark)]">
                 <div className="flex justify-between">
                   <span>Mon – Fri</span>
                   <span className="font-medium text-[var(--color-navy-deep)]">8am – 8pm</span>
