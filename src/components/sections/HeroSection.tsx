@@ -10,7 +10,7 @@ export function HeroSection() {
         {/* Pharmacy storefront background — positioned to show signage while keeping text zones clear */}
         <div
           className="absolute inset-0 bg-cover bg-[center_20%] md:bg-[center_30%]"
-          style={{ backgroundImage: 'url(/hero-pharmacy.png)' }}
+          style={{ backgroundImage: 'url(/hero-pharmacy.webp)' }}
         />
         {/* Primary navy overlay — lighter to let storefront show */}
         <div className="absolute inset-0 bg-[var(--color-navy-deep)]/68 md:bg-[var(--color-navy-deep)]/58" />

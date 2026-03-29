@@ -10,10 +10,10 @@ interface BrandLogoProps {
 export function BrandLogo({ variant = 'dark', className = '', style }: BrandLogoProps) {
   const src =
     variant === 'light'
-      ? '/logo-white.png'
+      ? '/logo-white.webp'
       : variant === 'badge'
         ? '/logo-badge.webp'
-        : '/logo-black.png'
+        : '/logo-black.webp'
 
   return (
     <img

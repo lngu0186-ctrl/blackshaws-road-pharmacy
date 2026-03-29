@@ -137,7 +137,7 @@ export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url(/chemist-care-bg-poster.jpg)',
+          backgroundImage: 'url(/chemist-care-bg-poster.webp)',
           opacity: videoLoaded && !prefersReducedMotion ? 0 : 0.26,
           transition: 'opacity 220ms ease',
         }}
@@ -152,7 +152,7 @@ export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
           loop
           playsInline
           preload="metadata"
-          poster="/chemist-care-bg-poster.jpg"
+          poster="/chemist-care-bg-poster.webp"
           className="absolute inset-0 h-full w-full object-cover pointer-events-none"
           style={{ opacity: videoLoaded ? 0.34 : 0 }}
           aria-hidden="true"
@@ -174,7 +174,7 @@ export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
             <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-white/80 backdrop-blur-sm">Victorian Government-backed care</span>
 
             <img
-              src="/chemist-care-now-logo.png"
+              src="/chemist-care-now-logo.webp"
               alt="Chemist Care Now"
               className="mt-6 h-12 w-auto sm:h-14 md:h-16"
               style={{ objectFit: 'contain', display: 'block' }}
