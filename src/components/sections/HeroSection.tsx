@@ -50,55 +50,55 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div className="hidden lg:flex justify-center">
-            <div className="relative w-[320px]">
+          <div className="hidden lg:flex justify-center items-center">
+            <div className="relative w-[480px]">
               <img
                 src={iphoneFrame}
                 alt=""
                 role="presentation"
-                className="relative z-0 w-full h-auto pointer-events-none select-none drop-shadow-[0_40px_80px_rgba(0,0,0,0.45)]"
+                className="relative z-20 w-full h-auto pointer-events-none select-none drop-shadow-[0_40px_80px_rgba(0,0,0,0.45)]"
               />
               <div className="absolute z-10 overflow-hidden overflow-y-auto"
                 style={{
-                  top: '2.4%',
-                  left: '5.2%',
-                  right: '5.2%',
-                  bottom: '2.4%',
-                  borderRadius: '44px',
+                  top: '1.8%',
+                  left: '4.6%',
+                  right: '4.6%',
+                  bottom: '1.8%',
+                  borderRadius: '48px',
                 }}>
                 <div className="h-full w-full bg-white flex flex-col">
-                  <div className="h-12 shrink-0" />
+                  <div className="h-16 shrink-0" />
 
-                  <div className="px-5 pb-5 flex flex-col flex-1 text-[var(--color-text-dark)]">
-                    <div className="text-center mb-4">
-                      <h3 className="text-[1rem] leading-tight font-bold text-[var(--color-navy-deep)]" style={{ fontFamily: 'var(--font-display)' }}>
+                  <div className="px-7 pb-7 flex flex-col flex-1 text-[var(--color-text-dark)]">
+                    <div className="text-center mb-5">
+                      <h3 className="text-[1.4rem] leading-tight font-bold text-[var(--color-navy-deep)]" style={{ fontFamily: 'var(--font-display)' }}>
                         Blackshaws Road<br />Pharmacy
                       </h3>
-                      <p className="mt-1.5 text-[0.65rem] leading-snug text-[var(--color-text-muted)]">
+                      <p className="mt-2 text-[0.85rem] leading-snug text-[var(--color-text-muted)]">
                         310A Blackshaws Road<br />
                         Altona North<br />
                         Victoria 3025
                       </p>
-                      <p className="mt-2 text-[0.6rem] text-[var(--color-navy)]" style={{ fontWeight: 600 }}>
+                      <p className="mt-3 text-[0.8rem] text-[var(--color-navy)]" style={{ fontWeight: 600 }}>
                         Give us a call on{' '}
                         <span className="text-[var(--color-red)]">03 9391 3257</span>
                       </p>
                     </div>
 
-                    <div className="h-px bg-[var(--color-border)] my-2" />
+                    <div className="h-px bg-[var(--color-border)] my-3" />
 
-                    <div className="mb-3">
-                      <p className="text-[0.7rem] font-bold text-[var(--color-navy-deep)] mb-1">Do you have an ePrescription?</p>
-                      <p className="text-[0.55rem] leading-relaxed text-[var(--color-text-muted)]">
+                    <div className="mb-4">
+                      <p className="text-[0.9rem] font-bold text-[var(--color-navy-deep)] mb-1.5">Do you have an ePrescription?</p>
+                      <p className="text-[0.75rem] leading-relaxed text-[var(--color-text-muted)]">
                         EMAIL us a copy of your prescription. Please note that if it is a paper prescription we will require the original hard-copy upon collection of the medication.
                       </p>
-                      <p className="text-[0.55rem] leading-relaxed text-[var(--color-text-muted)] mt-1.5">
+                      <p className="text-[0.75rem] leading-relaxed text-[var(--color-text-muted)] mt-2">
                         Alternatively TEXT/SMS us a copy of your ESCRIPT link.
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-[var(--color-navy-soft)] p-3 mb-3">
-                      <div className="space-y-1 text-[0.55rem] text-[var(--color-text-dark)]">
+                    <div className="rounded-xl bg-[var(--color-navy-soft)] p-4 mb-4">
+                      <div className="space-y-1.5 text-[0.75rem] text-[var(--color-text-dark)]">
                         <p><span className="font-semibold text-[var(--color-navy)]">Phone:</span> 03 9391 3257</p>
                         <p><span className="font-semibold text-[var(--color-navy)]">Fax:</span> 03 9391 8099</p>
                         <p><span className="font-semibold text-[var(--color-navy)]">Mobile:</span> 0406 692 267</p>
@@ -106,9 +106,9 @@ export function HeroSection() {
                       </div>
                     </div>
 
-                    <div className="rounded-xl bg-[var(--color-cream)] p-3 mb-4">
-                      <p className="text-[0.6rem] font-bold text-[var(--color-navy-deep)] mb-1.5">Opening Hours</p>
-                      <div className="space-y-0.5 text-[0.55rem] text-[var(--color-text-muted)]">
+                    <div className="rounded-xl bg-[var(--color-cream)] p-4 mb-5">
+                      <p className="text-[0.8rem] font-bold text-[var(--color-navy-deep)] mb-2">Opening Hours</p>
+                      <div className="space-y-1 text-[0.75rem] text-[var(--color-text-muted)]">
                         <div className="flex justify-between"><span>Monday – Friday</span><span className="font-semibold text-[var(--color-text-dark)]">8am – 8pm</span></div>
                         <div className="flex justify-between"><span>Saturday</span><span className="font-semibold text-[var(--color-text-dark)]">8am – 2pm</span></div>
                         <div className="flex justify-between"><span>Sunday</span><span className="font-semibold text-[var(--color-text-dark)]">8am – 1pm</span></div>
@@ -117,7 +117,7 @@ export function HeroSection() {
 
                     <div className="mt-auto">
                       <Link to="/upload-prescription" className="block">
-                        <button className="w-full rounded-full py-2.5 text-[0.7rem] font-bold text-white bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] transition-colors shadow-[0_8px_20px_-8px_rgba(192,57,43,0.6)]">
+                        <button className="w-full rounded-full py-3 text-[0.9rem] font-bold text-white bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] transition-colors shadow-[0_8px_20px_-8px_rgba(192,57,43,0.6)]">
                           Upload Prescription
                         </button>
                       </Link>
