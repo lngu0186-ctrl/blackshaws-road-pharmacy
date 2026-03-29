@@ -123,10 +123,7 @@ export default function Shop() {
         <div className="flex gap-8">
           <aside className="hidden w-72 shrink-0 xl:block">
             <div className="sticky top-28 rounded-[30px] border border-[var(--color-border)] bg-white p-6 shadow-[0_28px_70px_-48px_rgba(16,24,63,0.25)]">
-              <div className="mb-5 flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-[var(--color-navy)]">Browse categories</h2>
-                <button onClick={handleClearCategory} className="text-sm font-semibold text-[var(--color-red)]">Clear</button>
-              </div>
+              <h2 className="text-lg font-semibold text-[var(--color-navy)]">Browse categories</h2>
               <button onClick={handleClearCategory} className={`category-btn ${!selectedCategoryPath ? 'active' : ''}`}>All products <span className="count">({products.length})</span></button>
               <nav className="mt-3 space-y-1">
                 {allCategories.map((category) => {
@@ -167,6 +164,7 @@ export default function Shop() {
                     <button onClick={() => setViewMode('list')} className={`rounded-full p-2 ${viewMode === 'list' ? 'bg-white text-[var(--color-red)]' : 'text-gray-500'}`}><List className="h-4 w-4" /></button>
                   </div>
                   <Button variant="outline" size="sm" className="xl:hidden" onClick={() => setShowMobileFilters(true)}><SlidersHorizontal className="mr-2 h-4 w-4" /> Filters</Button>
+                  {selectedCategoryPath && <button onClick={handleClearCategory} className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface-alt)] px-4 py-2 text-sm font-semibold text-[var(--color-red)]">Clear</button>}
                 </div>
               </div>
 
