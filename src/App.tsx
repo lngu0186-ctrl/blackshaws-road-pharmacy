@@ -66,6 +66,7 @@ function App() {
               <Route path="/shop/:handle" element={<ProductDetail />} />
               <Route path="/services" element={<Services />} />
               <Route path="/services/:slug" element={<ServiceDetail />} />
+              <Route path="/upload-prescription" element={<UploadPrescription />} />
               <Route path="/" element={
                 <>
                   <HeroSection />

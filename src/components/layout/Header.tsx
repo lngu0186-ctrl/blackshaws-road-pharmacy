@@ -12,6 +12,7 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/services', label: 'Services' },
   { href: '/shop', label: 'Shop' },
+  { href: '/upload-prescription', label: 'Upload Prescription' },
   { href: '/#vaccination', label: 'Vaccinations' },
   { href: '/#chemist-care', label: 'Chemist Care' },
   { href: '/#location', label: 'Contact' },
