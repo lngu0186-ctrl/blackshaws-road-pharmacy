@@ -18,6 +18,7 @@ const Shop = lazy(() => import('./pages/Shop'))
 const ProductDetail = lazy(() => import('./pages/ProductDetail'))
 const Services = lazy(() => import('./pages/Services'))
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'))
+const UploadPrescription = lazy(() => import('./pages/UploadPrescription'))
 
 function LoadingFallback() {
   return (
@@ -65,6 +66,7 @@ function App() {
               <Route path="/shop/:handle" element={<ProductDetail />} />
               <Route path="/services" element={<Services />} />
               <Route path="/services/:slug" element={<ServiceDetail />} />
+              <Route path="/upload-prescription" element={<UploadPrescription />} />
               <Route path="/" element={
                 <>
                   <HeroSection />

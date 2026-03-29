@@ -50,8 +50,8 @@ export function HeroSection() {
 
             <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
               <Link to="/shop"><Button variant="red" size="lg">Shop online now</Button></Link>
-              <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer"><Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">Book a vaccination</Button></a>
-              <a href="#services"><Button variant="ghost" size="lg" className="text-white hover:bg-white/10">Explore pharmacy services</Button></a>
+              <Link to="/upload-prescription"><Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">Upload prescription</Button></Link>
+              <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer"><Button variant="ghost" size="lg" className="text-white hover:bg-white/10">Book a vaccination</Button></a>
             </div>
           </div>
 

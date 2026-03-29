@@ -10,6 +10,7 @@ const footerLinks = {
   ],
   explore: [
     { label: 'Shop online', href: '/shop' },
+    { label: 'Upload prescription', href: '/upload-prescription' },
     { label: 'All services', href: '/services' },
     { label: 'Practitioner-only range', href: 'https://blackshawspharmacy.com.au/collections/practitioner-only-range', target: '_blank' },
   ],
