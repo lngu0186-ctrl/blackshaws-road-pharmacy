@@ -195,12 +195,6 @@ p { max-width: 72ch; }
 }
 
 
-  background: linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.96) 100%);
-  border: 1px solid rgba(255,255,255,0.55);
-  box-shadow: 0 30px 80px -44px rgba(10, 18, 56, 0.4);
-  backdrop-filter: blur(18px);
-}
-
 .nav-link {
   font-size: 0.93rem;
   font-weight: 600;
