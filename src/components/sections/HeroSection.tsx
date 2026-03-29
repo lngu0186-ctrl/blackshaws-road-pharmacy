@@ -56,15 +56,15 @@ export function HeroSection() {
                 src={iphoneFrame}
                 alt=""
                 role="presentation"
-                className="relative z-10 w-full h-auto pointer-events-none select-none drop-shadow-[0_40px_80px_rgba(0,0,0,0.45)]"
+                className="relative z-0 w-full h-auto pointer-events-none select-none drop-shadow-[0_40px_80px_rgba(0,0,0,0.45)]"
               />
-              <div className="absolute z-0 overflow-hidden overflow-y-auto"
+              <div className="absolute z-10 overflow-hidden overflow-y-auto"
                 style={{
-                  top: '3.8%',
-                  left: '5.8%',
-                  right: '5.8%',
-                  bottom: '3.8%',
-                  borderRadius: '38px',
+                  top: '2.4%',
+                  left: '5.2%',
+                  right: '5.2%',
+                  bottom: '2.4%',
+                  borderRadius: '44px',
                 }}>
                 <div className="h-full w-full bg-white flex flex-col">
                   <div className="h-12 shrink-0" />
