@@ -7,10 +7,14 @@ export function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-[var(--color-navy-deep)] text-white">
       <div className="absolute inset-0">
-        {/* Pharmacy storefront background — positioned to show signage while keeping text zones clear */}
-        <div
-          className="absolute inset-0 bg-cover bg-[center_20%] md:bg-[center_30%]"
-          style={{ backgroundImage: 'url(/hero-pharmacy.webp)' }}
+        {/* Pharmacy storefront background — native img for LCP discoverability */}
+        <img
+          src="/hero-pharmacy.webp"
+          alt=""
+          role="presentation"
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover object-[center_20%] md:object-[center_30%]"
         />
         {/* Primary navy overlay — lighter to let storefront show */}
         <div className="absolute inset-0 bg-[var(--color-navy-deep)]/68 md:bg-[var(--color-navy-deep)]/58" />
