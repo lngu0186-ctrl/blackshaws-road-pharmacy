@@ -50,9 +50,9 @@ export function PhoneMockup() {
             </h3>
 
             {/* Address */}
-            <div className="mt-3 flex items-start gap-2 rounded-2xl bg-[var(--color-navy-soft)] px-3 py-2.5">
-              <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--color-navy)]" />
-              <p className="text-[0.72rem] leading-snug text-[var(--color-text-muted)]">
+            <div className="mt-4 flex items-start gap-2.5 rounded-2xl bg-[var(--color-navy-soft)] px-4 py-3">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-navy)]" />
+              <p className="text-[0.85rem] leading-snug text-[var(--color-text-muted)]">
                 310A Blackshaws Road
                 <br />
                 Altona North, Victoria 3025
