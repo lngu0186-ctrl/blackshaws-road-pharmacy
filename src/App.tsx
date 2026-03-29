@@ -18,6 +18,7 @@ const Shop = lazy(() => import('./pages/Shop'))
 const ProductDetail = lazy(() => import('./pages/ProductDetail'))
 const Services = lazy(() => import('./pages/Services'))
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'))
+const UploadPrescription = lazy(() => import('./pages/UploadPrescription'))
 
 function LoadingFallback() {
   return (
