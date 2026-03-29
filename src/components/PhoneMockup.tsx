@@ -69,18 +69,18 @@ export function PhoneMockup() {
             </div>
 
             {/* ePrescription */}
-            <div className="mt-3">
-              <div className="flex items-center gap-1.5">
-                <FileText className="h-3.5 w-3.5 text-[var(--color-red)]" />
-                <p className="text-[0.72rem] font-bold uppercase tracking-wider text-[var(--color-red)]">
+            <div className="mt-4">
+              <div className="flex items-center gap-2">
+                <FileText className="h-4 w-4 text-[var(--color-red)]" />
+                <p className="text-[0.85rem] font-bold uppercase tracking-wider text-[var(--color-red)]">
                   ePrescription
                 </p>
               </div>
-              <p className="mt-1.5 text-[0.68rem] leading-relaxed text-[var(--color-text-muted)]">
+              <p className="mt-2 text-[0.8rem] leading-relaxed text-[var(--color-text-muted)]">
                 <strong className="text-[var(--color-navy-deep)]">EMAIL</strong> us a copy of your
                 prescription. Paper scripts require the original hard-copy upon collection.
               </p>
-              <p className="mt-1 text-[0.68rem] leading-relaxed text-[var(--color-text-muted)]">
+              <p className="mt-1.5 text-[0.8rem] leading-relaxed text-[var(--color-text-muted)]">
                 Or <strong className="text-[var(--color-navy-deep)]">TEXT/SMS</strong> us your eScript
                 link.
               </p>
