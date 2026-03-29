@@ -24,7 +24,7 @@ export function HeroSection() {
       </div>
 
       <div className="container-custom relative z-10 py-18 md:py-24">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(440px,0.95fr)] xl:gap-12">
           <div className="max-w-4xl">
             <div className="flex flex-wrap gap-3">
               <span className="badge-red">EST. 1968</span>
@@ -51,79 +51,80 @@ export function HeroSection() {
           </div>
 
           <div className="hidden lg:flex justify-center items-center">
-            <div className="relative w-[480px]">
-              <img
-                src={iphoneFrame}
-                alt=""
-                role="presentation"
-                className="relative z-20 w-full h-auto pointer-events-none select-none drop-shadow-[0_40px_80px_rgba(0,0,0,0.45)]"
-              />
-              <div className="absolute z-10 overflow-hidden overflow-y-auto"
-                style={{
-                  top: '1.8%',
-                  left: '4.6%',
-                  right: '4.6%',
-                  bottom: '1.8%',
-                  borderRadius: '48px',
-                }}>
-                <div className="h-full w-full bg-white flex flex-col">
-                  <div className="h-16 shrink-0" />
+            <div className="relative isolate w-[500px] xl:w-[520px]">
+              <div
+                className="absolute inset-x-[4.8%] top-[1.8%] bottom-[1.8%] z-10 overflow-hidden rounded-[3.4rem] bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]"
+                style={{ clipPath: 'inset(0 round 3.4rem)' }}
+              >
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(249,246,241,0.98)_100%)]" />
+                <div className="relative flex h-full flex-col text-[var(--color-text-dark)]">
+                  <div className="h-[5.7rem] shrink-0" />
 
-                  <div className="px-7 pb-7 flex flex-col flex-1 text-[var(--color-text-dark)]">
-                    <div className="text-center mb-5">
-                      <h3 className="text-[1.4rem] leading-tight font-bold text-[var(--color-navy-deep)]" style={{ fontFamily: 'var(--font-display)' }}>
+                  <div className="flex flex-1 flex-col px-7 pb-6">
+                    <div className="text-center">
+                      <h3 className="text-[1.42rem] leading-[1.15] font-bold text-[var(--color-navy-deep)]" style={{ fontFamily: 'var(--font-display)' }}>
                         Blackshaws Road<br />Pharmacy
                       </h3>
-                      <p className="mt-2 text-[0.85rem] leading-snug text-[var(--color-text-muted)]">
+                      <p className="mt-2.5 text-[0.86rem] leading-snug text-[var(--color-text-muted)]">
                         310A Blackshaws Road<br />
                         Altona North<br />
                         Victoria 3025
                       </p>
-                      <p className="mt-3 text-[0.8rem] text-[var(--color-navy)]" style={{ fontWeight: 600 }}>
-                        Give us a call on{' '}
-                        <span className="text-[var(--color-red)]">03 9391 3257</span>
+                      <p className="mt-3 text-[0.8rem] font-semibold text-[var(--color-navy)]">
+                        Give us a call on <span className="text-[var(--color-red)]">03 9391 3257</span>
                       </p>
                     </div>
 
-                    <div className="h-px bg-[var(--color-border)] my-3" />
+                    <div className="my-4 h-px bg-[var(--color-border)]/80" />
 
-                    <div className="mb-4">
-                      <p className="text-[0.9rem] font-bold text-[var(--color-navy-deep)] mb-1.5">Do you have an ePrescription?</p>
-                      <p className="text-[0.75rem] leading-relaxed text-[var(--color-text-muted)]">
-                        EMAIL us a copy of your prescription. Please note that if it is a paper prescription we will require the original hard-copy upon collection of the medication.
-                      </p>
-                      <p className="text-[0.75rem] leading-relaxed text-[var(--color-text-muted)] mt-2">
-                        Alternatively TEXT/SMS us a copy of your ESCRIPT link.
-                      </p>
-                    </div>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-[0.9rem] font-bold text-[var(--color-navy-deep)]">Do you have an ePrescription?</p>
+                        <p className="mt-1.5 text-[0.73rem] leading-[1.55] text-[var(--color-text-muted)]">
+                          EMAIL us a copy of your prescription. Please note that if it is a paper prescription we will require the original hard-copy upon collection of the medication.
+                        </p>
+                        <p className="mt-2 text-[0.73rem] leading-[1.55] text-[var(--color-text-muted)]">
+                          Alternatively TEXT/SMS us a copy of your ESCRIPT link.
+                        </p>
+                      </div>
 
-                    <div className="rounded-xl bg-[var(--color-navy-soft)] p-4 mb-4">
-                      <div className="space-y-1.5 text-[0.75rem] text-[var(--color-text-dark)]">
-                        <p><span className="font-semibold text-[var(--color-navy)]">Phone:</span> 03 9391 3257</p>
-                        <p><span className="font-semibold text-[var(--color-navy)]">Fax:</span> 03 9391 8099</p>
-                        <p><span className="font-semibold text-[var(--color-navy)]">Mobile:</span> 0406 692 267</p>
-                        <p><span className="font-semibold text-[var(--color-navy)]">Email:</span> <span className="text-[var(--color-red)]">online@blackshawsroadpharmacy.com.au</span></p>
+                      <div className="rounded-[1.15rem] bg-[var(--color-navy-soft)] p-4 shadow-[0_14px_30px_-22px_rgba(16,24,63,0.42)]">
+                        <div className="space-y-1.5 text-[0.74rem] leading-[1.45] text-[var(--color-text-dark)]">
+                          <p><span className="font-semibold text-[var(--color-navy)]">Phone:</span> 03 9391 3257</p>
+                          <p><span className="font-semibold text-[var(--color-navy)]">Fax:</span> 03 9391 8099</p>
+                          <p><span className="font-semibold text-[var(--color-navy)]">Mobile:</span> 0406 692 267</p>
+                          <p><span className="font-semibold text-[var(--color-navy)]">Email:</span> <span className="break-all text-[var(--color-red)]">online@blackshawsroadpharmacy.com.au</span></p>
+                        </div>
+                      </div>
+
+                      <div className="rounded-[1.15rem] bg-[var(--color-cream)] p-4 shadow-[0_14px_30px_-24px_rgba(16,24,63,0.25)]">
+                        <p className="mb-2 text-[0.8rem] font-bold text-[var(--color-navy-deep)]">Opening Hours</p>
+                        <div className="space-y-1 text-[0.73rem] leading-[1.45] text-[var(--color-text-muted)]">
+                          <div className="flex justify-between gap-3"><span>Monday - Friday</span><span className="font-semibold text-[var(--color-text-dark)]">8am - 8pm</span></div>
+                          <div className="flex justify-between gap-3"><span>Saturday</span><span className="font-semibold text-[var(--color-text-dark)]">8am - 2pm</span></div>
+                          <div className="flex justify-between gap-3"><span>Sunday</span><span className="font-semibold text-[var(--color-text-dark)]">8am - 1pm</span></div>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="rounded-xl bg-[var(--color-cream)] p-4 mb-5">
-                      <p className="text-[0.8rem] font-bold text-[var(--color-navy-deep)] mb-2">Opening Hours</p>
-                      <div className="space-y-1 text-[0.75rem] text-[var(--color-text-muted)]">
-                        <div className="flex justify-between"><span>Monday – Friday</span><span className="font-semibold text-[var(--color-text-dark)]">8am – 8pm</span></div>
-                        <div className="flex justify-between"><span>Saturday</span><span className="font-semibold text-[var(--color-text-dark)]">8am – 2pm</span></div>
-                        <div className="flex justify-between"><span>Sunday</span><span className="font-semibold text-[var(--color-text-dark)]">8am – 1pm</span></div>
-                      </div>
-                    </div>
-
-                    <div className="mt-auto">
+                    <div className="mt-auto pt-4">
                       <Link to="/upload-prescription" className="block">
-                        <button className="w-full rounded-full py-3 text-[0.9rem] font-bold text-white bg-[var(--color-red)] hover:bg-[var(--color-red-hover)] transition-colors shadow-[0_8px_20px_-8px_rgba(192,57,43,0.6)]">
+                        <Button variant="red" className="w-full min-h-12 rounded-full text-[0.9rem] font-bold shadow-[0_18px_30px_-20px_rgba(192,57,43,0.82)]">
                           Upload Prescription
-                        </button>
+                        </Button>
                       </Link>
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-[4.5rem]">
+                <img
+                  src={iphoneFrame}
+                  alt=""
+                  role="presentation"
+                  className="h-full w-full scale-[1.035] object-contain mix-blend-multiply select-none drop-shadow-[0_40px_80px_rgba(0,0,0,0.4)]"
+                />
               </div>
             </div>
           </div>
