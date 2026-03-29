@@ -87,7 +87,7 @@ export function PhoneMockup() {
             </div>
 
             {/* Contact grid */}
-            <div className="mt-3 grid grid-cols-2 gap-1.5">
+            <div className="mt-4 grid grid-cols-2 gap-2">
               {[
                 { icon: Phone, label: '03 9391 3257' },
                 { icon: MessageSquare, label: '0406 692 267' },
@@ -96,10 +96,10 @@ export function PhoneMockup() {
               ].map((c) => (
                 <div
                   key={c.label}
-                  className="flex items-center gap-1.5 rounded-xl bg-[var(--color-cream)] px-2 py-2"
+                  className="flex items-center gap-2 rounded-xl bg-[var(--color-cream)] px-3 py-2.5"
                 >
-                  <c.icon className="h-3 w-3 shrink-0 text-[var(--color-navy)]" />
-                  <span className="truncate text-[0.62rem] text-[var(--color-text-muted)]">{c.label}</span>
+                  <c.icon className="h-3.5 w-3.5 shrink-0 text-[var(--color-navy)]" />
+                  <span className="truncate text-[0.75rem] text-[var(--color-text-muted)]">{c.label}</span>
                 </div>
               ))}
             </div>
