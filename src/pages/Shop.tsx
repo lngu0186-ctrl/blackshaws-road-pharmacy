@@ -164,6 +164,7 @@ export default function Shop() {
                     <button onClick={() => setViewMode('list')} className={`rounded-full p-2 ${viewMode === 'list' ? 'bg-white text-[var(--color-red)]' : 'text-gray-500'}`}><List className="h-4 w-4" /></button>
                   </div>
                   <Button variant="outline" size="sm" className="xl:hidden" onClick={() => setShowMobileFilters(true)}><SlidersHorizontal className="mr-2 h-4 w-4" /> Filters</Button>
+                  {selectedCategoryPath && <button onClick={handleClearCategory} className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface-alt)] px-4 py-2 text-sm font-semibold text-[var(--color-red)]">Clear</button>}
                 </div>
               </div>
 
