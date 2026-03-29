@@ -368,7 +368,7 @@ export default function UploadPrescription() {
                   'Photograph the entire prescription — all edges visible',
                   'Use good lighting with no shadows across the text',
                   'Make sure all text and barcodes are sharp and readable',
-                  'Include the prescriber's details and date',
+                  'Include the prescriber\u2019s details and date',
                 ].map((tip, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <span className="mt-1 h-2 w-2 rounded-full bg-[var(--color-red)] shrink-0" />
