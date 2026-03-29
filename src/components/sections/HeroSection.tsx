@@ -51,16 +51,29 @@ export function HeroSection() {
           </div>
 
           <div className="hidden lg:flex justify-center items-center">
-            <div className="relative isolate w-[500px] xl:w-[520px]">
+            <div className="relative w-[500px] xl:w-[520px]">
+              {/* Phone frame on top */}
+              <img
+                src={iphoneFrame}
+                alt=""
+                role="presentation"
+                className="relative z-20 w-full h-auto pointer-events-none select-none drop-shadow-[0_40px_80px_rgba(0,0,0,0.45)]"
+              />
+              {/* Screen content underneath, positioned inside the screen area */}
               <div
-                className="absolute inset-x-[4.8%] top-[1.8%] bottom-[1.8%] z-10 overflow-hidden rounded-[3.4rem] bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]"
-                style={{ clipPath: 'inset(0 round 3.4rem)' }}
+                className="absolute z-10 overflow-hidden overflow-y-auto"
+                style={{
+                  top: '2%',
+                  left: '5.4%',
+                  right: '5.4%',
+                  bottom: '2%',
+                  borderRadius: '46px',
+                }}
               >
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(249,246,241,0.98)_100%)]" />
-                <div className="relative flex h-full flex-col text-[var(--color-text-dark)]">
-                  <div className="h-[5.7rem] shrink-0" />
+                <div className="h-full w-full bg-white flex flex-col">
+                  <div className="h-[5.2rem] shrink-0" />
 
-                  <div className="flex flex-1 flex-col px-7 pb-6">
+                  <div className="flex flex-1 flex-col overflow-y-auto px-7 pb-6 text-[var(--color-text-dark)]">
                     <div className="text-center">
                       <h3 className="text-[1.42rem] leading-[1.15] font-bold text-[var(--color-navy-deep)]" style={{ fontFamily: 'var(--font-display)' }}>
                         Blackshaws Road<br />Pharmacy
@@ -88,7 +101,7 @@ export function HeroSection() {
                         </p>
                       </div>
 
-                      <div className="rounded-[1.15rem] bg-[var(--color-navy-soft)] p-4 shadow-[0_14px_30px_-22px_rgba(16,24,63,0.42)]">
+                      <div className="rounded-[1.15rem] bg-[var(--color-navy-soft)] p-4">
                         <div className="space-y-1.5 text-[0.74rem] leading-[1.45] text-[var(--color-text-dark)]">
                           <p><span className="font-semibold text-[var(--color-navy)]">Phone:</span> 03 9391 3257</p>
                           <p><span className="font-semibold text-[var(--color-navy)]">Fax:</span> 03 9391 8099</p>
@@ -97,12 +110,12 @@ export function HeroSection() {
                         </div>
                       </div>
 
-                      <div className="rounded-[1.15rem] bg-[var(--color-cream)] p-4 shadow-[0_14px_30px_-24px_rgba(16,24,63,0.25)]">
+                      <div className="rounded-[1.15rem] bg-[var(--color-cream)] p-4">
                         <p className="mb-2 text-[0.8rem] font-bold text-[var(--color-navy-deep)]">Opening Hours</p>
                         <div className="space-y-1 text-[0.73rem] leading-[1.45] text-[var(--color-text-muted)]">
-                          <div className="flex justify-between gap-3"><span>Monday - Friday</span><span className="font-semibold text-[var(--color-text-dark)]">8am - 8pm</span></div>
-                          <div className="flex justify-between gap-3"><span>Saturday</span><span className="font-semibold text-[var(--color-text-dark)]">8am - 2pm</span></div>
-                          <div className="flex justify-between gap-3"><span>Sunday</span><span className="font-semibold text-[var(--color-text-dark)]">8am - 1pm</span></div>
+                          <div className="flex justify-between gap-3"><span>Monday – Friday</span><span className="font-semibold text-[var(--color-text-dark)]">8am – 8pm</span></div>
+                          <div className="flex justify-between gap-3"><span>Saturday</span><span className="font-semibold text-[var(--color-text-dark)]">8am – 2pm</span></div>
+                          <div className="flex justify-between gap-3"><span>Sunday</span><span className="font-semibold text-[var(--color-text-dark)]">8am – 1pm</span></div>
                         </div>
                       </div>
                     </div>
@@ -116,15 +129,6 @@ export function HeroSection() {
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-[4.5rem]">
-                <img
-                  src={iphoneFrame}
-                  alt=""
-                  role="presentation"
-                  className="h-full w-full scale-[1.035] object-contain mix-blend-multiply select-none drop-shadow-[0_40px_80px_rgba(0,0,0,0.4)]"
-                />
               </div>
             </div>
           </div>
