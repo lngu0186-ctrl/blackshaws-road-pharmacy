@@ -60,9 +60,9 @@ export function PhoneMockup() {
             </div>
 
             {/* Call */}
-            <div className="mt-2 flex items-center gap-2 rounded-2xl bg-[var(--color-navy-soft)] px-3 py-2.5">
-              <Phone className="h-3.5 w-3.5 shrink-0 text-[var(--color-navy)]" />
-              <p className="text-[0.72rem] leading-snug text-[var(--color-text-muted)]">
+            <div className="mt-2.5 flex items-center gap-2.5 rounded-2xl bg-[var(--color-navy-soft)] px-4 py-3">
+              <Phone className="h-4 w-4 shrink-0 text-[var(--color-navy)]" />
+              <p className="text-[0.85rem] leading-snug text-[var(--color-text-muted)]">
                 Give us a call on{' '}
                 <span className="font-semibold text-[var(--color-navy-deep)]">03 9391 3257</span>
               </p>
