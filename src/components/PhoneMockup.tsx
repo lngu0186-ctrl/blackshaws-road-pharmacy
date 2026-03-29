@@ -6,11 +6,11 @@ export function PhoneMockup() {
     <div className="flex justify-center lg:justify-end">
       {/* Outer device shell */}
       <div
-        className="relative w-[280px] md:w-[300px]"
+        className="relative w-[420px] md:w-[450px]"
         style={{
-          borderRadius: '44px',
+          borderRadius: '52px',
           background: 'linear-gradient(145deg, #e0e0e0 0%, #c0c0c0 30%, #a0a0a0 70%, #888 100%)',
-          padding: '3px',
+          padding: '4px',
           boxShadow:
             '0 50px 100px -30px rgba(0,0,0,0.45), 0 20px 40px -20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.4)',
         }}
