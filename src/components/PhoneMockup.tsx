@@ -129,7 +129,7 @@ export function PhoneMockup() {
             {/* CTA */}
             <Link
               to="/upload-prescription"
-              className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-[var(--color-red)] px-4 py-2.5 text-[0.78rem] font-bold text-white shadow-lg transition-transform hover:scale-[1.02]"
+              className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[var(--color-red)] px-5 py-3 text-[0.9rem] font-bold text-white shadow-lg transition-transform hover:scale-[1.02]"
               style={{ boxShadow: '0 12px 28px -10px rgba(192,57,43,0.6)' }}
             >
               Upload Prescription
