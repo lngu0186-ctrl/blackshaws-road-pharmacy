@@ -29,7 +29,7 @@ export function HeroSection() {
       </div>
 
       <div className="container-custom relative z-10 py-18 md:py-24">
-        <div className="grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="grid items-end gap-10 lg:grid-cols-[1fr_1fr]">
           <div className="max-w-4xl">
             <div className="flex flex-wrap gap-3">
               <span className="badge-red">EST. 1968</span>
