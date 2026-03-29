@@ -137,7 +137,7 @@ export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url(/chemist-care-bg-poster.jpg)',
+          backgroundImage: 'url(/chemist-care-bg-poster.webp)',
           opacity: videoLoaded && !prefersReducedMotion ? 0 : 0.26,
           transition: 'opacity 220ms ease',
         }}
