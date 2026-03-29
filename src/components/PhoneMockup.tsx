@@ -105,12 +105,12 @@ export function PhoneMockup() {
             </div>
 
             {/* Hours */}
-            <div className="mt-3 rounded-2xl bg-[var(--color-cream)] px-3 py-2.5">
-              <div className="flex items-center gap-1.5">
-                <Clock className="h-3.5 w-3.5 text-[var(--color-sage)]" />
-                <p className="text-[0.68rem] font-bold text-[var(--color-navy-deep)]">Opening Hours</p>
+            <div className="mt-4 rounded-2xl bg-[var(--color-cream)] px-4 py-3">
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4 text-[var(--color-sage)]" />
+                <p className="text-[0.8rem] font-bold text-[var(--color-navy-deep)]">Opening Hours</p>
               </div>
-              <div className="mt-1.5 space-y-0.5 text-[0.65rem] text-[var(--color-text-muted)]">
+              <div className="mt-2 space-y-1 text-[0.78rem] text-[var(--color-text-muted)]">
                 <div className="flex justify-between">
                   <span>Mon – Fri</span>
                   <span className="font-medium text-[var(--color-navy-deep)]">8am – 8pm</span>
