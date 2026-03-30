@@ -90,41 +90,94 @@ export function Header() {
                       />
                     </button>
                     {servicesDropdownOpen && (
-                      <div className="absolute right-0 top-full mt-4 w-[40rem] rounded-[24px] bg-[var(--color-navy)] p-6 text-white shadow-[0_32px_80px_-38px_rgba(16,24,63,0.45)]">
-                        <Link
-                          to="/health-services"
-                          className="mb-6 block rounded-xl bg-[var(--color-navy-light)] px-5 py-3 font-semibold flex items-center justify-center gap-2"
-                          onClick={() => setServicesDropdownOpen(false)}
+                      <>
+                        {/* Backdrop */}
+                        <div className="fixed inset-0 z-40" onClick={() => setServicesDropdownOpen(false)} />
+                        <div
+                          className="absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2"
+                          style={{
+                            width: '860px',
+                            background: '#10183f',
+                            borderRadius: '12px',
+                            padding: '24px 28px',
+                            boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
+                          }}
                         >
-                          View all Health Services <ArrowRight className="h-4 w-4" />
-                        </Link>
-                        <div className="grid grid-cols-5 gap-6">
-                          {healthServiceGroups.map((group) => (
-                            <div key={group.id}>
-                              <h3 className="mb-3 text-sm font-bold uppercase tracking-wider text-[var(--color-red)]">
-                                {group.heading}
-                              </h3>
-                              <ul className="space-y-3">
-                                {group.items.map((item) => {
-                                  const Icon = item.icon
-                                  return (
-                                    <li key={item.href}>
+                          {/* View all link */}
+                          <Link
+                            to="/health-services"
+                            className="mb-4 flex items-center gap-1.5 pb-3 transition-colors"
+                            style={{
+                              borderBottom: '1px solid rgba(255,255,255,0.15)',
+                              fontFamily: 'Nunito, sans-serif',
+                              fontSize: '12px',
+                              fontWeight: 600,
+                              color: 'rgba(255,255,255,0.75)',
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
+                            onClick={() => setServicesDropdownOpen(false)}
+                          >
+                            View all Health Services <ArrowRight className="h-3.5 w-3.5" />
+                          </Link>
+                          {/* 5-column grid */}
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', columnGap: '20px' }}>
+                            {healthServiceGroups.map((group) => (
+                              <div key={group.id}>
+                                <p
+                                  style={{
+                                    fontFamily: 'Nunito, sans-serif',
+                                    fontSize: '10px',
+                                    fontWeight: 700,
+                                    letterSpacing: '0.08em',
+                                    textTransform: 'uppercase',
+                                    color: '#c0392b',
+                                    marginBottom: '10px',
+                                    whiteSpace: 'nowrap',
+                                  }}
+                                >
+                                  {group.heading}
+                                </p>
+                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                  {group.items.map((item) => {
+                                    const Icon = item.icon
+                                    return (
                                       <Link
+                                        key={item.href}
                                         to={item.href}
-                                        className="flex items-start gap-3 text-sm text-white/90 hover:text-white transition"
+                                        className="group"
+                                        style={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          gap: '8px',
+                                          padding: '5px 0',
+                                          textDecoration: 'none',
+                                        }}
                                         onClick={() => setServicesDropdownOpen(false)}
                                       >
-                                        <Icon className="h-5 w-5 flex-shrink-0 mt-0.5" />
-                                        <span>{item.title}</span>
+                                        <Icon style={{ width: '14px', height: '14px', color: 'rgba(255,255,255,0.7)', flexShrink: 0, marginRight: '0' }} />
+                                        <span
+                                          className="group-hover:!text-[#c0392b]"
+                                          style={{
+                                            fontFamily: 'Nunito, sans-serif',
+                                            fontSize: '13px',
+                                            fontWeight: 500,
+                                            color: '#ffffff',
+                                            lineHeight: 1.3,
+                                            transition: 'color 150ms',
+                                          }}
+                                        >
+                                          {item.title}
+                                        </span>
                                       </Link>
-                                    </li>
-                                  )
-                                })}
-                              </ul>
-                            </div>
-                          ))}
+                                    )
+                                  })}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
+                      </>
                     )}
                   </div>
                 )
