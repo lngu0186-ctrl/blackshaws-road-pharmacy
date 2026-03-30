@@ -16,15 +16,8 @@ const navLinks: Array<{ href: string; label: string; isAnchor?: boolean }> = [
   { href: '/plant-based-therapies', label: 'Plant Based Therapies' },
   { href: '/compounding', label: 'Compounding' },
   { href: '/shop', label: 'Shop' },
-<<<<<<< HEAD
   { href: '/faq', label: 'FAQ' },
   { href: '/contact', label: 'Contact' },
-=======
-  { href: '/upload-prescription', label: 'Upload Prescription' },
-  { href: '/#vaccination', label: 'Vaccinations' },
-  { href: '/#chemist-care', label: 'Chemist Care' },
-  { href: '/#location', label: 'Contact' },
->>>>>>> origin/main
 ]
 
 

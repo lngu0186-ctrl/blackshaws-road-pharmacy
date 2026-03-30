@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import { Phone, Mail, Award, Shield, MapPin, ArrowUpRight, Clock3 } from 'lucide-react'
 import { Logo } from './Logo'
-=======
-import { Phone, Mail, Shield, MapPin, ArrowUpRight, Clock3 } from 'lucide-react'
-import { BrandLogo } from '../BrandLogo'
->>>>>>> origin/main
 
 const footerLinks = {
   services: [
@@ -80,7 +75,6 @@ export function Footer() {
           </div>
         </div>
 
-<<<<<<< HEAD
         <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-white/58 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-col gap-2">
             <p>© {new Date().getFullYear()} Blackshaws Road Pharmacy. Independent community pharmacy care.</p>
@@ -90,18 +84,10 @@ export function Footer() {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            {/* IPA logo placeholder - replace with actual logo when available */}
             <div className="text-xs text-white/60 text-right">
               <p className="font-semibold">Independent Pharmacies Australia</p>
               <p className="opacity-70">Here for Good</p>
             </div>
-=======
-          <div className="mt-12 flex flex-col gap-6 border-t border-white/10 pt-8 text-sm text-white/58 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} Blackshaws Road Pharmacy. Independent community pharmacy care.</p>
-          <div className="flex items-center gap-3">
-            <img src="/ipa-logo.png" alt="Independent Pharmacies Australia" className="h-10 w-auto brightness-0 invert opacity-70" />
-            <span>Proud member of Independent Pharmacies Australia</span>
->>>>>>> origin/main
           </div>
         </div>
       </div>
