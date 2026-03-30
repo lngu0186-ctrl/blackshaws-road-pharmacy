@@ -52,31 +52,9 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div className="premium-panel rounded-[32px] p-6 text-[var(--color-text-dark)] md:p-8">
-            <div className="inline-flex items-center gap-2 rounded-full bg-[var(--color-red-soft)] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-red)]"><ShieldCheck className="h-4 w-4" /> trusted local healthcare</div>
-            <h2 className="mt-5 text-3xl text-[var(--color-navy-deep)] md:text-4xl">Designed for convenience. Grounded in care.</h2>
-            <div className="mt-6 space-y-4">
-              {[
-                'Accredited vaccination and pharmacist consultation services',
-                'Medication support for families, seniors and complex care needs',
-                'Online shopping paired with real in-store pharmacy expertise',
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-3 rounded-2xl bg-white/80 p-4">
-                  <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[var(--color-red)]" />
-                  <p className="text-sm leading-relaxed text-[var(--color-text-muted)]">{item}</p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-6 grid gap-4 rounded-[24px] bg-[var(--color-navy-deep)] p-5 text-white sm:grid-cols-2">
-              <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-white/60">Need a script filled?</p>
-                <p className="mt-2 text-lg font-semibold">Speak to the team about prescriptions and repeats.</p>
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-white/60">Need an appointment?</p>
-                <p className="mt-2 text-lg font-semibold">Vaccinations and key services are easy to book online.</p>
-              </div>
-            </div>
+          <div className="hidden lg:block">
+            <PhoneMockup />
+          </div>
           </div>
         </div>
       </div>
