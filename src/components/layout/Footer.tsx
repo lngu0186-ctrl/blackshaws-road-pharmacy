@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import { Phone, Mail, Award, Shield, MapPin, ArrowUpRight, Clock3 } from 'lucide-react'
 import { Logo } from './Logo'
-=======
-import { Phone, Mail, Shield, MapPin, ArrowUpRight, Clock3 } from 'lucide-react'
-import { BrandLogo } from '../BrandLogo'
->>>>>>> origin/main
 
 const footerLinks = {
   services: [
