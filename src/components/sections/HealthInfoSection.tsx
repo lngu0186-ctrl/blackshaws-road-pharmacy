@@ -30,6 +30,7 @@ const resources = [
 
 export function HealthInfoSection() {
   const ref = useRef(null)
+  const isInView = true
 
   return (
     <section id="health-info" className="section-padding bg-white">

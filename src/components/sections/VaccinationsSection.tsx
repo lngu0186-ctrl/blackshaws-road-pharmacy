@@ -14,6 +14,7 @@ const vaccineTabs = [
 export function VaccinationsSection() {
   const [activeTab, setActiveTab] = useState('infants')
   const ref = useRef(null)
+  const isInView = true
   const activeContent = vaccineTabs.find((tab) => tab.id === activeTab)
 
   return (

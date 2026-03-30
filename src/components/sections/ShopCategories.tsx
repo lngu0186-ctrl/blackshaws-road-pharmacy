@@ -24,6 +24,7 @@ export function ShopCategories() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const ref = useRef(null)
+  const isInView = true
 
   useEffect(() => {
     ;(async () => {

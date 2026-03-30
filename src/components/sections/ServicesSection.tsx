@@ -18,6 +18,7 @@ const services = [
 
 export function ServicesSection() {
   const ref = useRef(null)
+  const isInView = true
 
   return (
     <section id="services" className="section-padding bg-white">

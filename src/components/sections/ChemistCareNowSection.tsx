@@ -39,6 +39,7 @@ const chemistCareServices = [
 
 export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
   const ref = useRef(null)
+  const isInView = true
 
   return (
     <section id={id} className="section-padding bg-white">
