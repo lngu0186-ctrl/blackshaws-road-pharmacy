@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { MessageCircle, X, ChevronDown } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '../ui/Button'
@@ -34,36 +34,37 @@ export function ChatWidget() {
   const panelRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
+  const toggle = useCallback(() => setIsOpen(prev => !prev), [])
+
   // Click outside to close
   useEffect(() => {
     if (!isOpen) return
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as Node
       if (
-        panelRef.current && 
-        !panelRef.current.contains(event.target as Node) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target as Node)
+        panelRef.current && !panelRef.current.contains(target) &&
+        buttonRef.current && !buttonRef.current.contains(target)
       ) {
         setIsOpen(false)
       }
     }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
   }, [isOpen])
 
   return (
     <>
-      {/* Floating button */}
+      {/* Floating button — toggles */}
       <motion.button
         ref={buttonRef}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        onClick={() => setIsOpen(prev => !prev)} // toggle
+        onClick={toggle}
         className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
-        style={{ backgroundColor: 'var(--color-accent)' }}
+        style={{ backgroundColor: 'var(--color-navy)' }}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
-        <MessageCircle className="w-6 h-6 text-white" />
+        {isOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
       </motion.button>
 
       {/* Chat panel */}
@@ -74,12 +75,13 @@ export function ChatWidget() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-24 right-8 z-50 w-80 sm:w-96 max-h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="fixed bottom-24 right-8 z-50 w-80 sm:w-96 max-h-[500px] bg-[var(--color-surface)] rounded-2xl shadow-2xl border border-[var(--color-border)] overflow-hidden"
           >
             {/* Header */}
             <div
               className="p-4 flex items-center justify-between"
-              style={{ backgroundColor: 'var(--color-accent)' }}
+              style={{ backgroundColor: 'var(--color-navy)' }}
             >
               <div>
                 <h3 className="font-semibold" style={{ color: '#1a1a1a' }}>Ask a Pharmacist</h3>
@@ -96,36 +98,45 @@ export function ChatWidget() {
 
             {/* Content */}
             <div className="p-4 overflow-y-auto max-h-96">
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-[var(--color-text-muted)] mb-4">
                 Find answers to common questions below, or send us a message and we'll get back to you during business hours.
               </p>
 
               {/* FAQ accordion */}
               <div className="space-y-2">
                 {faqItems.map((item, index) => (
-                  <div key={index} className="border border-gray-200 rounded-xl overflow-hidden">
+                  <div key={index} className="border border-[var(--color-border)] rounded-xl overflow-hidden">
                     <button
                       onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                      className="w-full flex items-center justify-between p-3 text-left text-sm font-medium hover:bg-gray-50 transition-colors"
+                      className="w-full flex items-center justify-between p-3 text-left text-sm font-medium text-[var(--color-text-dark)] hover:bg-[var(--color-surface-alt)] transition-colors"
                     >
                       <span className="text-gray-900">{item.question}</span>
                       <ChevronDown
-                        className={`w-4 h-4 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
-                        style={{ color: 'var(--color-navy)' }}
+                        className={`w-4 h-4 shrink-0 ml-2 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
                       />
                     </button>
-                    {openFaq === index && (
-                      <div className="p-3 bg-gray-50 text-sm text-gray-600 border-t border-gray-200">
-                        {item.answer}
-                      </div>
-                    )}
+                    <AnimatePresence>
+                      {openFaq === index && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="p-3 bg-[var(--color-surface-alt)] text-sm text-[var(--color-text-muted)] border-t border-[var(--color-border)]">
+                            {item.answer}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 ))}
               </div>
 
               {/* Contact form teaser */}
-              <div className="mt-6 p-4 rounded-xl bg-gray-50">
-                <p className="text-sm text-gray-600 mb-3">
+              <div className="mt-6 p-4 rounded-xl bg-[var(--color-surface-alt)]">
+                <p className="text-sm text-[var(--color-text-muted)] mb-3">
                   Still have questions? Send us a message.
                 </p>
                 <Button
@@ -134,6 +145,7 @@ export function ChatWidget() {
                   className="w-full"
                   onClick={() => {
                     window.location.href = '#location'
+                    setIsOpen(false)
                   }}
                 >
                   Contact Us
@@ -141,7 +153,7 @@ export function ChatWidget() {
               </div>
 
               {/* Disclaimer */}
-              <p className="text-xs text-gray-500 mt-4 text-center">
+              <p className="text-xs text-[var(--color-text-muted)] mt-4 text-center">
                 This chat provides general information only and does not replace professional medical advice. For urgent concerns, please call emergency services.
               </p>
             </div>

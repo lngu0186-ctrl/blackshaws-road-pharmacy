@@ -28,6 +28,7 @@ const PlantBasedTherapies = lazy(() => import('./pages/PlantBasedTherapies'))
 const Compounding = lazy(() => import('./pages/Compounding'))
 const Contact = lazy(() => import('./pages/Contact'))
 const HealthServicePlaceholder = lazy(() => import('./pages/HealthServicePlaceholder'))
+const UploadPrescription = lazy(() => import('./pages/UploadPrescription'))
 
 function LoadingFallback() {
   return (
@@ -68,7 +69,7 @@ function App() {
 
         <Header />
 
-        <main id="main-content" className="pt-[var(--header-height-mobile)] md:pt-[var(--header-height-desktop)]">
+        <main id="main-content">
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
               <Route path="/shop" element={<Shop />} />
@@ -76,6 +77,7 @@ function App() {
               <Route path="/services" element={<Services />} />
               <Route path="/services/:slug" element={<ServiceDetail />} />
               <Route path="/prescriptions" element={<Prescription />} />
+              <Route path="/upload-prescription" element={<UploadPrescription />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/patient-info" element={<PatientInfo />} />
               <Route path="/plant-based-therapies" element={<PlantBasedTherapies />} />
