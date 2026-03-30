@@ -2,16 +2,10 @@
 
 _Learn about the person you're helping. Update this as you go._
 
-- **Name:**
-- **What to call them:**
-- **Pronouns:** _(optional)_
-- **Timezone:**
-- **Notes:**
-
-## Context
-
-_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_
-
----
+- **Name:** Hugh
+- **What to call them:** Hugh
+- **Pronouns:** (not specified)
+- **Timezone:** Australia/Melbourne
+- **Notes:** Developing an OSCE Prep website to record course information in summarized form. GitHub repo: https://github.com/burkeroadpharmacy-wq/hugh-osce-prep.git
 
 The more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.

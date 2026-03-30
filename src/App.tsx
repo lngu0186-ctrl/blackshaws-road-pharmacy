@@ -24,6 +24,10 @@ const ServiceDetail = lazy(() => import('./pages/ServiceDetail'))
 const Prescription = lazy(() => import('./pages/Prescription'))
 const FAQ = lazy(() => import('./pages/FAQ'))
 const PatientInfo = lazy(() => import('./pages/PatientInfo'))
+const PlantBasedTherapies = lazy(() => import('./pages/PlantBasedTherapies'))
+const Compounding = lazy(() => import('./pages/Compounding'))
+const Contact = lazy(() => import('./pages/Contact'))
+const HealthServicePlaceholder = lazy(() => import('./pages/HealthServicePlaceholder'))
 
 function LoadingFallback() {
   return (
@@ -74,6 +78,11 @@ function App() {
               <Route path="/prescriptions" element={<Prescription />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/patient-info" element={<PatientInfo />} />
+              <Route path="/plant-based-therapies" element={<PlantBasedTherapies />} />
+              <Route path="/compounding" element={<Compounding />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/health-services" element={<HealthServicePlaceholder />} />
+              <Route path="/health-services/:slug" element={<HealthServicePlaceholder />} />
               <Route path="/" element={
                 <>
                   <HeroSection />

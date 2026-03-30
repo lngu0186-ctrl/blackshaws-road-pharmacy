@@ -4,8 +4,9 @@ import { Logo } from './Logo'
 const footerLinks = {
   services: [
     { label: 'Upload a prescription', href: '/prescriptions' },
+    { label: 'Plant Based Therapies', href: '/plant-based-therapies' },
+    { label: 'Compounding', href: '/compounding' },
     { label: 'Vaccinations', href: '/#vaccination' },
-    { label: 'Chemist Care Now', href: '/#chemist-care' },
     { label: 'Medication Reviews', href: '/services/medscheck' },
   ],
   explore: [
@@ -13,6 +14,7 @@ const footerLinks = {
     { label: 'All services', href: '/services' },
     { label: 'FAQ', href: '/faq' },
     { label: 'Patient information', href: '/patient-info' },
+    { label: 'Contact', href: '/contact' },
     { label: 'Practitioner-only range', href: 'https://blackshawspharmacy.com.au/collections/practitioner-only-range', target: '_blank' },
   ],
   resources: [
