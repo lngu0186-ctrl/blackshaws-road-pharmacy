@@ -55,7 +55,6 @@ export function HeroSection() {
           <div className="hidden lg:block">
             <PhoneMockup />
           </div>
-          </div>
         </div>
       </div>
     </section>
