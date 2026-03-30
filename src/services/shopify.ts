@@ -1,12 +1,14 @@
 // Shopify Storefront API Service
 
-// Shopify Storefront API Configuration
 const SHOPIFY_API_VERSION = '2025-07'
-const SHOPIFY_STORE_PERMANENT_DOMAIN = 'blackshaws-road-pharmacy.myshopify.com'
+const SHOPIFY_STORE_PERMANENT_DOMAIN = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN || 'blackshaws-road-pharmacy.myshopify.com'
 const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`
-const SHOPIFY_STOREFRONT_TOKEN = '7049490ac9a0923d80e14dbe95587f54'
+const SHOPIFY_STOREFRONT_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN
 
-// ─── Types ───────────────────────────────────────────────────────
+if (!SHOPIFY_STOREFRONT_TOKEN) {
+  console.warn('Shopify Storefront token is missing. Set VITE_SHOPIFY_STOREFRONT_TOKEN in your environment.')
+}
+
 export interface ShopifyProduct {
   id: string
   handle: string
@@ -80,8 +82,11 @@ export interface ShopifyProduct {
 
 export type Product = ShopifyProduct
 
-// ─── Storefront API Helper ──────────────────────────────────────
 export async function storefrontApiRequest(query: string, variables: Record<string, unknown> = {}) {
+  if (!SHOPIFY_STOREFRONT_TOKEN) {
+    throw new Error('Missing Shopify Storefront token. Set VITE_SHOPIFY_STOREFRONT_TOKEN.')
+  }
+
   const response = await fetch(SHOPIFY_STOREFRONT_URL, {
     method: 'POST',
     headers: {
@@ -109,7 +114,6 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
   return data
 }
 
-// ─── Product Queries ────────────────────────────────────────────
 const GET_ALL_PRODUCTS = `
   query getAllProducts($first: Int!, $after: String, $query: String) {
     products(first: $first, after: $after, query: $query) {
@@ -270,7 +274,6 @@ const GET_PRODUCT_BY_HANDLE = `
   }
 `
 
-// ─── Product Functions ──────────────────────────────────────────
 export async function getAllProducts(query?: string): Promise<ShopifyProduct[]> {
   const allProducts: ShopifyProduct[] = []
   let hasNextPage = true
@@ -300,7 +303,6 @@ export async function getProductByHandle(handle: string): Promise<ShopifyProduct
   return data.data.product
 }
 
-// ─── Cart Queries & Mutations ───────────────────────────────────
 export const CART_QUERY = `
   query cart($id: ID!) {
     cart(id: $id) { id totalQuantity }

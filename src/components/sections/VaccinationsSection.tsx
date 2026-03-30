@@ -1,5 +1,4 @@
 import { useState, useRef } from 'react'
-import { useInView } from 'framer-motion'
 import { Button } from '../ui/Button'
 import { Shield, Baby, Users, Heart, BabyIcon, Plane, AlertCircle } from 'lucide-react'
 
@@ -15,7 +14,6 @@ const vaccineTabs = [
 export function VaccinationsSection() {
   const [activeTab, setActiveTab] = useState('infants')
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
   const activeContent = vaccineTabs.find((tab) => tab.id === activeTab)
 
   return (

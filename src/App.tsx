@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Header } from './components/layout/Header'
 import { HeroSection } from './components/sections/HeroSection'
 import { ShopCategories } from './components/sections/ShopCategories'
@@ -19,8 +19,6 @@ import './App.css'
 // Lazy-load pages
 const Shop = lazy(() => import('./pages/Shop'))
 const ProductDetail = lazy(() => import('./pages/ProductDetail'))
-const Services = lazy(() => import('./pages/Services'))
-const ServiceDetail = lazy(() => import('./pages/ServiceDetail'))
 const Prescription = lazy(() => import('./pages/Prescription'))
 const FAQ = lazy(() => import('./pages/FAQ'))
 const PatientInfo = lazy(() => import('./pages/PatientInfo'))
@@ -28,7 +26,6 @@ const PlantBasedTherapies = lazy(() => import('./pages/PlantBasedTherapies'))
 const Compounding = lazy(() => import('./pages/Compounding'))
 const Contact = lazy(() => import('./pages/Contact'))
 const HealthServicePlaceholder = lazy(() => import('./pages/HealthServicePlaceholder'))
-const UploadPrescription = lazy(() => import('./pages/UploadPrescription'))
 
 function LoadingFallback() {
   return (
@@ -55,7 +52,7 @@ function App() {
       import('./components/features/ChatWidget').then(mod => setDeferredChat(() => mod.ChatWidget))
       import('./components/CartDrawer').then(mod => setDeferredCart(() => mod.default))
       import('./components/ToastContainer').then(mod => setDeferredToast(() => mod.default))
-    }, 2000) // 2s defer - adjust as needed
+    }, 2000)
 
     return () => clearTimeout(timer)
   }, [])
@@ -74,10 +71,10 @@ function App() {
             <Routes>
               <Route path="/shop" element={<Shop />} />
               <Route path="/shop/:handle" element={<ProductDetail />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/services/:slug" element={<ServiceDetail />} />
+              <Route path="/services" element={<Navigate to="/health-services" replace />} />
+              <Route path="/services/:slug" element={<Navigate to="/health-services" replace />} />
               <Route path="/prescriptions" element={<Prescription />} />
-              <Route path="/upload-prescription" element={<UploadPrescription />} />
+              <Route path="/upload-prescription" element={<Navigate to="/prescriptions" replace />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/patient-info" element={<PatientInfo />} />
               <Route path="/plant-based-therapies" element={<PlantBasedTherapies />} />

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Clock3, FileText, ShieldAlert, Phone } from 'lucide-react'
-import { PrescriptionUploadForm } from '../components/features/PrescriptionUploadForm'
+import UploadPrescription from './UploadPrescription'
 import { Button } from '../components/ui/Button'
 
 const notes = [
@@ -22,8 +22,8 @@ export default function Prescription() {
         <div className="container-custom grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
             <p className="section-label !text-white/70">Prescriptions</p>
-            <h1 className="max-w-4xl text-white">Upload your prescription for a more convenient pickup pathway.</h1>
-            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">Send your prescription ahead so the pharmacy team can review it, prepare where appropriate and let you know the next step. This keeps the experience faster while respecting pharmacist review, medicine availability and prescription requirements.</p>
+            <h1 className="max-w-4xl text-white">Upload your prescription for a straightforward pickup process.</h1>
+            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">Send your prescription ahead so our pharmacy team can review it, prepare where appropriate and let you know the next step. This helps make pickup faster while still allowing for pharmacist review, medicine availability and prescription requirements.</p>
           </div>
           <div className="premium-panel rounded-[32px] p-7 text-[var(--color-text-dark)]">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-red)]">Before you upload</p>
@@ -44,28 +44,26 @@ export default function Prescription() {
         </div>
       </section>
 
-      <section className="section-padding">
+      <UploadPrescription />
+
+      <section className="section-padding pt-0">
         <div className="container-custom grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-          <PrescriptionUploadForm />
-
-          <div className="space-y-6">
-            <div className="rounded-[28px] border border-[var(--color-border)] bg-white p-6 shadow-[0_24px_60px_-46px_rgba(16,24,63,0.18)]">
-              <h2 className="text-[var(--color-navy)]">How it works</h2>
-              <div className="mt-5 space-y-4 text-sm leading-relaxed text-[var(--color-text-muted)]">
-                <p className="flex items-start gap-3"><FileText className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> Upload your prescription request with your name, date of birth and contact number.</p>
-                <p className="flex items-start gap-3"><Clock3 className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> Our team reviews the request during pharmacy hours and may contact you if more information is needed.</p>
-                <p className="flex items-start gap-3"><ShieldAlert className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> If the medicine is unavailable, not suitable for advance preparation or needs prescriber clarification, we will let you know the safest next step.</p>
-              </div>
+          <div className="rounded-[28px] border border-[var(--color-border)] bg-white p-6 shadow-[0_24px_60px_-46px_rgba(16,24,63,0.18)]">
+            <h2 className="text-[var(--color-navy)]">How it works</h2>
+            <div className="mt-5 space-y-4 text-sm leading-relaxed text-[var(--color-text-muted)]">
+              <p className="flex items-start gap-3"><FileText className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> Upload your prescription request with your name, date of birth and contact number.</p>
+              <p className="flex items-start gap-3"><Clock3 className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> Our team reviews the request during pharmacy hours and may contact you if more information is needed.</p>
+              <p className="flex items-start gap-3"><ShieldAlert className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> If the medicine is unavailable, not suitable for advance preparation or needs prescriber clarification, we will let you know the safest next step.</p>
             </div>
+          </div>
 
-            <div className="rounded-[28px] bg-[var(--color-navy-deep)] p-6 text-white">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-white/60">Need immediate help?</p>
-              <h2 className="mt-3 text-white">Call the pharmacy team.</h2>
-              <p className="mt-3 text-sm leading-relaxed text-white/76">If the request is urgent, involves specialised medicines or you are unsure whether online upload is appropriate, a quick call is the better path.</p>
-              <a href="tel:0393913257" className="mt-5 inline-block">
-                <Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]"><Phone className="mr-2 h-5 w-5" /> (03) 9391 3257</Button>
-              </a>
-            </div>
+          <div className="rounded-[28px] bg-[var(--color-navy-deep)] p-6 text-white">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-white/60">Need immediate help?</p>
+            <h2 className="mt-3 text-white">Call the pharmacy team.</h2>
+            <p className="mt-3 text-sm leading-relaxed text-white/76">If the request is urgent, involves specialised medicines or you are unsure whether online upload is appropriate, a quick call is the better path.</p>
+            <a href="tel:0393913257" className="mt-5 inline-block">
+              <Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]"><Phone className="mr-2 h-5 w-5" /> (03) 9391 3257</Button>
+            </a>
           </div>
         </div>
       </section>

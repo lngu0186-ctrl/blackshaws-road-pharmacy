@@ -1,4 +1,3 @@
-import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { Button } from '../ui/Button'
 import { IconContraceptive, IconUTI, IconShingles, IconPsoriasis, IconVaccinations, IconImpetigo } from './ChemistCareCards'
@@ -40,7 +39,6 @@ const chemistCareServices = [
 
 export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
     <section id={id} className="section-padding bg-white">

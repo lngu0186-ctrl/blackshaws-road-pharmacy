@@ -2,7 +2,6 @@
 
 import { Shield, ExternalLink } from 'lucide-react'
 import { Card } from '../ui/Card'
-import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 
 const resources = [
@@ -31,7 +30,6 @@ const resources = [
 
 export function HealthInfoSection() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
     <section id="health-info" className="section-padding bg-white">
@@ -58,10 +56,9 @@ export function HealthInfoSection() {
             ))}
           </div>
 
-          {/* TGA Compliance notice */}
           <div
             className="mt-16 p-6 rounded-2xl border-2"
-            style={{ borderColor: 'var(--color-navy)/20', backgroundColor: 'var(--color-offwhite)' }}
+            style={{ borderColor: 'rgba(16, 24, 63, 0.20)', backgroundColor: 'var(--color-offwhite)' }}
           >
             <div className="flex items-start gap-4">
               <Shield className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: 'var(--color-navy)' }} />
@@ -114,10 +111,7 @@ function ResourceCard({
       <ul className="space-y-2">
         {features.map((feature) => (
           <li key={feature} className="flex items-center gap-2 text-sm">
-            <div
-              className="w-1.5 h-1.5 rounded-full"
-              style={{ backgroundColor: 'var(--color-red)' }}
-            />
+            <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'var(--color-red)' }} />
             <span className="text-[var(--color-gray-600)]">{feature}</span>
           </li>
         ))}

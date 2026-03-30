@@ -1,18 +1,17 @@
 'use client'
 
-import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { Users } from 'lucide-react'
 
 export function AboutSection() {
   const introRef = useRef(null)
-  const isIntroInView = useInView(introRef, { once: true, margin: '-100px' })
+  const isIntroInView = true
 
   const historyRef = useRef(null)
-  const isHistoryInView = useInView(historyRef, { once: true, margin: '-100px' })
+  const isHistoryInView = true
 
   const teamRef = useRef(null)
-  const isTeamInView = useInView(teamRef, { once: true, margin: '-100px' })
+  const isTeamInView = true
 
   return (
     <section id="about" className="section-padding bg-alt">

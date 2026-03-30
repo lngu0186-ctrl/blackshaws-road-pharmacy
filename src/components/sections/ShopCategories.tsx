@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { Grid, Activity, Baby, Heart, Sparkles, User, Bandage, HeartPulse, Scale, Wind, Shield, Stethoscope, ArrowRight } from 'lucide-react'
 import { PHARMACY_CATEGORIES, getActiveCategories, categorizeProduct } from '../../utils/productCategories'
 import { getAllProducts, type Product } from '../../services/shopify'
-import { useInView } from 'framer-motion'
 
 const iconMap: Record<string, any> = {
   pill: Grid,
@@ -25,7 +24,6 @@ export function ShopCategories() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   useEffect(() => {
     ;(async () => {

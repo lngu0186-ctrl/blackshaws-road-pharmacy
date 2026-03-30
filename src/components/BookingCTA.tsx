@@ -19,7 +19,7 @@ export default function BookingCTA({
   const phoneNumber = '0393913257'
   const formattedPhone = '(03) 9391 3257'
 
-  const content = (
+  return (
     <div
       className={`booking-cta rounded-2xl p-8 md:p-10 ${className}`}
       style={{
@@ -29,9 +29,7 @@ export default function BookingCTA({
       <div className="grid md:grid-cols-2 gap-8 items-center">
         <div className="text-white">
           <h3 className="text-2xl md:text-3xl font-bold mb-4">
-            {service
-              ? `Book Your ${service.title} Appointment`
-              : 'Book a Health Service Today'}
+            {service ? `Book Your ${service.title} Appointment` : 'Book a Health Service Today'}
           </h3>
           <p className="opacity-90 mb-6">
             {service
@@ -57,42 +55,22 @@ export default function BookingCTA({
 
         <div className="flex flex-col sm:flex-row gap-4 md:justify-end">
           <a href={`tel:${phoneNumber}`} className="inline-block">
-            <Button
-              variant={variant}
-              size={size}
-              className="w-full sm:w-auto"
-            >
+            <Button variant={variant} size={size} className="w-full sm:w-auto">
               <Phone className="w-4 h-4 mr-2" />
               Call Now
             </Button>
           </a>
-          {service && (
-            <Link to="/services">
-              <Button
-                variant="outline"
-                size={size}
-                className="w-full sm:w-auto !text-white !border-white hover:!bg-white hover:!text-[var(--color-navy)]"
-              >
-                <Calendar className="w-4 h-4 mr-2" />
-                View All Services
-              </Button>
-            </Link>
-          )}
-          {!service && (
-            <Link to="/services">
-              <Button
-                variant="outline"
-                size={size}
-                className="w-full sm:w-auto !text-white !border-white hover:!bg-white hover:!text-[var(--color-navy)]"
-              >
-                Explore Services
-              </Button>
-            </Link>
-          )}
+          <Link to="/health-services">
+            <Button
+              variant="outline"
+              size={size}
+              className="w-full sm:w-auto !text-white !border-white hover:!bg-white hover:!text-[var(--color-navy)]"
+            >
+              {service ? <><Calendar className="w-4 h-4 mr-2" />View All Services</> : 'Explore Services'}
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
   )
-
-  return content
 }

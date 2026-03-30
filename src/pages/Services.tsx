@@ -81,7 +81,7 @@ export default function Services() {
                     <p className="mt-3 max-w-3xl text-[var(--color-text-muted)]">{categoryInfo.description}</p>
                   </div>
                 </div>
-                <Link to="/services" className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-navy)]">Browse all services <ArrowRight className="h-4 w-4" /></Link>
+                <Link to="/health-services" className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-navy)]">Browse all services <ArrowRight className="h-4 w-4" /></Link>
               </div>
 
               <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -99,7 +99,7 @@ export default function Services() {
                       </div>
                       <div className="mt-6 border-t border-[var(--color-border)] pt-5">
                         <div className="mb-4 text-xs font-bold uppercase tracking-[0.18em]" style={{ color: service.isFree ? 'var(--color-sage)' : 'var(--color-red)' }}>{service.isFree ? 'Free or funded options available' : 'Private service details available'}</div>
-                        <Link to={`/services/${service.slug}`}>
+                        <Link to={`/health-services/${service.slug}`}>
                           <Button variant="primary" className="w-full justify-center">Learn more <ChevronRight className="h-4 w-4" /></Button>
                         </Link>
                       </div>

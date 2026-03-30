@@ -6,13 +6,12 @@ const footerLinks = {
     { label: 'Upload a prescription', href: '/prescriptions' },
     { label: 'Plant Based Therapies', href: '/plant-based-therapies' },
     { label: 'Compounding', href: '/compounding' },
-    { label: 'Vaccinations', href: '/#vaccination' },
-    { label: 'Medication Reviews', href: '/services/medscheck' },
+    { label: 'Vaccinations', href: '/health-services/vaccinations' },
+    { label: 'Medication Reviews', href: '/health-services/medscheck' },
   ],
   explore: [
     { label: 'Shop online', href: '/shop' },
-    { label: 'Upload prescription', href: '/upload-prescription' },
-    { label: 'All services', href: '/services' },
+    { label: 'Health services', href: '/health-services' },
     { label: 'FAQ', href: '/faq' },
     { label: 'Patient information', href: '/patient-info' },
     { label: 'Contact', href: '/contact' },
@@ -46,7 +45,7 @@ export function Footer() {
             <h4 className="font-serif text-xl font-semibold">Visit or call</h4>
             <div className="mt-6 space-y-4 text-sm text-white/78">
               <p className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> 310A Blackshaws Road, Altona North VIC 3025</p>
-              <p className="flex items-start gap-3"><Clock3 className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> Open 7 days. Call ahead for current pharmacist services and appointment availability.</p>
+              <p className="flex items-start gap-3"><Clock3 className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> Monday–Friday 8:00 AM–9:00 PM · Saturday 8:00 AM–6:00 PM · Sunday 10:00 AM–5:00 PM</p>
               <a href="tel:0393913257" className="flex items-center gap-3 hover:text-white"><Phone className="h-4 w-4 text-[var(--color-red)]" /> (03) 9391 3257</a>
               <a href="mailto:info@blackshawsroadpharmacy.com.au" className="flex items-center gap-3 hover:text-white"><Mail className="h-4 w-4 text-[var(--color-red)]" /> info@blackshawsroadpharmacy.com.au</a>
             </div>
@@ -67,7 +66,7 @@ export function Footer() {
           <div className="rounded-[28px] bg-white/6 p-6">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-white/60">Need help choosing a service?</p>
             <h4 className="mt-3 font-serif text-2xl">Speak with the pharmacy team.</h4>
-            <p className="mt-3 text-sm text-white/72">We can guide you on bookings, prescriptions, vaccination eligibility and the right in-pharmacy care pathway.</p>
+            <p className="mt-3 text-sm text-white/72">We can guide you on bookings, prescriptions, vaccination eligibility and the right care pathway.</p>
             <div className="mt-5 flex flex-wrap gap-3">
               <a href="tel:0393913257" className="inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-[var(--color-navy-deep)]">Call (03) 9391 3257</a>
               <a href="/faq" className="inline-flex rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:bg-white/8">Read FAQs</a>
@@ -82,6 +81,7 @@ export function Footer() {
               <Award className="h-4 w-4 text-[var(--color-red)]" />
               <span>Proud member of Independent Pharmacies Australia</span>
             </div>
+            <p className="text-xs text-white/60">After hours urgent health advice: NURSE-ON-CALL 1300 60 60 24 | Emergency: 000</p>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-xs text-white/60 text-right">

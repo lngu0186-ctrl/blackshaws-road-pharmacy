@@ -1,7 +1,6 @@
 import { Pill, Syringe, Beaker, Heart, Calendar, Stethoscope, Shield, ShoppingBag, ArrowRight, Leaf, FlaskConical } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Card } from '../ui/Card'
-import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 
 const services = [
@@ -19,7 +18,6 @@ const services = [
 
 export function ServicesSection() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
     <section id="services" className="section-padding bg-white">
@@ -40,7 +38,7 @@ export function ServicesSection() {
   )
 }
 
-function ServiceCard({ icon: Icon, title, description, highlight, shopLink, shopText, href, linkText }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; description: string; highlight?: boolean; shopLink?: string; shopText?: string; href?: string; linkText?: string }) {
+function ServiceCard({ icon: Icon, title, description, highlight, shopLink, shopText, href, linkText }: { icon: React.ElementType; title: string; description: string; highlight?: boolean; shopLink?: string; shopText?: string; href?: string; linkText?: string }) {
   return (
     <Card className={`flex h-full flex-col ${highlight ? 'border-[var(--color-sage)] bg-[linear-gradient(180deg,white,rgba(238,245,239,0.75))]' : ''}`}>
       <div className={`flex h-14 w-14 items-center justify-center rounded-[20px] ${highlight ? 'bg-[var(--color-sage-soft)] text-[var(--color-sage)]' : 'bg-[var(--color-red-soft)] text-[var(--color-red)]'}`}><Icon className="h-7 w-7" /></div>

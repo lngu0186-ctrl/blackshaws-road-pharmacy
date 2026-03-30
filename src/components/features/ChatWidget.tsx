@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { MessageCircle, X, ChevronDown } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '../ui/Button'
 
 const faqItems = [
@@ -36,15 +35,11 @@ export function ChatWidget() {
 
   const toggle = useCallback(() => setIsOpen(prev => !prev), [])
 
-  // Click outside to close
   useEffect(() => {
     if (!isOpen) return
     const handleClick = (e: MouseEvent) => {
       const target = e.target as Node
-      if (
-        panelRef.current && !panelRef.current.contains(target) &&
-        buttonRef.current && !buttonRef.current.contains(target)
-      ) {
+      if (panelRef.current && !panelRef.current.contains(target) && buttonRef.current && !buttonRef.current.contains(target)) {
         setIsOpen(false)
       }
     }
@@ -54,112 +49,58 @@ export function ChatWidget() {
 
   return (
     <>
-      {/* Floating button — toggles */}
-      <motion.button
+      <button
         ref={buttonRef}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
         onClick={toggle}
-        className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
+        className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-105"
         style={{ backgroundColor: 'var(--color-navy)' }}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
         {isOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
-      </motion.button>
+      </button>
 
-      {/* Chat panel */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            ref={panelRef}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="fixed bottom-24 right-8 z-50 w-80 sm:w-96 max-h-[500px] bg-[var(--color-surface)] rounded-2xl shadow-2xl border border-[var(--color-border)] overflow-hidden"
-          >
-            {/* Header */}
-            <div
-              className="p-4 flex items-center justify-between"
-              style={{ backgroundColor: 'var(--color-navy)' }}
-            >
-              <div>
-                <h3 className="font-semibold" style={{ color: '#1a1a1a' }}>Ask a Pharmacist</h3>
-                <p className="text-sm" style={{ color: '#1a1a1a', opacity: 0.8 }}>General health information</p>
-              </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-[#1a1a1a] hover:opacity-80"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
+      {isOpen && (
+        <div
+          ref={panelRef}
+          className="fixed bottom-24 right-8 z-50 w-80 sm:w-96 max-h-[500px] bg-[var(--color-surface)] rounded-2xl shadow-2xl border border-[var(--color-border)] overflow-hidden"
+          style={{ opacity: 1, transform: 'translateY(0)', transition: 'opacity 0.25s ease-out, transform 0.25s ease-out' }}
+        >
+          <div className="p-4 flex items-center justify-between" style={{ backgroundColor: 'var(--color-navy)' }}>
+            <div>
+              <h3 className="font-semibold text-white">Ask a Pharmacist</h3>
+              <p className="text-sm text-white/80">General health information</p>
+            </div>
+            <button onClick={() => setIsOpen(false)} className="text-white hover:opacity-80" aria-label="Close chat widget">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div className="p-4 overflow-y-auto max-h-96">
+            <p className="text-sm text-[var(--color-text-muted)] mb-4">Find answers to common questions below, or send us a message and we'll get back to you during business hours.</p>
+
+            <div className="space-y-2">
+              {faqItems.map((item, index) => (
+                <div key={index} className="border border-[var(--color-border)] rounded-xl overflow-hidden">
+                  <button onClick={() => setOpenFaq(openFaq === index ? null : index)} className="w-full flex items-center justify-between p-3 text-left text-sm font-medium text-[var(--color-text-dark)] hover:bg-[var(--color-surface-alt)] transition-colors" aria-expanded={openFaq === index} aria-label={item.question}>
+                    <span className="text-gray-900">{item.question}</span>
+                    <ChevronDown className={`w-4 h-4 shrink-0 ml-2 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
+                  </button>
+                  {openFaq === index && <div className="p-3 bg-[var(--color-surface-alt)] text-sm text-[var(--color-text-muted)] border-t border-[var(--color-border)]">{item.answer}</div>}
+                </div>
+              ))}
             </div>
 
-            {/* Content */}
-            <div className="p-4 overflow-y-auto max-h-96">
-              <p className="text-sm text-[var(--color-text-muted)] mb-4">
-                Find answers to common questions below, or send us a message and we'll get back to you during business hours.
-              </p>
-
-              {/* FAQ accordion */}
-              <div className="space-y-2">
-                {faqItems.map((item, index) => (
-                  <div key={index} className="border border-[var(--color-border)] rounded-xl overflow-hidden">
-                    <button
-                      onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                      className="w-full flex items-center justify-between p-3 text-left text-sm font-medium text-[var(--color-text-dark)] hover:bg-[var(--color-surface-alt)] transition-colors"
-                    >
-                      <span className="text-gray-900">{item.question}</span>
-                      <ChevronDown
-                        className={`w-4 h-4 shrink-0 ml-2 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
-                      />
-                    </button>
-                    <AnimatePresence>
-                      {openFaq === index && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="p-3 bg-[var(--color-surface-alt)] text-sm text-[var(--color-text-muted)] border-t border-[var(--color-border)]">
-                            {item.answer}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ))}
-              </div>
-
-              {/* Contact form teaser */}
-              <div className="mt-6 p-4 rounded-xl bg-[var(--color-surface-alt)]">
-                <p className="text-sm text-[var(--color-text-muted)] mb-3">
-                  Still have questions? Send us a message.
-                </p>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  className="w-full"
-                  onClick={() => {
-                    window.location.href = '#location'
-                    setIsOpen(false)
-                  }}
-                >
-                  Contact Us
-                </Button>
-              </div>
-
-              {/* Disclaimer */}
-              <p className="text-xs text-[var(--color-text-muted)] mt-4 text-center">
-                This chat provides general information only and does not replace professional medical advice. For urgent concerns, please call emergency services.
-              </p>
+            <div className="mt-6 p-4 rounded-xl bg-[var(--color-surface-alt)]">
+              <p className="text-sm text-[var(--color-text-muted)] mb-3">Still have questions? Send us a message.</p>
+              <Button variant="primary" size="sm" className="w-full" onClick={() => { window.location.href = '/contact'; setIsOpen(false) }}>
+                Contact Us
+              </Button>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+            <p className="text-xs text-[var(--color-text-muted)] mt-4 text-center">This chat provides general information only and does not replace professional medical advice. For urgent concerns, please call emergency services.</p>
+          </div>
+        </div>
+      )}
     </>
   )
 }

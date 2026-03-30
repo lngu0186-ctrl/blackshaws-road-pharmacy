@@ -34,6 +34,8 @@ export default function ProductDetail() {
   const [error, setError] = useState<string | null>(null)
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null)
   const [quantity, setQuantity] = useState(1)
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null)
+  const [imageVisible, setImageVisible] = useState(true)
   const addItem = useCartStore((s) => s.addItem)
   const openCart = useCartStore((s) => s.openCart)
   const isLoading = useCartStore((s) => s.isLoading)
@@ -48,12 +50,14 @@ export default function ProductDetail() {
         const data = await getProductByHandle(handle)
         if (data) {
           setProduct(data)
-          const firstAvailable = data.variants.edges.find((edge: any) => edge.node.availableForSale)
-          setSelectedVariant(firstAvailable?.node || data.variants.edges[0]?.node || null)
+          const firstAvailable = data.variants.edges.find((edge: { node: ProductVariant }) => edge.node.availableForSale)
+          const resolvedVariant = firstAvailable?.node || data.variants.edges[0]?.node || null
+          setSelectedVariant(resolvedVariant)
+          setSelectedImageUrl(getProductImageUrl(data, 800, 800, resolvedVariant?.image?.url || data.images.edges[0]?.node?.url))
+          setError(null)
         } else {
           setError('Product not found')
         }
-        setError(null)
       } catch (err) {
         console.error('Failed to fetch product:', err)
         setError('Unable to load product details.')
@@ -67,23 +71,33 @@ export default function ProductDetail() {
     window.scrollTo(0, 0)
   }, [handle, showToast])
 
+  const productCategories = useMemo(() => (product ? categorizeProduct(product) : []), [product])
+
   const relatedProducts = useMemo(() => {
     if (!product || allProducts.length === 0) return []
-    const productCats = categorizeProduct(product)
-    if (productCats.length === 0) return []
-    const related = allProducts
-      .filter(p => p.id !== product.id && categorizeProduct(p).some(cat => productCats.includes(cat)))
-      .sort(() => Math.random() - 0.5)
+
+    return allProducts
+      .filter((p) => p.id !== product.id)
+      .map((p) => {
+        const categories = categorizeProduct(p)
+        const sameCategory = categories.some((cat) => productCategories.includes(cat))
+        return { product: p, sameCategory }
+      })
+      .filter((item) => item.sameCategory)
+      .sort((a, b) => {
+        if (a.sameCategory !== b.sameCategory) return a.sameCategory ? -1 : 1
+        return a.product.title.localeCompare(b.product.title)
+      })
       .slice(0, 4)
-    return related
-  }, [product, allProducts])
+      .map((item) => item.product)
+  }, [allProducts, product, productCategories])
 
   useEffect(() => {
     if (!product) return
 
     const title = `${product.title} | Blackshaws Road Pharmacy`
     const description = product.description.replace(/<[^>]*>/g, '').slice(0, 160) || 'Shop online at Blackshaws Road Pharmacy for quality health products.'
-    const image = getProductImageUrl(product, 1200, 630)
+    const image = selectedImageUrl || getProductImageUrl(product, 1200, 630)
     const canonical = `https://blackshawsroadpharmacy.lovable.app/shop/${product.handle}`
 
     document.title = title
@@ -96,13 +110,21 @@ export default function ProductDetail() {
     }
     metaDesc.setAttribute('content', description)
 
+    let metaRobots = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null
+    if (!metaRobots) {
+      metaRobots = document.createElement('meta')
+      metaRobots.name = 'robots'
+      document.head.appendChild(metaRobots)
+    }
+    metaRobots.content = 'index, follow'
+
     let linkCanonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null
     if (!linkCanonical) {
       linkCanonical = document.createElement('link')
       linkCanonical.rel = 'canonical'
       document.head.appendChild(linkCanonical)
     }
-    if (linkCanonical) linkCanonical.href = canonical
+    linkCanonical.href = canonical
 
     const setOgTag = (property: string, content: string) => {
       let el = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement | null
@@ -145,7 +167,7 @@ export default function ProductDetail() {
     script.type = 'application/ld+json'
     script.textContent = JSON.stringify(schema)
     document.head.appendChild(script)
-  }, [product])
+  }, [product, selectedImageUrl])
 
   const handleAddToCart = async () => {
     if (!selectedVariant || !product) return
@@ -166,6 +188,14 @@ export default function ProductDetail() {
     }
   }
 
+  const handleThumbnailSelect = (imageUrl: string) => {
+    setImageVisible(false)
+    window.setTimeout(() => {
+      setSelectedImageUrl(imageUrl)
+      setImageVisible(true)
+    }, 150)
+  }
+
   if (loading) {
     return (
       <div className="section-padding">
@@ -184,12 +214,8 @@ export default function ProductDetail() {
         <div className="container-custom">
           <div className="text-center py-20">
             <h1 className="text-2xl font-bold mb-4" style={{ color: 'var(--color-navy)' }}>Product Not Found</h1>
-            <p className="text-[var(--color-gray-600)] mb-6">
-              {error || 'The product you are looking for does not exist or has been removed.'}
-            </p>
-            <Button variant="primary" asChild>
-              <Link to="/shop">Browse All Products</Link>
-            </Button>
+            <p className="text-[var(--color-gray-600)] mb-6">{error || 'The product you are looking for does not exist or has been removed.'}</p>
+            <Link to="/shop"><Button variant="primary">Browse All Products</Button></Link>
           </div>
         </div>
       </div>
@@ -200,16 +226,20 @@ export default function ProductDetail() {
   const onSale = isOnSale(product)
   const salePrice = onSale ? getSalePrice(product) : null
   const regularPrice = product.priceRange.minVariantPrice
-  const mainImage = getProductImageUrl(product, 800, 800, selectedVariant?.image?.url || undefined)
+  const mainImage = selectedImageUrl || getProductImageUrl(product, 800, 800, selectedVariant?.image?.url || undefined)
 
-  const categorySlug = categorizeProduct(product).length > 0 ? categorizeProduct(product)[0] : null
+  const categorySlug = productCategories.length > 0 ? productCategories[0] : null
   const categoryName = categorySlug ? PHARMACY_CATEGORIES.find((c) => c.id === categorySlug)?.name : 'Shop'
 
+  const galleryImages = product.images.edges.slice(0, 4).map((img) => ({
+    url: getProductImageUrl(product, 150, 150, img.node.url),
+    fullUrl: getProductImageUrl(product, 800, 800, img.node.url),
+    alt: img.node.altText || product.title,
+  }))
 
   return (
     <div className="section-padding bg-white">
       <div className="container-custom">
-        {/* Breadcrumb */}
         <nav className="mb-6 text-sm">
           <ol className="flex items-center gap-2 flex-wrap">
             <li><Link to="/" className="text-gray-500 hover:text-red-600 transition-colors">Home</Link></li>
@@ -218,112 +248,78 @@ export default function ProductDetail() {
             {categorySlug && (
               <>
                 <li className="text-gray-400">/</li>
-                <li>
-                  <Link to={`/shop?category=${categorySlug}`} className="text-gray-500 hover:text-red-600 transition-colors">
-                    {categoryName}
-                  </Link>
-                </li>
+                <li><Link to={`/shop?category=${categorySlug}`} className="text-gray-500 hover:text-red-600 transition-colors">{categoryName}</Link></li>
               </>
             )}
             <li className="text-gray-400">/</li>
-            <li className="font-medium truncate max-w-[200px]" style={{ color: 'var(--color-navy)' }}>
-              {product.title}
-            </li>
+            <li className="font-medium truncate max-w-[200px]" style={{ color: 'var(--color-navy)' }}>{product.title}</li>
           </ol>
         </nav>
 
-        {/* Back to Shop */}
-        <Link
-          to="/shop"
-          className="inline-flex items-center text-sm text-gray-500 hover:text-gray-900 mb-6 transition-colors"
-        >
+        <Link to="/shop" className="inline-flex items-center text-sm text-gray-500 hover:text-gray-900 mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-1" />
           Back to Shop
         </Link>
 
-        {/* Product Grid */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-          {/* Product Images */}
           <div className="space-y-4">
             <div className="relative aspect-square rounded-2xl overflow-hidden bg-gray-100 shadow-lg">
               <img
                 src={mainImage}
                 alt={selectedVariant?.image?.altText || product.images?.edges[0]?.node?.altText || product.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-opacity duration-150"
+                style={{ opacity: imageVisible ? 1 : 0 }}
                 loading="eager"
                 decoding="sync"
               />
-              {onSale && (
-                <span className="absolute top-4 left-4 bg-red-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-md">
-                  On Sale
-                </span>
-              )}
+              {onSale && <span className="absolute top-4 left-4 bg-red-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-md">On Sale</span>}
               {!selectedVariant?.availableForSale && (
                 <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
-                  <span className="text-white font-semibold text-lg bg-red-600 px-6 py-3 rounded-lg">
-                    Out of Stock
-                  </span>
+                  <span className="text-white font-semibold text-lg bg-red-600 px-6 py-3 rounded-lg">Out of Stock</span>
                 </div>
               )}
             </div>
 
-            {product.images.edges.length > 1 && (
+            {galleryImages.length > 1 && (
               <div className="grid grid-cols-4 gap-3">
-                {product.images.edges.slice(0, 4).map((img, idx) => (
-                  <button
-                    key={idx}
-                    className="aspect-square rounded-lg overflow-hidden border-2 transition-all focus:outline-none"
-                    style={{ borderColor: 'var(--color-red)' }}
-                  >
-                    <img
-                      src={getProductImageUrl(product, 150, 150, img.node.url)}
-                      alt={img.node.altText || `${product.title} image ${idx + 1}`}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </button>
-                ))}
+                {galleryImages.map((img, idx) => {
+                  const isActive = mainImage === img.fullUrl
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => handleThumbnailSelect(img.fullUrl)}
+                      className="aspect-square rounded-lg overflow-hidden border-2 transition-all focus:outline-none"
+                      style={{ borderColor: isActive ? '#c0392b' : 'var(--color-gray-200)' }}
+                      aria-label={`View ${product.title} image ${idx + 1}`}
+                    >
+                      <img src={img.url} alt={img.alt} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                    </button>
+                  )
+                })}
               </div>
             )}
           </div>
 
-          {/* Product Details */}
           <div>
-            <p className="text-sm font-medium text-[var(--color-gray-500)] mb-2 uppercase tracking-wide">
-              {product.vendor}
-            </p>
-
-            <h1 className="text-3xl md:text-4xl font-serif font-bold mb-6 leading-tight" style={{ color: 'var(--color-navy)' }}>
-              {product.title}
-            </h1>
+            <p className="text-sm font-medium text-[var(--color-gray-500)] mb-2 uppercase tracking-wide">{product.vendor}</p>
+            <h1 className="text-3xl md:text-4xl font-serif font-bold mb-6 leading-tight" style={{ color: 'var(--color-navy)' }}>{product.title}</h1>
 
             <div className="mb-8">
               <div className="flex items-baseline gap-3">
                 {onSale && salePrice ? (
                   <>
-                    <span className="text-3xl font-bold" style={{ color: 'var(--color-red)' }}>
-                      {formatPrice(salePrice.amount, salePrice.currencyCode)}
-                    </span>
-                    <span className="text-xl text-gray-400 line-through">
-                      {formatPrice(regularPrice.amount, regularPrice.currencyCode)}
-                    </span>
+                    <span className="text-3xl font-bold" style={{ color: 'var(--color-red)' }}>{formatPrice(salePrice.amount, salePrice.currencyCode)}</span>
+                    <span className="text-xl text-gray-400 line-through">{formatPrice(regularPrice.amount, regularPrice.currencyCode)}</span>
                   </>
                 ) : (
-                  <span className="text-3xl font-bold" style={{ color: 'var(--color-navy)' }}>
-                    {formatPrice(regularPrice.amount, regularPrice.currencyCode)}
-                  </span>
+                  <span className="text-3xl font-bold" style={{ color: 'var(--color-navy)' }}>{formatPrice(regularPrice.amount, regularPrice.currencyCode)}</span>
                 )}
               </div>
-              {product.variants.edges.length > 1 && (
-                <p className="text-sm text-[var(--color-gray-500)] mt-2">Price may vary by variant</p>
-              )}
+              {product.variants.edges.length > 1 && <p className="text-sm text-[var(--color-gray-500)] mt-2">Price may vary by variant</p>}
             </div>
 
-            <div
-              className="prose prose-sm max-w-none mb-8 text-[var(--color-gray-700)] leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: product.descriptionHtml || product.description }}
-            />
+            <div className="prose prose-sm max-w-none mb-8 text-[var(--color-gray-700)] leading-relaxed" dangerouslySetInnerHTML={{ __html: product.descriptionHtml || product.description }} />
 
             {hasVariants && (
               <div className="mb-8">
@@ -332,13 +328,13 @@ export default function ProductDetail() {
                   {product.variants.edges.map(({ node }) => (
                     <button
                       key={node.id}
-                      onClick={() => setSelectedVariant(node)}
-                      className={`px-5 py-3 rounded-xl text-sm border transition-all ${
-                        selectedVariant?.id === node.id
-                          ? 'border-red-600 bg-red-50 text-red-700 font-semibold'
-                          : 'border-gray-200 hover:border-gray-300 text-gray-700'
-                      }`}
+                      onClick={() => {
+                        setSelectedVariant(node)
+                        if (node.image?.url) handleThumbnailSelect(getProductImageUrl(product, 800, 800, node.image.url))
+                      }}
+                      className={`px-5 py-3 rounded-xl text-sm border transition-all ${selectedVariant?.id === node.id ? 'border-red-600 bg-red-50 text-red-700 font-semibold' : 'border-gray-200 hover:border-gray-300 text-gray-700'}`}
                       disabled={!node.availableForSale}
+                      aria-label={`Select ${node.title}`}
                     >
                       {node.title}
                       {!node.availableForSale && ' (Out of Stock)'}
@@ -352,93 +348,42 @@ export default function ProductDetail() {
               <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-navy)' }}>Quantity</h3>
               <div className="flex items-center gap-4">
                 <div className="flex items-center border-2 rounded-xl overflow-hidden" style={{ borderColor: 'var(--color-gray-200)' }}>
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-4 py-3 hover:bg-gray-100 transition-colors font-semibold"
-                    disabled={quantity <= 1}
-                    style={{ color: quantity <= 1 ? 'var(--color-gray-300)' : 'var(--color-gray-700)' }}
-                  >
+                  <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-4 py-3 hover:bg-gray-100 transition-colors font-semibold" disabled={quantity <= 1} style={{ color: quantity <= 1 ? 'var(--color-gray-300)' : 'var(--color-gray-700)' }} aria-label="Decrease quantity">
                     <Minus className="w-4 h-4" />
                   </button>
-                  <input
-                    type="text"
-                    value={quantity}
-                    readOnly
-                    className="w-16 text-center font-semibold border-none bg-transparent focus:ring-0"
-                    style={{ color: 'var(--color-navy)' }}
-                  />
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="px-4 py-3 hover:bg-gray-100 transition-colors font-semibold"
-                    style={{ color: 'var(--color-gray-700)' }}
-                  >
+                  <input type="text" value={quantity} readOnly className="w-16 text-center font-semibold border-none bg-transparent focus:ring-0" style={{ color: 'var(--color-navy)' }} aria-label="Quantity" />
+                  <button onClick={() => setQuantity(quantity + 1)} className="px-4 py-3 hover:bg-gray-100 transition-colors font-semibold" style={{ color: 'var(--color-gray-700)' }} aria-label="Increase quantity">
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
-                {selectedVariant && !selectedVariant.availableForSale && (
-                  <span className="text-red-600 font-medium">This item is out of stock</span>
-                )}
+                {selectedVariant && !selectedVariant.availableForSale && <span className="text-red-600 font-medium">This item is out of stock</span>}
               </div>
             </div>
 
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={handleAddToCart}
-              disabled={!selectedVariant?.availableForSale || isLoading}
-              className="w-full md:w-auto text-lg py-4 px-8"
-            >
+            <Button variant="primary" size="lg" onClick={handleAddToCart} disabled={!selectedVariant?.availableForSale || isLoading} className="w-full md:w-auto text-lg py-4 px-8">
               <ShoppingBag className="w-5 h-5 mr-3" />
               {isLoading ? 'Adding...' : selectedVariant?.availableForSale ? 'Add to Cart' : 'Out of Stock'}
             </Button>
 
-            {/* TGA Disclaimer */}
             <p className="text-xs text-gray-500 mt-4 max-w-md leading-relaxed">
-              <strong>Therapeutic Goods:</strong> Always read the label. Follow directions for use. 
-              If symptoms persist, consult your healthcare practitioner. This product may not be suitable for everyone.
+              <strong>Therapeutic Goods:</strong> Always read the label. Follow directions for use. If symptoms persist, consult your healthcare practitioner. This product may not be suitable for everyone.
             </p>
 
-            {/* Trust Badges */}
             <div className="flex items-center gap-6 mt-4 text-xs text-gray-600">
-              <div className="flex items-center gap-1.5">
-                <Lock className="w-4 h-4" style={{ color: 'var(--color-navy)' }} />
-                <span>Secure Checkout</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4" style={{ color: 'var(--color-navy)' }} />
-                <span>AACP Accredited</span>
-              </div>
+              <div className="flex items-center gap-1.5"><Lock className="w-4 h-4" style={{ color: 'var(--color-navy)' }} /><span>Secure Checkout</span></div>
+              <div className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4" style={{ color: 'var(--color-navy)' }} /><span>AACP Accredited</span></div>
             </div>
 
             <div className="mt-10 p-6 rounded-2xl bg-gray-50 border" style={{ borderColor: 'var(--color-gray-200)' }}>
               <h4 className="font-semibold text-lg mb-4" style={{ color: 'var(--color-navy)' }}>Product Details</h4>
               <dl className="space-y-3 text-sm">
-                {product.vendor && (
-                  <div className="flex">
-                    <dt className="w-32 font-medium text-gray-600">Brand</dt>
-                    <dd className="flex-1 text-gray-900">{product.vendor}</dd>
-                  </div>
-                )}
-                {product.productType && (
-                  <div className="flex">
-                    <dt className="w-32 font-medium text-gray-600">Category</dt>
-                    <dd className="flex-1 text-gray-900">{product.productType}</dd>
-                  </div>
-                )}
-                {selectedVariant?.sku && (
-                  <div className="flex">
-                    <dt className="w-32 font-medium text-gray-600">SKU</dt>
-                    <dd className="flex-1 text-gray-900 font-mono text-xs">{selectedVariant.sku}</dd>
-                  </div>
-                )}
+                {product.vendor && <div className="flex"><dt className="w-32 font-medium text-gray-600">Brand</dt><dd className="flex-1 text-gray-900">{product.vendor}</dd></div>}
+                {product.productType && <div className="flex"><dt className="w-32 font-medium text-gray-600">Category</dt><dd className="flex-1 text-gray-900">{product.productType}</dd></div>}
+                {selectedVariant?.sku && <div className="flex"><dt className="w-32 font-medium text-gray-600">SKU</dt><dd className="flex-1 text-gray-900 font-mono text-xs">{selectedVariant.sku}</dd></div>}
                 {selectedVariant?.availableForSale !== undefined && (
                   <div className="flex">
                     <dt className="w-32 font-medium text-gray-600">Availability</dt>
-                    <dd className="flex-1">
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${selectedVariant.availableForSale ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                        {selectedVariant.availableForSale ? 'In Stock' : 'Out of Stock'}
-                      </span>
-                    </dd>
+                    <dd className="flex-1"><span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${selectedVariant.availableForSale ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>{selectedVariant.availableForSale ? 'In Stock' : 'Out of Stock'}</span></dd>
                   </div>
                 )}
               </dl>
@@ -447,42 +392,25 @@ export default function ProductDetail() {
             <div className="mt-6 p-6 rounded-2xl bg-red-50 border border-red-100">
               <h4 className="font-semibold mb-3" style={{ color: 'var(--color-red)' }}>Pharmacy Information</h4>
               <ul className="space-y-2 text-sm text-gray-700">
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-600" />
-                  <span>This is a genuine product sourced from authorised distributors</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-600" />
-                  <span>Speak to our pharmacists for advice on this product</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-600" />
-                  <span>Free click &amp; collect available from our Altona North store</span>
-                </li>
+                <li className="flex items-start gap-2"><Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-600" /><span>This is a genuine product sourced from authorised distributors</span></li>
+                <li className="flex items-start gap-2"><Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-600" /><span>Speak to our pharmacists for advice on this product</span></li>
+                <li className="flex items-start gap-2"><Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-600" /><span>Free click & collect available from our Altona North store</span></li>
               </ul>
             </div>
           </div>
         </div>
 
-        {/* Related Products */}
         {relatedProducts.length > 0 && (
           <div className="mt-16">
             <h2 className="text-2xl font-bold mb-8" style={{ color: 'var(--color-navy)' }}>You May Also Like</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {relatedProducts.map(related => (
+              {relatedProducts.map((related) => (
                 <Link key={related.id} to={`/shop/${related.handle}`} className="product-card group">
                   <div className="aspect-square rounded-xl overflow-hidden bg-gray-100 mb-3">
-                    <img
-                      src={getProductImageUrl(related, 300, 300)}
-                      alt={related.images?.edges[0]?.node?.altText || related.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
+                    <img src={getProductImageUrl(related, 300, 300)} alt={related.images?.edges[0]?.node?.altText || related.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
                   </div>
                   <h3 className="font-medium text-sm line-clamp-2 mb-2">{related.title}</h3>
-                  <p className="text-sm font-bold" style={{ color: 'var(--color-navy)' }}>
-                    {formatPrice(related.priceRange.minVariantPrice.amount, related.priceRange.minVariantPrice.currencyCode)}
-                  </p>
+                  <p className="text-sm font-bold" style={{ color: 'var(--color-navy)' }}>{formatPrice(related.priceRange.minVariantPrice.amount, related.priceRange.minVariantPrice.currencyCode)}</p>
                 </Link>
               ))}
             </div>
