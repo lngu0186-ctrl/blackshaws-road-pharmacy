@@ -2,6 +2,7 @@
 
 import { MapPin, Phone, Clock, Car } from 'lucide-react'
 import { Button } from '../ui/Button'
+import { BrandSignature } from '../layout/BrandSignature'
 
 const hours = [
   { day: 'Monday', open: '8:00 AM', close: '9:00 PM' },
@@ -44,6 +45,9 @@ export function LocationSection() {
             <h2 className="mb-8" style={{ color: 'var(--color-navy)' }}>
               Find us in Altona North
             </h2>
+            <div className="mb-8">
+              <BrandSignature className="max-w-xl" />
+            </div>
 
             <div className="space-y-8">
               <div className="flex items-start gap-4">

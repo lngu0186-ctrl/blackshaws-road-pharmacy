@@ -33,8 +33,13 @@ export function Footer() {
           <div>
             <Logo variant="dark" className="h-16 max-w-[260px] md:h-[4.5rem] md:max-w-[320px]" imageClassName="drop-shadow-[0_14px_34px_rgba(0,0,0,0.28)]" />
             <p className="mt-7 max-w-[34rem] text-base leading-relaxed text-white/74">A trusted Altona North pharmacy blending expert community care with convenient everyday health support, vaccinations and online shopping.</p>
-            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
-              <Shield className="h-4 w-4 text-[var(--color-red)]" /> Alliance Pharmacy member since 1968
+            <div className="mt-6 flex flex-wrap gap-3">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+                <Shield className="h-4 w-4 text-[var(--color-red)]" /> Alliance Pharmacy member since 1968
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/6 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+                <Logo lockup="mark" className="h-5 w-5" imageClassName="object-contain" /> Community trusted branding
+              </div>
             </div>
           </div>
 
@@ -84,9 +89,12 @@ export function Footer() {
             <p className="text-xs text-white/60">After hours urgent health advice: NURSE-ON-CALL 1300 60 60 24 | Emergency: 000</p>
           </div>
           <div className="flex items-center gap-4">
-            <div className="text-xs text-white/60 text-right">
-              <p className="font-semibold">Independent Pharmacies Australia</p>
-              <p className="opacity-70">Here for Good</p>
+            <div className="inline-flex items-center gap-3 rounded-full border border-white/12 bg-white/6 px-4 py-2">
+              <Logo lockup="mark" className="h-8 w-8" imageClassName="object-contain" />
+              <div className="text-xs text-white/70 text-right">
+                <p className="font-semibold text-white/90">Blackshaws Road Pharmacy</p>
+                <p className="opacity-70">Serving Altona North since 1968</p>
+              </div>
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { Award, BadgeCheck, HeartHandshake, Shield } from 'lucide-react'
+import { Logo } from '../layout/Logo'
 
 const pillars = [
   {
@@ -27,6 +28,11 @@ export function PatientTrustSection() {
   return (
     <section className="section-padding bg-alt">
       <div className="container-custom">
+        <div className="mb-6 flex justify-end">
+          <div className="rounded-full border border-[var(--color-border)] bg-white/80 px-4 py-2 shadow-[0_16px_40px_-34px_rgba(16,24,63,0.22)]">
+            <Logo lockup="mark" className="h-8 w-8" imageClassName="object-contain opacity-80" />
+          </div>
+        </div>
         <div className="mb-12 max-w-3xl">
           <p className="section-label" style={{ color: 'var(--color-navy)' }}>Why patients choose us</p>
           <h2 className="text-[var(--color-navy)]">Built to feel reassuring, not overwhelming.</h2>
