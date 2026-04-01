@@ -10,6 +10,7 @@ import { healthServiceGroups } from '../../data/healthServicesNav'
 import type { ReactNode } from 'react'
 
 const navLinks: Array<{ href: string; label: string; isAnchor?: boolean }> = [
+  { href: '/', label: 'Home' },
   { href: '/prescriptions', label: 'Prescriptions' },
   { href: '/health-services', label: 'Health Services' },
   { href: '/plant-based-therapies', label: 'Plant Based Therapies' },
@@ -74,22 +75,6 @@ export function Header() {
           </div>
 
           <nav className="hidden items-center gap-8 md:flex">
-            <Link
-              to="/"
-              aria-label="Home"
-              className={cn(
-                'inline-flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-red)] focus-visible:ring-offset-2',
-                activeHref === '/' || isHome
-                  ? 'border-[var(--color-red)] bg-[var(--color-red)]/10 shadow-[0_10px_24px_-18px_rgba(192,57,43,0.65)]'
-                  : 'border-[var(--color-border)] bg-white/80 hover:border-[var(--color-red)]/40'
-              )}
-            >
-              <img
-                src="/logo-520.png"
-                alt="Home"
-                className="h-6 w-6 object-contain"
-              />
-            </Link>
             {navLinks.map((link) => {
               if (link.href === '/health-services') {
                 return (
