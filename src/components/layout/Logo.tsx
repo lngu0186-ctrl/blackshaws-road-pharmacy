@@ -12,16 +12,16 @@ interface LogoProps {
 
 const logoMap = {
   default: {
-    wordmark: '/logo.svg',
-    mark: '/logo-mark.svg',
+    wordmark: '/logo-1040.png',
+    mark: '/logo-mark-512.png',
   },
   dark: {
-    wordmark: '/logo-dark.svg',
-    mark: '/logo-mark.svg',
+    wordmark: '/logo-white.png',
+    mark: '/logo-mark-512.png',
   },
   white: {
-    wordmark: '/logo-white.svg',
-    mark: '/logo-mark.svg',
+    wordmark: '/logo-white.png',
+    mark: '/logo-mark-512.png',
   },
 } as const
 

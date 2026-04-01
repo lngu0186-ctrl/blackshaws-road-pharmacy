@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ChevronDown, ChevronUp, ArrowRight, CheckCircle2, ShieldCheck, FileCheck2, AlertCircle, Phone } from 'lucide-react'
 import { Button } from '../components/ui/Button'
+import { BrandSignature } from '../components/layout/BrandSignature'
 
 const faqs = [
   {
@@ -85,6 +86,9 @@ export default function PlantBasedTherapies() {
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/74">
               We provide respectful, patient-centred pharmacy support for prescribed plant based therapies, including dispensing guidance, medicine counselling, and practical help around safe use. Our role is to support quality use of medicines and work within the professional standards set for pharmacists in Australia.
             </p>
+            <div className="mt-6">
+              <BrandSignature tone="dark" className="max-w-xl" />
+            </div>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <Link to="/contact">
                 <Button variant="red" size="lg">Speak with our pharmacy team</Button>

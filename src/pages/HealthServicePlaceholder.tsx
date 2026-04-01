@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { healthServiceGroups } from '../data/healthServicesNav'
 import { Button } from '../components/ui/Button'
 import { Phone, ArrowRight } from 'lucide-react'
+import { BrandSignature } from '../components/layout/BrandSignature'
 
 function titleFromSlug(slug: string) {
   return slug
@@ -52,6 +53,9 @@ export default function HealthServicePlaceholder() {
           <p className="section-label !text-white/70">Health Services</p>
           <h1 className="text-white">{heroTitle}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">{subheading}</p>
+          <div className="mt-6">
+            <BrandSignature tone="dark" className="max-w-xl" />
+          </div>
         </div>
       </section>
 

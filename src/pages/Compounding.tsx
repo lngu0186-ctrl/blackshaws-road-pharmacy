@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ChevronDown, ChevronUp, ArrowRight, FlaskConical, FileText, ClipboardCheck, BellRing, ShieldAlert, PawPrint } from 'lucide-react'
 import { Button } from '../components/ui/Button'
+import { BrandSignature } from '../components/layout/BrandSignature'
 
 const reasons = [
   'Allergies or sensitivities to excipients in standard products',
@@ -84,6 +85,9 @@ export default function Compounding() {
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/74">
               When a commercially available medicine is not suitable, compounding may provide a tailored option for a specific patient. We help patients navigate that process carefully, with pharmacist review, counselling, and coordination through our compounding partner.
             </p>
+            <div className="mt-6">
+              <BrandSignature tone="dark" className="max-w-xl" />
+            </div>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <Link to="/contact">
                 <Button variant="red" size="lg">Talk to our pharmacist about compounding</Button>

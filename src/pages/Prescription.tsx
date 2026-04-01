@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Clock3, FileText, ShieldAlert, Phone } from 'lucide-react'
 import UploadPrescription from './UploadPrescription'
 import { Button } from '../components/ui/Button'
+import { BrandSignature } from '../components/layout/BrandSignature'
 
 const notes = [
   'Please upload a clear photo or PDF of the full prescription.',
@@ -24,6 +25,9 @@ export default function Prescription() {
             <p className="section-label !text-white/70">Prescriptions</p>
             <h1 className="max-w-4xl text-white">Upload your prescription for a straightforward pickup process.</h1>
             <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">Send your prescription ahead so our pharmacy team can review it, prepare where appropriate and let you know the next step. This helps make pickup faster while still allowing for pharmacist review, medicine availability and prescription requirements.</p>
+            <div className="mt-6">
+              <BrandSignature tone="dark" className="max-w-xl" />
+            </div>
           </div>
           <div className="premium-panel rounded-[32px] p-7 text-[var(--color-text-dark)]">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-red)]">Before you upload</p>

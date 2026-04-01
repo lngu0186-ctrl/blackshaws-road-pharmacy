@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { BrandSignature } from '../components/layout/BrandSignature'
 
 const faqGroups = [
   {
@@ -84,6 +85,9 @@ export default function FAQ() {
           <p className="section-label !text-white/70">Frequently asked questions</p>
           <h1 className="text-white">Answers that help patients move faster with less uncertainty.</h1>
           <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">This page gives practical guidance on prescriptions, bookings, general health information and how to contact the pharmacy team when a more personal conversation is the better option.</p>
+          <div className="mt-6">
+            <BrandSignature tone="dark" className="max-w-xl" />
+          </div>
         </div>
       </section>
 

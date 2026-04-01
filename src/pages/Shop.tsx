@@ -8,6 +8,7 @@ import { getAllCategories, classifyProduct, formatPrice, getProductImageUrl, isO
 import { useProductStore } from '../stores/productStore'
 import { Button } from '../components/ui/Button'
 import { Breadcrumb } from '../components/layout/Breadcrumb'
+import { BrandSignature } from '../components/layout/BrandSignature'
 import './Shop.css'
 
 const PRODUCTS_PER_PAGE = 48
@@ -111,6 +112,9 @@ export default function Shop() {
               <p className="section-label !text-white/70">Online pharmacy</p>
               <h1 className="text-white">Shop your health essentials.</h1>
               <p className="mt-4 max-w-2xl text-lg text-white/76">Browse a curated selection of pharmacy and wellness products with clearer filters, better search and the reassurance of a trusted local pharmacy behind every order.</p>
+              <div className="mt-6">
+                <BrandSignature tone="dark" className="max-w-xl" />
+              </div>
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
               {[`${products.length} total products`, `${totalFiltered} matching now`, 'Pickup and local pharmacy support'].map((item) => <div key={item} className="rounded-[24px] bg-white/10 px-5 py-4 text-sm font-semibold text-white/85">{item}</div>)}

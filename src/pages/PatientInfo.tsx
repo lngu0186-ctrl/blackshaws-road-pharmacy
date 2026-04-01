@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { LockKeyhole, ShieldCheck, Stethoscope } from 'lucide-react'
+import { BrandSignature } from '../components/layout/BrandSignature'
 
 const sections = [
   {
@@ -44,6 +45,9 @@ export default function PatientInfo() {
           <p className="section-label !text-white/70">Patient information</p>
           <h1 className="text-white">Clear expectations around prescriptions, privacy and general health information.</h1>
           <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">This page supports trust and compliance by explaining how online prescription requests work, how pharmacist review fits in and why website content should be treated as general information only.</p>
+          <div className="mt-6">
+            <BrandSignature tone="dark" className="max-w-xl" />
+          </div>
         </div>
       </section>
 

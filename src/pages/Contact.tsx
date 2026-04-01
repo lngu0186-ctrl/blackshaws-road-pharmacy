@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Phone, MapPin, MessageSquare } from 'lucide-react'
 import { Button } from '../components/ui/Button'
+import { BrandSignature } from '../components/layout/BrandSignature'
 
 const hours = [
   { label: 'Monday–Friday', value: '8:00 AM – 9:00 PM' },
@@ -43,6 +44,9 @@ export default function Contact() {
           <p className="section-label !text-white/70">Contact</p>
           <h1 className="text-white">Get in Touch</h1>
           <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">We're here Monday to Saturday. Walk in anytime, or reach us by phone or online.</p>
+          <div className="mt-6">
+            <BrandSignature tone="dark" className="max-w-xl" />
+          </div>
         </div>
       </section>
 
