@@ -30,7 +30,7 @@ export function HeroSection() {
             <div className="mt-6 md:mt-7">
               <Logo
                 variant="dark"
-                className="h-[4.5rem] max-w-[280px] sm:h-[5rem] sm:max-w-[340px] md:h-[5.8rem] md:max-w-[420px]"
+                className="brand-logo-hero h-[3.6rem] sm:h-[4.2rem] md:h-[4.8rem]"
                 imageClassName="drop-shadow-[0_16px_40px_rgba(0,0,0,0.22)]"
                 priority
               />

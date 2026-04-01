@@ -68,7 +68,7 @@ export function Header() {
               <Menu className="h-5 w-5" />
             </button>
             <Logo
-              className="h-[var(--logo-max-height-mobile)] max-w-[210px] md:h-[var(--logo-max-height)] md:max-w-[340px]"
+              className="brand-logo-header h-[var(--logo-max-height-mobile)] md:h-[var(--logo-max-height)]"
               imageClassName="origin-left"
               priority
             />

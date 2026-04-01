@@ -39,12 +39,12 @@ export function Logo({
     <Link
       to="/"
       aria-label="Blackshaws Road Pharmacy — return to homepage"
-      className={cn('inline-flex min-w-0 shrink-0 items-center focus-visible:outline-none', className)}
+      className={cn('inline-flex min-w-0 shrink-0 items-center overflow-hidden focus-visible:outline-none', className)}
     >
       <img
         src={logoSrc}
         alt={alt}
-        className={cn('block h-full w-auto max-w-full object-contain object-left', imageClassName)}
+        className={cn('block h-full w-full max-w-full object-contain object-left', imageClassName)}
         fetchPriority={priority ? 'high' : 'auto'}
         decoding={priority ? 'sync' : 'async'}
       />
