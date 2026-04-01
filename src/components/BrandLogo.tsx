@@ -1,27 +1,19 @@
-/** BrandLogo — centralised brand logo component for consistent usage site-wide. */
+/** BrandLogo — legacy compatibility wrapper around the current Logo component. */
+import { Logo } from './layout/Logo'
 
 interface BrandLogoProps {
-  /** 'dark' = black logo on light bg, 'light' = white logo on dark bg, 'badge' = with Alliance badge */
+  /** 'dark' = dark wordmark on light bg, 'light' = white wordmark on dark bg, 'badge' maps to the standard dark wordmark */
   variant?: 'dark' | 'light' | 'badge'
   className?: string
   style?: React.CSSProperties
 }
 
 export function BrandLogo({ variant = 'dark', className = '', style }: BrandLogoProps) {
-  const src =
-    variant === 'light'
-      ? '/logo-white.webp'
-      : variant === 'badge'
-        ? '/logo-badge.webp'
-        : '/logo-black.webp'
+  const mappedVariant = variant === 'light' ? 'dark' : 'default'
 
   return (
-    <img
-      src={src}
-      alt="Blackshaws Road Pharmacy"
-      className={className}
-      style={{ objectFit: 'contain', display: 'block', ...style }}
-      loading={variant === 'dark' ? undefined : 'lazy'}
-    />
+    <div className={className} style={style}>
+      <Logo variant={mappedVariant} className="h-full w-full" imageClassName="object-contain" />
+    </div>
   )
 }

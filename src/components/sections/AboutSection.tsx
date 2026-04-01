@@ -62,8 +62,8 @@ export function AboutSection() {
           <div className="order-1 lg:order-2 relative h-80 rounded-2xl overflow-hidden border border-[var(--color-gray-200)] bg-white shadow-md">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(192,57,43,0.12),transparent_34%),linear-gradient(180deg,rgba(27,42,107,0.02),rgba(27,42,107,0.08))]" />
             <div className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-[var(--color-navy-soft)]/70 blur-2xl" />
-            <div className="absolute bottom-4 right-4 opacity-[0.08]">
-              <Logo lockup="mark" className="h-28 w-28" imageClassName="object-contain" />
+            <div className="absolute bottom-5 right-5 opacity-[0.06]">
+              <Logo className="h-20 w-[12rem]" imageClassName="object-contain" />
             </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
               <Logo className="h-16 max-w-[220px] mb-4" imageClassName="opacity-70 object-contain" />

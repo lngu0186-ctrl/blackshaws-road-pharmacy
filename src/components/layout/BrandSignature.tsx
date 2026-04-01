@@ -21,9 +21,9 @@ export function BrandSignature({ className, tone = 'light' }: BrandSignatureProp
       )}
     >
       <Logo
-        lockup="mark"
-        className="h-14 w-14"
-        imageClassName="rounded-[16px] object-contain"
+        variant={isDark ? 'dark' : 'default'}
+        className="h-12 w-[9.5rem] sm:w-[10.5rem]"
+        imageClassName="object-contain"
         priority={isDark}
       />
       <div className="min-w-0">

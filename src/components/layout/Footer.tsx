@@ -37,8 +37,8 @@ export function Footer() {
               <div className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
                 <Shield className="h-4 w-4 text-[var(--color-red)]" /> Alliance Pharmacy member since 1968
               </div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/6 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
-                <Logo lockup="mark" className="h-5 w-5" imageClassName="object-contain" /> Community trusted branding
+              <div className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/6 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+                <Logo variant="dark" className="h-6 w-[6.75rem]" imageClassName="object-contain" /> Community trusted branding
               </div>
             </div>
           </div>
@@ -90,7 +90,7 @@ export function Footer() {
           </div>
           <div className="flex items-center gap-4">
             <div className="inline-flex items-center gap-3 rounded-full border border-white/12 bg-white/6 px-4 py-2">
-              <Logo lockup="mark" className="h-8 w-8" imageClassName="object-contain" />
+              <Logo variant="dark" className="h-8 w-[8.5rem]" imageClassName="object-contain" />
               <div className="text-xs text-white/70 text-right">
                 <p className="font-semibold text-white/90">Blackshaws Road Pharmacy</p>
                 <p className="opacity-70">Serving Altona North since 1968</p>
