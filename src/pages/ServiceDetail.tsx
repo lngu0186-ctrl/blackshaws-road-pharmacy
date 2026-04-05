@@ -1,73 +1,160 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Phone, Check, Calendar, Star } from 'lucide-react'
-import { getServiceBySlug, services, serviceCategories } from '../data/services'
+import { ArrowLeft, Phone, Check, Calendar, Star, ArrowRight } from 'lucide-react'
+import { getServiceBySlug, services, serviceCategories, type Service } from '../data/services'
+import { SERVICE_SLUG_MAP } from '../data/serviceSlugMapping'
+import { healthServiceGroups } from '../data/healthServicesNav'
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
-import BookingCTA from '../components/BookingCTA'
+import { BrandSignature } from '../components/layout/BrandSignature'
 import './ServiceDetail.css'
 
-export default function ServiceDetail() {
-  const { slug } = useParams<{ slug: string }>()
-  const [service, setService] = useState(getServiceBySlug(slug || ''))
+interface ServiceDetailProps {
+  slugOverride?: string // For hub page overview
+}
 
+function titleFromSlug(slug: string) {
+  return slug
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ')
+}
+
+function getNavServiceTitle(slug: string): string {
+  for (const group of healthServiceGroups) {
+    for (const item of group.items) {
+      const key = item.href.replace(/^\/health-services\//, '')
+      if (key === slug) return item.title
+    }
+  }
+  return titleFromSlug(slug)
+}
+
+export default function ServiceDetail({ slugOverride }: ServiceDetailProps) {
+  const { slug: routeSlug } = useParams<{ slug: string }>()
+  const slug = slugOverride || routeSlug
+
+  const [service, setService] = useState<Service | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Resolve service: try direct slug, then mapping, then nav title fallback
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
-    if (!service && slug) {
-      const found = services.find((s) =>
-        s.slug.toLowerCase() === slug?.toLowerCase() ||
-        s.id.toLowerCase() === slug?.toLowerCase()
-      )
-      if (found) {
-        setService(found)
-      }
+    if (!slug) {
+      setIsLoading(false)
+      setService(null)
+      return
     }
-    window.scrollTo(0, 0)
-    if (service) {
-      document.title = `${service.title} | Blackshaws Road Pharmacy`
-    }
-  }, [slug, service])
 
-  if (!service) {
+    setIsLoading(true)
+
+    // 1. Direct lookup
+    let found = getServiceBySlug(slug)
+
+    // 2. Mapping lookup
+    if (!found && SERVICE_SLUG_MAP[slug]) {
+      found = getServiceBySlug(SERVICE_SLUG_MAP[slug])
+    }
+
+    // 3. Try nav slug direct (for slugs like 'medscheck' that match)
+    if (!found) {
+      found = services.find(
+        (s) =>
+          s.slug.toLowerCase() === slug.toLowerCase() ||
+          s.id.toLowerCase() === slug.toLowerCase()
+      )
+    }
+
+    setService(found || null)
+    setIsLoading(false)
+
+    // Scroll to top
+    window.scrollTo(0, 0)
+
+    // Set page title
+    if (slug === 'hub') {
+      document.title = 'Health Services | Blackshaws Road Pharmacy'
+    } else if (found) {
+      document.title = `${found.title} | Blackshaws Road Pharmacy`
+    } else {
+      document.title = `${getNavServiceTitle(slug)} | Blackshaws Road Pharmacy`
+    }
+
+    // Set meta description
+    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.name = 'description'
+      document.head.appendChild(metaDescription)
+    }
+
+    if (slug === 'hub') {
+      metaDescription.content = 'Explore health services at Blackshaws Road Pharmacy in Altona North including vaccinations, health checks, medication reviews, diabetes support, and more. Call (03) 9391 3257 to book.'
+    } else if (found) {
+      metaDescription.content = `${found.title} at Blackshaws Road Pharmacy, Altona North. ${found.shortDescription} ${found.isFree ? 'Free or bulk-billed.' : found.cost}`
+    } else {
+      metaDescription.content = `${getNavServiceTitle(slug)} services at Blackshaws Road Pharmacy in Altona North. Our pharmacists provide professional healthcare support. Call (03) 9391 3257.`
+    }
+
+    // Set robots to index,follow for real services, noindex for stubs
+    let metaRobots = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null
+    if (!metaRobots) {
+      metaRobots = document.createElement('meta')
+      metaRobots.name = 'robots'
+      document.head.appendChild(metaRobots)
+    }
+    metaRobots.content = found ? 'index, follow' : 'noindex, nofollow'
+  }, [slug])
+
+  // For hub overview page
+  if (slug === 'hub' || !slug) {
+    return <HealthServicesHub />
+  }
+
+  // Loading state
+  if (isLoading) {
     return (
-      <div className="section-padding">
-        <div className="container-custom">
-          <div className="text-center py-20">
-            <h1 className="text-2xl font-bold mb-4" style={{ color: 'var(--color-navy)' }}>
-              Service Not Found
-            </h1>
-            <p className="text-[var(--color-gray-600)] mb-6">
-              We couldn't find the service you're looking for. It may have been moved or renamed.
-            </p>
-            <Link to="/health-services"><Button variant="primary">View All Services</Button></Link>
-          </div>
+      <div className="min-h-screen flex items-center justify-center bg-[var(--color-cream)]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-red)] mx-auto mb-4"></div>
+          <p className="text-[var(--color-text-muted)]">Loading service information...</p>
         </div>
       </div>
+    )
+  }
+
+  // Service not found — show intelligent fallback
+  if (!service) {
+    const navTitle = getNavServiceTitle(slug)
+    return (
+      <ServiceStubPage slug={slug} title={navTitle} />
     )
   }
 
   const categoryInfo = serviceCategories[service.category]
 
   return (
-    <div className="service-detail-page">
-      <section className="section-padding text-white" style={{ backgroundColor: 'var(--color-navy)' }}>
+    <div className="service-detail-page bg-[var(--color-cream)]">
+      {/* Hero */}
+      <section className="section-padding-lg bg-[linear-gradient(135deg,var(--color-navy-deep),var(--color-navy))] text-white">
         <div className="container-custom">
           <div className="mb-6">
-            <Link to="/health-services" className="inline-flex items-center text-sm opacity-80 hover:opacity-100 transition-colors">
+            <Link to="/health-services" className="inline-flex items-center text-sm text-white/70 hover:text-white transition-colors">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to All Services
             </Link>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
             <div>
-              <p className="text-sm font-medium mb-3 opacity-80">{categoryInfo.title.toUpperCase()}</p>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">{service.title}</h1>
-              <p className="text-xl mb-6 opacity-90">{service.shortDescription}</p>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/60 mb-3">{categoryInfo.title.toUpperCase()}</p>
+              <h1 className="text-clamp-2xl-4xl mb-6 text-white">{service.title}</h1>
+              <p className="text-lg mb-6 text-white/80 leading-relaxed">{service.shortDescription}</p>
 
-              <div className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium mb-6" style={{ backgroundColor: 'var(--color-red)', color: 'white' }}>
+              <div className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold mb-6 bg-white/10 text-white border border-white/15">
                 {service.isFree ? (
                   <>
-                    <Check className="w-4 h-4 mr-2" />
+                    <Check className="w-4 h-4 mr-2 text-[var(--color-sage)]" />
                     Free or Bulk Billed
                   </>
                 ) : (
@@ -79,96 +166,278 @@ export default function ServiceDetail() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <BookingCTA service={service} variant="primary" size="lg" />
                 <a href="tel:0393913257">
-                  <Button variant="outline" size="lg" className="text-white border-white hover:bg-white hover:text-[var(--color-navy)]">
+                  <Button variant="red" size="lg">
                     <Phone className="w-5 h-5 mr-2" />
-                    Call to Book
+                    Call (03) 9391 3257
                   </Button>
                 </a>
+                <Link to="/contact">
+                  <Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">
+                    Enquire Online
+                  </Button>
+                </Link>
               </div>
             </div>
 
-            <div className="flex justify-center items-center">
-              <div className="w-48 h-48 rounded-full flex items-center justify-center" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}>
-                <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--color-red)' }}>
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                </svg>
-              </div>
+            <div className="hidden lg:flex justify-center">
+              <BrandSignature tone="dark" className="max-w-md opacity-90" />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="section-padding">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-10">
+            <div className="space-y-8">
+              <Card className="p-8">
+                <h2 className="text-2xl font-bold mb-4" style={{ color: 'var(--color-navy)' }}>About This Service</h2>
+                <div className="prose max-w-none text-[var(--color-text-muted)] leading-relaxed">
+                  {service.fullDescription.split('\n\n').map((paragraph, idx) => (
+                    <p key={idx} className="mb-4 last:mb-0">{paragraph}</p>
+                  ))}
+                </div>
+              </Card>
+
+              <Card className="p-8">
+                <h2 className="text-2xl font-bold mb-4 flex items-center" style={{ color: 'var(--color-navy)' }}>
+                  <Star className="w-6 h-6 mr-3 text-[var(--color-red)]" />
+                  Who Is This For?
+                </h2>
+                <p className="text-[var(--color-text-muted)] leading-relaxed">{service.whoIsItFor}</p>
+              </Card>
+
+              <Card className="p-8">
+                <h2 className="text-2xl font-bold mb-4 flex items-center" style={{ color: 'var(--color-navy)' }}>
+                  <Calendar className="w-6 h-6 mr-3 text-[var(--color-red)]" />
+                  What to Expect
+                </h2>
+                <p className="text-[var(--color-text-muted)] leading-relaxed">{service.whatToExpect}</p>
+              </Card>
+
+              {service.tags.length > 0 && (
+                <Card className="p-8">
+                  <h2 className="text-2xl font-bold mb-4" style={{ color: 'var(--color-navy)' }}>Related Topics</h2>
+                  <div className="flex flex-wrap gap-3">
+                    {service.tags.map((tag) => (
+                      <span key={tag} className="px-4 py-2 rounded-full text-sm bg-[var(--color-navy-soft)] text-[var(--color-navy)] font-medium">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </Card>
+              )}
+            </div>
+
+            {/* Sidebar */}
+            <div>
+              <Card className="p-6 sticky top-28">
+                <h3 className="text-xl font-bold mb-5" style={{ color: 'var(--color-navy)' }}>Service Details</h3>
+                <div className="space-y-4 pb-6 border-b border-[var(--color-border)]">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.15em] text-[var(--color-text-muted)] mb-1">Cost</p>
+                    <p className="font-semibold text-[var(--color-navy)]">{service.cost}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.15em] text-[var(--color-text-muted)] mb-1">How to Access</p>
+                    <p className="font-medium text-[var(--color-navy)]">{service.bookingCTA}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.15em] text-[var(--color-text-muted)] mb-1">Category</p>
+                    <p className="font-medium text-[var(--color-navy)]">{categoryInfo.title}</p>
+                  </div>
+                </div>
+
+                <div className="mt-6 space-y-3">
+                  <a href="tel:0393913257" className="block">
+                    <Button variant="primary" className="w-full">
+                      <Phone className="w-4 h-4 mr-2" />
+                      Call (03) 9391 3257
+                    </Button>
+                  </a>
+                  <Link to="/contact" className="block">
+                    <Button variant="outline" className="w-full">
+                      Send an Enquiry
+                    </Button>
+                  </Link>
+                </div>
+
+                <p className="mt-5 text-xs text-[var(--color-text-muted)] text-center">
+                  For urgent medical concerns, call 000 or visit your GP.
+                </p>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Related Services */}
+      <section className="section-padding bg-[var(--color-cream)]">
+        <div className="container-custom">
+          <h2 className="text-2xl font-bold mb-8 text-[var(--color-navy)]">Other Services You Might Be Interested In</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services
+              .filter((s) => s.category === service.category && s.id !== service.id)
+              .slice(0, 3)
+              .map((relatedService) => (
+                <Card key={relatedService.id} className="p-6">
+                  <h3 className="text-lg font-bold mb-2 text-[var(--color-navy)]">{relatedService.title}</h3>
+                  <p className="text-sm text-[var(--color-text-muted)] mb-4">{relatedService.shortDescription}</p>
+                  <Link to={`/health-services/${relatedService.slug}`} className="inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-red)] hover:underline">
+                    Learn more <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </Card>
+              ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+/**
+ * Health Services Hub Page — index/overview of all services
+ */
+function HealthServicesHub() {
+  return (
+    <div className="min-h-screen bg-[var(--color-cream)]">
+      <section className="section-padding-lg bg-[linear-gradient(135deg,var(--color-navy-deep),var(--color-navy))] text-white">
+        <div className="container-custom max-w-5xl">
+          <p className="section-label !text-white/70">Health Services</p>
+          <h1 className="text-white">Comprehensive pharmacy care for Altona North and surrounds.</h1>
+          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">
+            From preventive health checks to medication management, chronic disease support,
+            and specialised care pathways — our pharmacy team provides accessible,
+            professional healthcare services seven days a week.
+          </p>
+          <div className="mt-6">
+            <BrandSignature tone="dark" className="max-w-xl" />
           </div>
         </div>
       </section>
 
       <section className="section-padding">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2 space-y-12">
-              <Card className="p-8">
-                <h2 className="text-2xl font-bold mb-4" style={{ color: 'var(--color-navy)' }}>About This Service</h2>
-                <div className="prose max-w-none text-[var(--color-gray-600)] leading-relaxed">
-                  {service.fullDescription.split('\n\n').map((paragraph, idx) => <p key={idx} className="mb-4">{paragraph}</p>)}
-                </div>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {healthServiceGroups.map((group) => (
+              <Card key={group.id} className="p-6">
+                <h3 className="text-lg font-bold mb-4 text-[var(--color-navy)]">
+                  {group.heading}
+                </h3>
+                <ul className="space-y-2">
+                  {group.items.map((item) => {
+                    const Icon = item.icon
+                    const serviceSlug = item.href.replace(/^\/health-services\//, '')
+                    const hasRealContent = SERVICE_SLUG_MAP[serviceSlug] || getServiceBySlug(serviceSlug)
+                    return (
+                      <li key={item.href}>
+                        <Link
+                          to={item.href}
+                          className={`group flex items-start gap-3 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-[var(--color-navy-soft)] ${
+                            hasRealContent ? 'text-[var(--color-navy)] font-medium' : 'text-[var(--color-text-muted)]'
+                          }`}
+                        >
+                          <Icon className={`mt-0.5 h-4 w-4 flex-shrink-0 ${hasRealContent ? 'text-[var(--color-red)]' : 'text-[var(--color-text-muted)]'}`} />
+                          <span>{item.title}</span>
+                          {!hasRealContent && <span className="ml-auto text-[10px] text-[var(--color-text-muted)]">Info coming soon</span>}
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
               </Card>
+            ))}
+          </div>
 
-              <Card className="p-8">
-                <h2 className="text-2xl font-bold mb-4 flex items-center" style={{ color: 'var(--color-navy)' }}><Star className="w-6 h-6 mr-3" style={{ color: 'var(--color-red)' }} />Who Is This For?</h2>
-                <p className="text-[var(--color-gray-600)] leading-relaxed">{service.whoIsItFor}</p>
-              </Card>
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row items-center justify-center">
+            <a href="tel:0393913257">
+              <Button variant="red" size="lg">
+                <Phone className="mr-2 h-5 w-5" /> Call (03) 9391 3257
+              </Button>
+            </a>
+            <Link to="/contact">
+              <Button variant="outline" size="lg">
+                Send an Enquiry
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
 
-              <Card className="p-8">
-                <h2 className="text-2xl font-bold mb-4 flex items-center" style={{ color: 'var(--color-navy)' }}><Calendar className="w-6 h-6 mr-3" style={{ color: 'var(--color-red)' }} />What to Expect</h2>
-                <p className="text-[var(--color-gray-600)] leading-relaxed">{service.whatToExpect}</p>
-              </Card>
+/**
+ * Stub page for services not yet fully built out
+ */
+function ServiceStubPage({ slug, title }: { slug: string; title: string }) {
+  useEffect(() => {
+    window.scrollTo(0, 0)
 
-              <Card className="p-8">
-                <h2 className="text-2xl font-bold mb-4" style={{ color: 'var(--color-navy)' }}>Related Topics</h2>
-                <div className="flex flex-wrap gap-3">
-                  {service.tags.map((tag) => <span key={tag} className="px-4 py-2 rounded-full text-sm" style={{ backgroundColor: 'var(--color-off-white)', color: 'var(--color-navy)' }}>{tag}</span>)}
-                </div>
-              </Card>
-            </div>
+    // Set meta for stub pages — noindex to avoid indexing thin content
+    let metaRobots = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null
+    if (!metaRobots) {
+      metaRobots = document.createElement('meta')
+      metaRobots.name = 'robots'
+      document.head.appendChild(metaRobots)
+    }
+    metaRobots.content = 'noindex, nofollow'
 
-            <div className="lg:col-span-1">
-              <Card className="p-6 sticky top-24">
-                <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--color-navy)' }}>Service Details</h3>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm font-medium text-[var(--color-gray-600)] mb-1">Cost</p>
-                    <p className="font-semibold" style={{ color: service.isFree ? 'var(--color-navy)' : 'var(--color-red)' }}>{service.cost}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-[var(--color-gray-600)] mb-1">Booking</p>
-                    <p className="font-semibold" style={{ color: 'var(--color-navy)' }}>{service.bookingCTA}</p>
-                  </div>
-                </div>
+    // Set description
+    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.name = 'description'
+      document.head.appendChild(metaDescription)
+    }
+    metaDescription.content = `${title} services at Blackshaws Road Pharmacy in Altona North. Contact our pharmacy team for more information.`
+  }, [slug, title])
 
-                <div className="mt-6 pt-6 border-t border-gray-200">
-                  <p className="text-sm text-[var(--color-gray-600)] mb-4">Have questions? Call us or visit the store.</p>
-                  <a href="tel:0393913257" className="block">
-                    <Button variant="primary" className="w-full"><Phone className="w-4 h-4 mr-2" />(03) 9391 3257</Button>
-                  </a>
-                </div>
-              </Card>
-            </div>
+  return (
+    <div className="min-h-screen bg-[var(--color-cream)]">
+      <section className="section-padding-lg bg-[linear-gradient(135deg,var(--color-navy-deep),var(--color-navy))] text-white">
+        <div className="container-custom max-w-5xl">
+          <p className="section-label !text-white/70">Health Services</p>
+          <h1 className="text-white">{title}</h1>
+          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">
+            Our pharmacy team at Blackshaws Road Pharmacy provides {title.toLowerCase()} support to patients
+            in Altona North and surrounding suburbs. For detailed information, eligibility, and booking,
+            please speak with our pharmacists directly.
+          </p>
+          <div className="mt-6">
+            <BrandSignature tone="dark" className="max-w-xl" />
           </div>
         </div>
       </section>
 
-      <BookingCTA service={service} />
+      <section className="section-padding">
+        <div className="container-custom max-w-5xl">
+          <Card className="p-8 md:p-10">
+            <p className="text-base leading-relaxed text-[var(--color-text-muted)]">
+              Detailed online information for this service is being prepared. In the meantime,
+              our pharmacists can provide personalised guidance, explain how the service works,
+              check your eligibility, and help you access the right care pathway.
+            </p>
+            <p className="mt-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+              This information is general in nature and does not substitute for professional medical advice.
+              Please consult your pharmacist or GP for guidance specific to your situation.
+            </p>
 
-      <section className="section-padding" style={{ backgroundColor: 'var(--color-off-white)' }}>
-        <div className="container-custom">
-          <h2 className="text-2xl font-bold mb-8" style={{ color: 'var(--color-navy)' }}>Other Services You Might Be Interested In</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.filter((s) => s.category === service.category && s.id !== service.id).slice(0, 3).map((relatedService) => (
-              <Card key={relatedService.id} className="p-6">
-                <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--color-navy)' }}>{relatedService.title}</h3>
-                <p className="text-sm text-[var(--color-gray-600)] mb-4">{relatedService.shortDescription}</p>
-                <Link to={`/health-services/${relatedService.slug}`} className="text-sm font-medium hover:underline" style={{ color: 'var(--color-red)' }}>Learn more →</Link>
-              </Card>
-            ))}
-          </div>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <a href="tel:0393913257">
+                <Button variant="red">
+                  <Phone className="mr-2 h-4 w-4" /> Call (03) 9391 3257
+                </Button>
+              </a>
+              <Link to="/contact">
+                <Button variant="outline">
+                  Send an Enquiry <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </Card>
         </div>
       </section>
     </div>

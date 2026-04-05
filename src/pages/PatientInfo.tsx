@@ -36,6 +36,14 @@ export default function PatientInfo() {
   useEffect(() => {
     window.scrollTo(0, 0)
     document.title = 'Patient Information | Blackshaws Road Pharmacy'
+
+    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.name = 'description'
+      document.head.appendChild(metaDescription)
+    }
+    metaDescription.content = 'Important patient information for Blackshaws Road Pharmacy including prescription privacy, medicine availability, pharmacist review process, and general health information disclaimers.'
   }, [])
 
   return (

@@ -59,6 +59,14 @@ export default function FAQ() {
   useEffect(() => {
     window.scrollTo(0, 0)
     document.title = 'FAQ | Blackshaws Road Pharmacy'
+
+    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.name = 'description'
+      document.head.appendChild(metaDescription)
+    }
+    metaDescription.content = 'Frequently asked questions about Blackshaws Road Pharmacy in Altona North including prescriptions, vaccination bookings, pharmacist consultations, online shop, and how to contact our team.'
   }, [])
 
   const faqSchema = {

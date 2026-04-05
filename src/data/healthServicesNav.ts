@@ -56,7 +56,7 @@ export const healthServiceGroups: HealthServiceGroup[] = [
     items: [
       { title: 'MedsCheck', href: '/health-services/medscheck', icon: ClipboardList },
       { title: 'Diabetes MedsCheck', href: '/health-services/diabetes-medscheck', icon: Pill },
-      { title: 'Medication Management', href: '/health-services/medication-management', icon: Pill },
+      { title: 'Medication Management', href: '/health-services/prescription-reviews', icon: Pill },
       { title: 'Dose Administration Aids', href: '/health-services/dose-administration-aids', icon: CalendarCheck },
       { title: 'eScripts', href: '/health-services/escripts', icon: FileText },
       { title: 'Absence Certificates', href: '/health-services/absence-certificates', icon: FileText },
@@ -67,11 +67,11 @@ export const healthServiceGroups: HealthServiceGroup[] = [
     heading: 'Chronic Condition Support',
     items: [
       { title: 'Diabetes', href: '/health-services/diabetes', icon: Droplet },
-      { title: 'Heart Health', href: '/health-services/heart-health', icon: Heart },
-      { title: 'Asthma & COPD', href: '/health-services/asthma-copd', icon: Wind },
+      { title: 'Heart Health', href: '/health-services/hypertension-management', icon: Heart },
+      { title: 'Asthma & COPD', href: '/health-services/asthma-management', icon: Wind },
       { title: 'Pain Support', href: '/health-services/pain-support', icon: Flame },
-      { title: 'Gut Health', href: '/health-services/gut-health', icon: Apple },
-      { title: 'Weight Management', href: '/health-services/weight-management', icon: Dumbbell },
+      { title: 'Gut Health', href: '/health-services/diabetes-management', icon: Apple },
+      { title: 'Weight Management', href: '/health-services/diabetes-management', icon: Dumbbell },
     ],
   },
   {
@@ -89,11 +89,11 @@ export const healthServiceGroups: HealthServiceGroup[] = [
     id: 'life-stage-wellness',
     heading: 'Life Stage & Wellness',
     items: [
-      { title: "Women's Health", href: '/health-services/womens-health', icon: Venus },
-      { title: "Men's Health", href: '/health-services/mens-health', icon: Mars },
-      { title: 'Baby & Breastfeeding', href: '/health-services/baby-breastfeeding', icon: Baby },
+      { title: "Women's Health", href: '/health-services/contraceptive-pill', icon: Venus },
+      { title: "Men's Health", href: '/health-services/contraceptive-pill', icon: Mars },
+      { title: 'Baby & Breastfeeding', href: '/health-services/pregnancy-testing', icon: Baby },
       { title: 'Skin Health', href: '/health-services/skin-health', icon: Sparkles },
-      { title: 'UTI Program', href: '/health-services/uti-program', icon: Droplet },
+      { title: 'UTI Program', href: '/health-services/uti-treatment', icon: Droplet },
     ],
   },
 ]

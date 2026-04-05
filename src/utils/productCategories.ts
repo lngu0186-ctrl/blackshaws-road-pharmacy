@@ -375,13 +375,13 @@ export function formatPrice(amount: string, currencyCode: string): string {
  */
 export function getProductImageUrl(product: Product, width: number = 600, height: number = 600, overrideImage?: { url: string; altText?: string }): string {
   if (overrideImage?.url) {
-    let url = overrideImage.url.startsWith('//') ? `https:${overrideImage.url}` : overrideImage.url
+    const url = overrideImage.url.startsWith('//') ? `https:${overrideImage.url}` : overrideImage.url
     return `${url}?width=${width}&height=${height}&fit=pad&format=jpeg&quality=80`
   }
   const firstImage = product.images?.edges[0]?.node
   if (!firstImage) return '/placeholder-product.png'
 
-  let url = firstImage.url.startsWith('//') ? `https:${firstImage.url}` : firstImage.url
+  const url = firstImage.url.startsWith('//') ? `https:${firstImage.url}` : firstImage.url
   // Shopify CDN can resize images
   return `${url}?width=${width}&height=${height}&fit=pad&format=jpeg&quality=80`
 }

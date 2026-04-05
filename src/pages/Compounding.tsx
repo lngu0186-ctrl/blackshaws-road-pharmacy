@@ -70,6 +70,14 @@ export default function Compounding() {
   useEffect(() => {
     window.scrollTo(0, 0)
     document.title = 'Compounding | Blackshaws Road Pharmacy'
+
+    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.name = 'description'
+      document.head.appendChild(metaDescription)
+    }
+    metaDescription.content = 'Customised compounding services at Blackshaws Road Pharmacy in Altona North, facilitated through our partnership with Burke Road Compounding Pharmacy for tailored medications.'
   }, [])
 
   return (

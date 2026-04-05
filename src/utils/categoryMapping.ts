@@ -94,7 +94,7 @@ export function formatPrice(amount: string, currencyCode: string): string {
 export function getProductImageUrl(product: ShopifyProduct, width: number = 600, height: number = 600, overrideUrl?: string): string {
   const imageUrl = overrideUrl || product.images?.edges[0]?.node?.url
   if (!imageUrl) return '/placeholder-product.png'
-  let url = imageUrl.startsWith('//') ? `https:${imageUrl}` : imageUrl
+  const url = imageUrl.startsWith('//') ? `https:${imageUrl}` : imageUrl
   return `${url}?width=${width}&height=${height}&fit=pad&format=jpeg&quality=80`
 }
 

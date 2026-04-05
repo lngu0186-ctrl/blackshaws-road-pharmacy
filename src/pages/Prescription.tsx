@@ -15,6 +15,14 @@ export default function Prescription() {
   useEffect(() => {
     window.scrollTo(0, 0)
     document.title = 'Prescriptions | Blackshaws Road Pharmacy'
+
+    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.name = 'description'
+      document.head.appendChild(metaDescription)
+    }
+    metaDescription.content = 'Upload your prescription online for convenient pickup at Blackshaws Road Pharmacy in Altona North. Fast, secure prescription requests with pharmacist review. Call (03) 9391 3257.'
   }, [])
 
   return (

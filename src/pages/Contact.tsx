@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Phone, MapPin, MessageSquare } from 'lucide-react'
+import { Phone, MapPin, MessageSquare, Send, Loader2 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { BrandSignature } from '../components/layout/BrandSignature'
+import { supabase } from '../integrations/supabase/client'
 
 const hours = [
   { label: 'Monday–Friday', value: '8:00 AM – 9:00 PM' },
@@ -16,11 +17,21 @@ export default function Contact() {
     email: '',
     message: '',
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
     document.title = 'Contact | Blackshaws Road Pharmacy'
+
+    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.name = 'description'
+      document.head.appendChild(metaDescription)
+    }
+    metaDescription.content = 'Contact Blackshaws Road Pharmacy in Altona North. Call (03) 9391 3257, visit us at 310A Blackshaws Road, or send us an online enquiry. Open 7 days with extended weekday hours.'
 
     let metaRobots = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null
     if (!metaRobots) {
@@ -31,10 +42,35 @@ export default function Contact() {
     metaRobots.content = 'index, follow'
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
-    setFormData({ name: '', phone: '', email: '', message: '' })
+    setIsSubmitting(true)
+    setSubmitError(null)
+
+    try {
+      const { data, error } = await supabase.functions.invoke('send-contact', {
+        body: {
+          ...formData,
+          timestamp: new Date().toISOString(),
+        },
+      })
+
+      if (error) {
+        throw new Error(error.message || 'Failed to send message')
+      }
+
+      if (!data?.success) {
+        throw new Error(data?.error || 'Failed to send message')
+      }
+
+      setSubmitted(true)
+      setFormData({ name: '', phone: '', email: '', message: '' })
+    } catch (err) {
+      console.error('Contact form error:', err)
+      setSubmitError(err instanceof Error ? err.message : 'Failed to send message. Please try again or call us directly.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -79,16 +115,42 @@ export default function Contact() {
               <MessageSquare className="h-10 w-10 text-[var(--color-red)]" />
               <h2 className="mt-5 text-[var(--color-navy)]">Send Us a Message</h2>
               {submitted ? (
-                <div className="mt-4 rounded-2xl bg-[var(--color-sage-soft)] p-4 text-sm text-[var(--color-sage)] font-medium">
-                  Thanks — we'll be in touch within 1 business day.
+                <div className="mt-4 rounded-2xl bg-[var(--color-sage-soft)] p-4 text-sm">
+                  <p className="font-medium text-[var(--color-sage)]">Thanks!</p>
+                  <p className="mt-2 text-[var(--color-text-muted)]">We'll be in touch within 1 business day. For urgent matters, please call us directly.</p>
                 </div>
               ) : (
                 <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
-                  <input className="form-input" type="text" placeholder="Name" required value={formData.name} onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))} />
-                  <input className="form-input" type="tel" placeholder="Phone number" value={formData.phone} onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))} />
-                  <input className="form-input" type="email" placeholder="Email" required value={formData.email} onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))} />
-                  <textarea className="form-input resize-none" placeholder="Message / enquiry" required rows={4} value={formData.message} onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))} />
-                  <Button type="submit" variant="red" className="w-full">Send Enquiry</Button>
+                  <div>
+                    <label htmlFor="contact-name" className="sr-only">Name</label>
+                    <input id="contact-name" className="form-input" type="text" placeholder="Name *" required aria-required="true" value={formData.name} onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))} />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-phone" className="sr-only">Phone number</label>
+                    <input id="contact-phone" className="form-input" type="tel" placeholder="Phone number (optional)" value={formData.phone} onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))} />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-email" className="sr-only">Email</label>
+                    <input id="contact-email" className="form-input" type="email" placeholder="Email *" required aria-required="true" value={formData.email} onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))} />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-message" className="sr-only">Message</label>
+                    <textarea id="contact-message" className="form-input resize-none" placeholder="Message / enquiry *" required aria-required="true" rows={4} value={formData.message} onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))} />
+                  </div>
+                  {submitError && (
+                    <div className="rounded-2xl bg-red-50 p-4 text-sm text-red-700">{submitError}</div>
+                  )}
+                  <Button type="submit" variant="red" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="mr-2 h-4 w-4" /> Send Enquiry
+                      </>
+                    )}
+                  </Button>
                 </form>
               )}
             </div>

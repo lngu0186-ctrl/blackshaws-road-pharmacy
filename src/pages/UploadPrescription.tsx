@@ -173,7 +173,7 @@ export default function UploadPrescription() {
             <div className="mt-8 rounded-[24px] bg-[var(--color-surface-alt)] p-6 text-left max-w-md mx-auto space-y-4">
               {[
                 'Our pharmacist will review your prescription',
-                `We\'ll call ${formData.phone || 'you'} to confirm availability and pickup`,
+                `We'll call ${formData.phone || 'you'} to confirm availability and pickup`,
                 'Collect at 310A Blackshaws Road, Altona North',
               ].map((step, i) => (
                 <div key={i} className="flex items-start gap-3">
