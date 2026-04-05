@@ -293,7 +293,120 @@ export default function ServiceDetail({ slugOverride }: ServiceDetailProps) {
           </div>
         </div>
       </section>
+
+      {/* Related Articles */}
+      <RelatedArticlesSection serviceSlug={service.slug} />
     </div>
+  )
+}
+
+/**
+ * Related Articles Section — shows relevant health library articles
+ * at the bottom of service pages for content enrichment and SEO.
+ */
+function RelatedArticlesSection({ serviceSlug }: { serviceSlug: string }) {
+  // Map service slugs to related article slugs
+  const ARTICLE_MAP: Record<string, string[]> = {
+    'blood-pressure-check': ['managing-high-blood-pressure'],
+    'hypertension-management': ['managing-high-blood-pressure'],
+    'flu-vaccination': ['flu-vaccination-why-annual'],
+    'vaccinations': ['flu-vaccination-why-annual'],
+    'medscheck': ['what-is-medscheck'],
+    'diabetes-medscheck': ['what-is-medscheck', 'managing-high-blood-pressure'],
+    'diabetes-management': ['managing-high-blood-pressure', 'what-is-medscheck'],
+    'asthma-management': [],
+    'wound-care': ['when-to-see-pharmacist-vs-gp'],
+    'contraceptive-pill': ['when-to-see-pharmacist-vs-gp'],
+    'uti-treatment': ['when-to-see-pharmacist-vs-gp'],
+    'travel-vaccinations': ['flu-vaccination-why-annual'],
+    'travel-health': ['flu-vaccination-why-annual'],
+    'pain-support': [],
+    'pregnancy-testing': [],
+    'skin-health': [],
+    'skincare-consultations': [],
+    'aged-care-services': ['when-to-see-pharmacist-vs-gp'],
+    'dose-administration-aids': ['what-is-medscheck'],
+    'prescription-reviews': ['what-is-medscheck', 'understanding-your-prescription'],
+    'escripts': ['understanding-your-prescription'],
+    'absence-certificates': ['when-to-see-pharmacist-vs-gp'],
+    'out-of-hospital': ['when-to-see-pharmacist-vs-gp'],
+    'mens-health': [],
+    'baby-breastfeeding': [],
+    'minor-ailments': ['when-to-see-pharmacist-vs-gp'],
+    'health-checks': ['managing-high-blood-pressure'],
+    'ndis-support': [],
+  }
+
+  const relatedArticleSlugs = ARTICLE_MAP[serviceSlug] || []
+
+  const articles = [
+    {
+      slug: 'when-to-see-pharmacist-vs-gp',
+      title: 'When Should You See a Pharmacist vs. a GP?',
+      excerpt: 'Not sure whether your symptoms need a doctor or whether a pharmacist can help? This guide explains the right care pathway.',
+      category: 'General Health',
+    },
+    {
+      slug: 'flu-vaccination-why-annual',
+      title: 'Flu Vaccination: Why Annual Shots Matter',
+      excerpt: 'The flu virus changes every year. Learn how the vaccine works, who should get it, and why timing matters.',
+      category: 'Preventive Health',
+    },
+    {
+      slug: 'managing-high-blood-pressure',
+      title: 'Managing High Blood Pressure at Home',
+      excerpt: 'High blood pressure affects one in three Australian adults. Discover practical lifestyle changes and monitoring tips.',
+      category: 'Chronic Conditions',
+    },
+    {
+      slug: 'what-is-medscheck',
+      title: 'What Is MedsCheck and Who Qualifies?',
+      excerpt: 'MedsCheck is a free, government-funded medication review service. Find out who is eligible and what happens.',
+      category: 'Medication Management',
+    },
+    {
+      slug: 'understanding-your-prescription',
+      title: 'Understanding Your Prescription: A Patient\'s Guide',
+      excerpt: 'Confused by the instructions on your prescription label? This guide breaks down common terminology and dosing.',
+      category: 'Medication Management',
+    },
+  ]
+
+  const relatedArticles = articles.filter((a) => relatedArticleSlugs.includes(a.slug))
+
+  if (relatedArticles.length === 0) {
+    return null
+  }
+
+  return (
+    <section className="section-padding bg-white">
+      <div className="container-custom">
+        <h2 className="text-2xl font-bold mb-2 text-[var(--color-navy)]">Related Health Articles</h2>
+        <p className="mb-8 text-sm text-[var(--color-text-muted)]">Further reading from our health library</p>
+        <div className="grid gap-6 md:grid-cols-3">
+          {relatedArticles.map((article) => (
+            <Link
+              key={article.slug}
+              to={`/learn/${article.slug}`}
+              className="group block rounded-[24px] border border-[var(--color-border)] bg-[var(--color-surface-alt)] p-5 shadow-[0_20px_50px_-40px_rgba(16,24,63,0.18)] transition-all hover:shadow-lg"
+            >
+              <span className="inline-block rounded-full bg-[var(--color-red-soft)] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--color-red)]">
+                {article.category}
+              </span>
+              <h3 className="mt-3 text-base font-semibold text-[var(--color-navy)] group-hover:text-[var(--color-red)] transition-colors line-clamp-2">
+                {article.title}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-muted)] line-clamp-2">
+                {article.excerpt}
+              </p>
+              <div className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-navy)] group-hover:text-[var(--color-red)]">
+                Read article <ArrowRight className="h-3.5 w-3.5" />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
 
