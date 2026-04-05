@@ -20,19 +20,19 @@ export const SERVICE_SLUG_MAP: Record<string, string> = {
   'diabetes': 'diabetes-management',
   'heart-health': 'hypertension-management', // Heart health uses hypertension service
   'asthma-copd': 'asthma-management',
-  'pain-support': 'wound-care', // Temporary mapping
+  'pain-support': 'pain-support', // Now has real content
   'gut-health': 'diabetes-management', // Temporary mapping
   'weight-management': 'diabetes-management', // Temporary mapping
 
   // Specialised Care
   'wound-care': 'wound-care',
-  'out-of-hospital': 'aged-care-services', // Out of hospital maps to aged care
+  'out-of-hospital': 'out-of-hospital', // Now has real content
   'aged-care': 'aged-care-services',
 
   // Life Stage & Wellness
   'womens-health': 'contraceptive-pill', // Women's health landing
-  'mens-health': 'contraceptive-pill', // Men's health placeholder
-  'baby-breastfeeding': 'pregnancy-testing', // Baby/breastfeeding placeholder
-  'skin-health': 'skincare-consultations',
+  'mens-health': 'mens-health', // Now has real content
+  'baby-breastfeeding': 'baby-breastfeeding', // Now has real content
+  'skin-health': 'skin-health', // Now has real content
   'uti-program': 'uti-treatment',
 }
