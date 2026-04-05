@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ShoppingBag, Minus, Plus, Check, ArrowLeft, Lock, ShieldCheck } from 'lucide-react'
+import { ShoppingBag, Minus, Plus, Check, ArrowLeft, Lock, ShieldCheck, Phone, MessageSquare, Truck, Store, Info, Star } from 'lucide-react'
 import { useProductStore } from '../stores/productStore'
 import { formatPrice, getProductImageUrl, isOnSale, getSalePrice } from '../utils/categoryMapping'
 import { useCartStore } from '../stores/cartStore'
@@ -365,54 +365,166 @@ export default function ProductDetail() {
               {isLoading ? 'Adding...' : selectedVariant?.availableForSale ? 'Add to Cart' : 'Out of Stock'}
             </Button>
 
-            <p className="text-xs text-gray-500 mt-4 max-w-md leading-relaxed">
-              <strong>Therapeutic Goods:</strong> Always read the label. Follow directions for use. If symptoms persist, consult your healthcare practitioner. This product may not be suitable for everyone.
-            </p>
-
-            <div className="flex items-center gap-6 mt-4 text-xs text-gray-600">
-              <div className="flex items-center gap-1.5"><Lock className="w-4 h-4" style={{ color: 'var(--color-navy)' }} /><span>Secure Checkout</span></div>
-              <div className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4" style={{ color: 'var(--color-navy)' }} /><span>AACP Accredited</span></div>
+            {/* Delivery / Pickup Info */}
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <div className="flex items-start gap-3 rounded-xl bg-[var(--color-surface-alt)] p-4">
+                <Store className="h-5 w-5 text-[var(--color-navy)] mt-0.5" />
+                <div>
+                  <p className="text-sm font-semibold text-[var(--color-navy)]">Free Click & Collect</p>
+                  <p className="mt-1 text-xs text-[var(--color-text-muted)]">Pick up from 310A Blackshaws Road, Altona North. Ready within 2 hours during store hours.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-xl bg-[var(--color-surface-alt)] p-4">
+                <Truck className="h-5 w-5 text-[var(--color-navy)] mt-0.5" />
+                <div>
+                  <p className="text-sm font-semibold text-[var(--color-navy)]">Australia-Wide Delivery</p>
+                  <p className="mt-1 text-xs text-[var(--color-text-muted)]">Standard shipping calculated at checkout. Express options available.</p>
+                </div>
+              </div>
             </div>
 
-            <div className="mt-10 p-6 rounded-2xl bg-gray-50 border" style={{ borderColor: 'var(--color-gray-200)' }}>
-              <h4 className="font-semibold text-lg mb-4" style={{ color: 'var(--color-navy)' }}>Product Details</h4>
+            {/* Therapeutic Notice */}
+            <p className="mt-6 text-xs text-[var(--color-text-muted)] leading-relaxed max-w-xl">
+              <strong className="text-[var(--color-navy)]">Therapeutic Goods Notice:</strong> Always read the label. Follow directions for use. If symptoms persist, worsen, or you have concerns, consult your healthcare practitioner. This product may not be suitable for all individuals.
+            </p>
+
+            {/* Trust Badges */}
+            <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-[var(--color-text-muted)]">
+              <div className="flex items-center gap-1.5">
+                <Lock className="w-4 h-4 text-[var(--color-navy)]" />
+                <span>Secure SSL Checkout</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-[var(--color-navy)]" />
+                <span>Australian Pharmacy</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Check className="w-4 h-4 text-[var(--color-sage)]" />
+                <span>Genuine Products Only</span>
+              </div>
+            </div>
+
+            <div className="mb-8 p-4 rounded-xl bg-[var(--color-sage-soft)] border border-[var(--color-sage)]/20">
+              <div className="flex items-start gap-3">
+                <MessageSquare className="h-5 w-5 text-[var(--color-sage)] mt-0.5" />
+                <div>
+                  <p className="text-sm font-semibold text-[var(--color-navy)]">Need advice on this product?</p>
+                  <p className="mt-1 text-sm text-[var(--color-text-muted)]">Our pharmacists can help you choose the right product for your needs.</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <a href="tel:0393913257" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-sage)] hover:underline">
+                      <Phone className="h-3.5 w-3.5" /> Call (03) 9391 3257
+                    </a>
+                    <Link to="/contact" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-sage)] hover:underline">
+                      Send an enquiry <ArrowLeft className="h-3.5 w-3.5 rotate-180" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 p-6 rounded-2xl bg-[var(--color-surface-alt)] border border-[var(--color-border)]">
+              <h4 className="font-semibold text-lg mb-4 flex items-center gap-2" style={{ color: 'var(--color-navy)' }}>
+                <Info className="h-5 w-5 text-[var(--color-navy)]" /> Product Details
+              </h4>
               <dl className="space-y-3 text-sm">
-                {product.vendor && <div className="flex"><dt className="w-32 font-medium text-gray-600">Brand</dt><dd className="flex-1 text-gray-900">{product.vendor}</dd></div>}
-                {product.productType && <div className="flex"><dt className="w-32 font-medium text-gray-600">Category</dt><dd className="flex-1 text-gray-900">{product.productType}</dd></div>}
-                {selectedVariant?.sku && <div className="flex"><dt className="w-32 font-medium text-gray-600">SKU</dt><dd className="flex-1 text-gray-900 font-mono text-xs">{selectedVariant.sku}</dd></div>}
+                {product.vendor && (
+                  <div className="flex justify-between gap-4 border-b border-[var(--color-border)] pb-2">
+                    <dt className="font-medium text-[var(--color-text-muted)]">Brand</dt>
+                    <dd className="text-[var(--color-navy)] font-medium text-right">{product.vendor}</dd>
+                  </div>
+                )}
+                {product.productType && (
+                  <div className="flex justify-between gap-4 border-b border-[var(--color-border)] pb-2">
+                    <dt className="font-medium text-[var(--color-text-muted)]">Type</dt>
+                    <dd className="text-[var(--color-navy)] font-medium text-right">{product.productType}</dd>
+                  </div>
+                )}
+                {selectedVariant?.sku && (
+                  <div className="flex justify-between gap-4 border-b border-[var(--color-border)] pb-2">
+                    <dt className="font-medium text-[var(--color-text-muted)]">SKU</dt>
+                    <dd className="font-mono text-xs text-[var(--color-navy)] text-right">{selectedVariant.sku}</dd>
+                  </div>
+                )}
                 {selectedVariant?.availableForSale !== undefined && (
-                  <div className="flex">
-                    <dt className="w-32 font-medium text-gray-600">Availability</dt>
-                    <dd className="flex-1"><span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${selectedVariant.availableForSale ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>{selectedVariant.availableForSale ? 'In Stock' : 'Out of Stock'}</span></dd>
+                  <div className="flex justify-between gap-4">
+                    <dt className="font-medium text-[var(--color-text-muted)]">Availability</dt>
+                    <dd className="text-right">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
+                        selectedVariant.availableForSale
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-red-100 text-red-800'
+                      }`}>
+                        {selectedVariant.availableForSale ? 'In Stock' : 'Out of Stock'}
+                      </span>
+                    </dd>
                   </div>
                 )}
               </dl>
             </div>
 
-            <div className="mt-6 p-6 rounded-2xl bg-red-50 border border-red-100">
-              <h4 className="font-semibold mb-3" style={{ color: 'var(--color-red)' }}>Pharmacy Information</h4>
-              <ul className="space-y-2 text-sm text-gray-700">
-                <li className="flex items-start gap-2"><Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-600" /><span>This is a genuine product sourced from authorised distributors</span></li>
-                <li className="flex items-start gap-2"><Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-600" /><span>Speak to our pharmacists for advice on this product</span></li>
-                <li className="flex items-start gap-2"><Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-600" /><span>Free click & collect available from our Altona North store</span></li>
+            <div className="mt-8 p-6 rounded-2xl bg-gradient-to-br from-[var(--color-red-soft)] to-white border border-[var(--color-red)]/15">
+              <h4 className="font-semibold text-lg mb-4 flex items-center gap-2" style={{ color: 'var(--color-red)' }}>
+                <ShieldCheck className="h-5 w-5" /> Pharmacy Assurance
+              </h4>
+              <ul className="space-y-3 text-sm text-[var(--color-text-muted)]">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--color-red)]" />
+                  <span><strong className="text-[var(--color-navy)]">Sourced from authorised distributors</strong> — genuine products with full supply chain traceability</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--color-red)]" />
+                  <span><strong className="text-[var(--color-navy)]">Pharmacist advice available</strong> — speak with our team about this product before or after purchase</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--color-red)]" />
+                  <span><strong className="text-[var(--color-navy)]">Free click & collect</strong> — order online and pick up at 310A Blackshaws Road, Altona North</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--color-red)]" />
+                  <span><strong className="text-[var(--color-navy)]">Secure checkout</strong> — your payment and personal data are protected</span>
+                </li>
               </ul>
             </div>
           </div>
         </div>
 
         {relatedProducts.length > 0 && (
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold mb-8" style={{ color: 'var(--color-navy)' }}>You May Also Like</h2>
+          <div className="mt-20 pt-10 border-t border-[var(--color-border)]">
+            <h2 className="text-2xl font-bold mb-2 flex items-center gap-3" style={{ color: 'var(--color-navy)' }}>
+              <Star className="h-6 w-6 text-[var(--color-red)]" />
+              You May Also Like
+            </h2>
+            <p className="mb-8 text-sm text-[var(--color-text-muted)]">Products frequently purchased together or recommended by our pharmacists</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {relatedProducts.map((related) => (
-                <Link key={related.id} to={`/shop/${related.handle}`} className="product-card group">
-                  <div className="aspect-square rounded-xl overflow-hidden bg-gray-100 mb-3">
-                    <img src={getProductImageUrl(related, 300, 300)} alt={related.images?.edges[0]?.node?.altText || related.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
-                  </div>
-                  <h3 className="font-medium text-sm line-clamp-2 mb-2">{related.title}</h3>
-                  <p className="text-sm font-bold" style={{ color: 'var(--color-navy)' }}>{formatPrice(related.priceRange.minVariantPrice.amount, related.priceRange.minVariantPrice.currencyCode)}</p>
-                </Link>
-              ))}
+              {relatedProducts.map((related) => {
+                const sale = isOnSale(related)
+                const salePrice = sale ? getSalePrice(related) : null
+                return (
+                  <Link key={related.id} to={`/shop/${related.handle}`} className="product-card group block">
+                    <div className="aspect-square rounded-xl overflow-hidden bg-[var(--color-surface-alt)] mb-3 relative">
+                      <img
+                        src={getProductImageUrl(related, 300, 300)}
+                        alt={related.images?.edges[0]?.node?.altText || related.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
+                      {sale && <span className="absolute top-2 left-2 bg-[var(--color-red)] text-white text-[10px] font-bold px-2 py-1 rounded-full">Sale</span>}
+                    </div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-red)] mb-1">{related.vendor}</p>
+                    <h3 className="font-medium text-sm line-clamp-2 mb-2 text-[var(--color-navy)] group-hover:text-[var(--color-red)] transition-colors">{related.title}</h3>
+                    <div className="flex items-baseline gap-2">
+                      {sale && salePrice ? (
+                        <>
+                          <span className="text-sm font-bold text-[var(--color-red)]">{formatPrice(salePrice.amount, salePrice.currencyCode)}</span>
+                          <span className="text-xs text-gray-400 line-through">{formatPrice(related.priceRange.minVariantPrice.amount, related.priceRange.minVariantPrice.currencyCode)}</span>
+                        </>
+                      ) : (
+                        <span className="text-sm font-bold text-[var(--color-navy)]">{formatPrice(related.priceRange.minVariantPrice.amount, related.priceRange.minVariantPrice.currencyCode)}</span>
+                      )}
+                    </div>
+                  </Link>
+                )
+              })}
             </div>
           </div>
         )}
