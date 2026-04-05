@@ -12,6 +12,7 @@ const footerLinks = {
   explore: [
     { label: 'Shop online', href: '/shop' },
     { label: 'Health services', href: '/health-services' },
+    { label: 'Health Library', href: '/learn' },
     { label: 'FAQ', href: '/faq' },
     { label: 'Patient information', href: '/patient-info' },
     { label: 'Contact', href: '/contact' },

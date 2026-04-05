@@ -6,6 +6,7 @@ import { ShopCategories } from './components/sections/ShopCategories'
 import { TrustBar } from './components/sections/TrustBar'
 import { ChemistCareNowSection } from './components/sections/ChemistCareNowSection'
 import { VaccinationsSection } from './components/sections/VaccinationsSection'
+import { GoogleReviewsWidget } from './components/sections/GoogleReviewsWidget'
 import { ServicesSection } from './components/sections/ServicesSection'
 import { AboutSection } from './components/sections/AboutSection'
 import { HealthInfoSection } from './components/sections/HealthInfoSection'
@@ -27,6 +28,8 @@ const Compounding = lazy(() => import('./pages/Compounding'))
 const Contact = lazy(() => import('./pages/Contact'))
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'))
 const ChemistCareNow = lazy(() => import('./pages/ChemistCareNow'))
+const Learn = lazy(() => import('./pages/Learn'))
+const LearnArticle = lazy(() => import('./pages/LearnArticle'))
 
 function LoadingFallback() {
   return (
@@ -84,6 +87,8 @@ function App() {
               <Route path="/health-services" element={<ServiceDetail slugOverride="hub" />} />
               <Route path="/health-services/:slug" element={<ServiceDetail />} />
               <Route path="/chemist-care-now" element={<ChemistCareNow />} />
+              <Route path="/learn" element={<Learn />} />
+              <Route path="/learn/:slug" element={<LearnArticle />} />
               <Route path="/" element={
                 <>
                   <HeroSection />
@@ -93,6 +98,7 @@ function App() {
                   <ServicesSection />
                   <ChemistCareNowSection id="chemist-care" />
                   <VaccinationsSection />
+                  <GoogleReviewsWidget />
                   <PatientTrustSection />
                   <AboutSection />
                   <FaqPreviewSection />

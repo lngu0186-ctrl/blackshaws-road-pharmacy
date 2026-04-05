@@ -212,6 +212,30 @@
 
   <!-- Information Pages -->
   <url>
+    <loc>https://blackshawsroadpharmacy.lovable.app/learn</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://blackshawsroadpharmacy.lovable.app/learn/when-to-see-pharmacist-vs-gp</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://blackshawsroadpharmacy.lovable.app/learn/flu-vaccination-why-annual</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://blackshawsroadpharmacy.lovable.app/learn/managing-high-blood-pressure</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://blackshawsroadpharmacy.lovable.app/faq</loc>
     <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
