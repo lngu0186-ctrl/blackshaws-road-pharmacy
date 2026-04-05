@@ -7,6 +7,7 @@ import { healthServiceGroups } from '../data/healthServicesNav'
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 import { BrandSignature } from '../components/layout/BrandSignature'
+import { applySeo } from '../lib/seo'
 import './ServiceDetail.css'
 
 interface ServiceDetailProps {
@@ -71,39 +72,24 @@ export default function ServiceDetail({ slugOverride }: ServiceDetailProps) {
     // Scroll to top
     window.scrollTo(0, 0)
 
-    // Set page title
-    if (slug === 'hub') {
-      document.title = 'Health Services | Blackshaws Road Pharmacy'
-    } else if (found) {
-      document.title = `${found.title} | Blackshaws Road Pharmacy`
-    } else {
-      document.title = `${getNavServiceTitle(slug)} | Blackshaws Road Pharmacy`
-    }
+    const title = slug === 'hub'
+      ? 'Health Services | Blackshaws Road Pharmacy'
+      : found
+        ? `${found.title} | Blackshaws Road Pharmacy`
+        : `${getNavServiceTitle(slug)} | Blackshaws Road Pharmacy`
 
-    // Set meta description
-    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta')
-      metaDescription.name = 'description'
-      document.head.appendChild(metaDescription)
-    }
+    const description = slug === 'hub'
+      ? 'Explore health services at Blackshaws Road Pharmacy in Altona North including vaccinations, health checks, medication reviews, diabetes support, and more. Call (03) 9391 3257 to book.'
+      : found
+        ? `${found.title} at Blackshaws Road Pharmacy, Altona North. ${found.shortDescription} ${found.isFree ? 'Free or bulk-billed.' : found.cost}`
+        : `${getNavServiceTitle(slug)} services at Blackshaws Road Pharmacy in Altona North. Our pharmacists provide professional healthcare support. Call (03) 9391 3257.`
 
-    if (slug === 'hub') {
-      metaDescription.content = 'Explore health services at Blackshaws Road Pharmacy in Altona North including vaccinations, health checks, medication reviews, diabetes support, and more. Call (03) 9391 3257 to book.'
-    } else if (found) {
-      metaDescription.content = `${found.title} at Blackshaws Road Pharmacy, Altona North. ${found.shortDescription} ${found.isFree ? 'Free or bulk-billed.' : found.cost}`
-    } else {
-      metaDescription.content = `${getNavServiceTitle(slug)} services at Blackshaws Road Pharmacy in Altona North. Our pharmacists provide professional healthcare support. Call (03) 9391 3257.`
-    }
-
-    // Set robots to index,follow for real services, noindex for stubs
-    let metaRobots = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null
-    if (!metaRobots) {
-      metaRobots = document.createElement('meta')
-      metaRobots.name = 'robots'
-      document.head.appendChild(metaRobots)
-    }
-    metaRobots.content = found ? 'index, follow' : 'noindex, nofollow'
+    applySeo({
+      title,
+      description,
+      robots: found || slug === 'hub' ? 'index, follow' : 'noindex, nofollow',
+      canonicalPath: slug === 'hub' ? '/health-services' : `/health-services/${slug}`,
+    })
   }, [slug])
 
   // For hub overview page

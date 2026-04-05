@@ -92,10 +92,10 @@ function App() {
               <Route path="/" element={
                 <>
                   <HeroSection />
-                  <TrustBar />
-                  <ShopCategories />
                   <PrescriptionPathwaySection />
+                  <TrustBar />
                   <ServicesSection />
+                  <ShopCategories />
                   <ChemistCareNowSection id="chemist-care" />
                   <VaccinationsSection />
                   <GoogleReviewsWidget />

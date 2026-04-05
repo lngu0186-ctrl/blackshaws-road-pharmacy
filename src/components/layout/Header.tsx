@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, ShoppingBag, Phone, ChevronDown, Clock3, MapPin, ArrowRight } from 'lucide-react'
 import { Logo } from './Logo'
@@ -44,9 +44,53 @@ export function Header() {
   const [expandedMobileGroup, setExpandedMobileGroup] = useState<string | null>(null)
   const cartCount = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0))
   const openCart = useCartStore((s) => s.openCart)
+  const servicesButtonRef = useRef<HTMLButtonElement>(null)
+  const servicesMenuRef = useRef<HTMLDivElement>(null)
 
   const isHome = location.pathname === '/'
   const activeHref = useMemo(() => navLinks.find((link) => !link.isAnchor && link.href === location.pathname)?.href, [location.pathname])
+
+  useEffect(() => {
+    if (!servicesDropdownOpen) return
+
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node
+      if (!servicesMenuRef.current?.contains(target) && !servicesButtonRef.current?.contains(target)) {
+        setServicesDropdownOpen(false)
+      }
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setServicesDropdownOpen(false)
+        servicesButtonRef.current?.focus()
+        return
+      }
+
+      if (!servicesMenuRef.current) return
+      const items = Array.from(servicesMenuRef.current.querySelectorAll<HTMLAnchorElement>('a[href]'))
+      const currentIndex = items.findIndex((item) => item === document.activeElement)
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault()
+        const nextIndex = currentIndex < 0 ? 0 : (currentIndex + 1) % items.length
+        items[nextIndex]?.focus()
+      }
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault()
+        const nextIndex = currentIndex <= 0 ? items.length - 1 : currentIndex - 1
+        items[nextIndex]?.focus()
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [servicesDropdownOpen])
 
   return (
     <header className="sticky top-0 z-50">
@@ -81,9 +125,19 @@ export function Header() {
                 return (
                   <div key={link.href} className="relative">
                     <button
+                      ref={servicesButtonRef}
                       className="nav-link flex items-center gap-1"
                       onClick={() => setServicesDropdownOpen((v) => !v)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'ArrowDown') {
+                          e.preventDefault()
+                          setServicesDropdownOpen(true)
+                          requestAnimationFrame(() => servicesMenuRef.current?.querySelector<HTMLAnchorElement>('a[href]')?.focus())
+                        }
+                      }}
                       aria-expanded={servicesDropdownOpen}
+                      aria-haspopup="true"
+                      aria-controls="health-services-menu"
                     >
                       {link.label}
                       <ChevronDown
@@ -91,11 +145,12 @@ export function Header() {
                       />
                     </button>
                     {servicesDropdownOpen && (
-                      <>
-                        {/* Backdrop */}
-                        <div className="fixed inset-0 z-40" onClick={() => setServicesDropdownOpen(false)} />
                         <div
+                          ref={servicesMenuRef}
+                          id="health-services-menu"
                           className="absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2"
+                          role="navigation"
+                          aria-label="Health services"
                           style={{
                             width: '860px',
                             background: '#10183f',
@@ -178,7 +233,6 @@ export function Header() {
                             ))}
                           </div>
                         </div>
-                      </>
                     )}
                   </div>
                 )
@@ -220,12 +274,6 @@ export function Header() {
             <p className="mt-2 text-lg font-semibold">Trusted local care, prescriptions, services and online shopping.</p>
           </div>
           <div className="space-y-1">
-            <MobileNavItem href="/" onClick={() => setMobileMenuOpen(false)}>
-              <span className="inline-flex items-center gap-3">
-                <img src="/logo-520.png" alt="Home" className="h-5 w-5 object-contain" />
-                <span>Home</span>
-              </span>
-            </MobileNavItem>
             {navLinks.map((link) => (
               <MobileNavItem key={link.href} href={link.href} isAnchor={link.isAnchor} onClick={() => setMobileMenuOpen(false)}>
                 {link.label}

@@ -7,10 +7,24 @@ const stats = [
   { label: 'Days open', value: 7, suffix: '/7', description: 'Reliable access to community care' },
 ]
 
+const credibilityPoints = [
+  'Pharmacist in charge: Tram-Anh Bui',
+  'Alliance Pharmacy member',
+  'Private consultations and pharmacist review',
+  'Local care, prescriptions and vaccinations',
+]
+
 export function TrustBar() {
   return (
     <section className="bg-[linear-gradient(135deg,var(--color-navy-deep),var(--color-navy))] py-14 text-white">
       <div className="container-custom">
+        <div className="mb-5 flex flex-wrap gap-3">
+          {credibilityPoints.map((point) => (
+            <span key={point} className="inline-flex items-center rounded-full border border-white/12 bg-white/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/78">
+              {point}
+            </span>
+          ))}
+        </div>
         <div className="grid gap-5 md:grid-cols-4">
           {stats.map((stat, index) => <StatCard key={index} {...stat} />)}
         </div>

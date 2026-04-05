@@ -1,5 +1,5 @@
 import { Star, ExternalLink } from 'lucide-react'
-import { useRef } from 'react'
+import { useIntersectionObserver } from '../../hooks/useIntersectionObserver'
 
 interface GoogleReviewsWidgetProps {
   placeId?: string
@@ -15,8 +15,7 @@ interface GoogleReviewsWidgetProps {
  * This component provides a fallback static display that can be enhanced later.
  */
 export function GoogleReviewsWidget(_: GoogleReviewsWidgetProps) {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = true
+  const [ref, isInView] = useIntersectionObserver({ threshold: 0.12, rootMargin: '0px 0px -10% 0px' })
 
   // Placeholder review data — replace with real API fetch when keys are available
   const reviews = [

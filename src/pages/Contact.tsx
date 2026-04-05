@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Phone, MapPin, MessageSquare, Send, Loader2 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { BrandSignature } from '../components/layout/BrandSignature'
 import { supabase } from '../integrations/supabase/client'
+import { usePageSeo } from '../lib/seo'
 
 const hours = [
   { label: 'Monday–Friday', value: '8:00 AM – 9:00 PM' },
@@ -21,26 +22,11 @@ export default function Contact() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-    document.title = 'Contact | Blackshaws Road Pharmacy'
-
-    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta')
-      metaDescription.name = 'description'
-      document.head.appendChild(metaDescription)
-    }
-    metaDescription.content = 'Contact Blackshaws Road Pharmacy in Altona North. Call (03) 9391 3257, visit us at 310A Blackshaws Road, or send us an online enquiry. Open 7 days with extended weekday hours.'
-
-    let metaRobots = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null
-    if (!metaRobots) {
-      metaRobots = document.createElement('meta')
-      metaRobots.name = 'robots'
-      document.head.appendChild(metaRobots)
-    }
-    metaRobots.content = 'index, follow'
-  }, [])
+  usePageSeo({
+    title: 'Contact | Blackshaws Road Pharmacy',
+    description: 'Contact Blackshaws Road Pharmacy in Altona North. Call (03) 9391 3257, visit us at 310A Blackshaws Road, or send us an online enquiry. Open 7 days with extended weekday hours.',
+    canonicalPath: '/contact',
+  })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -79,7 +65,7 @@ export default function Contact() {
         <div className="container-custom max-w-5xl">
           <p className="section-label !text-white/70">Contact</p>
           <h1 className="text-white">Get in Touch</h1>
-          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">We're here Monday to Saturday. Walk in anytime, or reach us by phone or online.</p>
+          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">We're here 7 days a week. Walk in anytime, or reach us by phone or online for a private, pharmacist-led follow-up.</p>
           <div className="mt-6">
             <BrandSignature tone="dark" className="max-w-xl" />
           </div>
@@ -122,20 +108,24 @@ export default function Contact() {
               ) : (
                 <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
                   <div>
-                    <label htmlFor="contact-name" className="sr-only">Name</label>
-                    <input id="contact-name" className="form-input" type="text" placeholder="Name *" required aria-required="true" value={formData.name} onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))} />
+                    <label htmlFor="contact-name" className="mb-2 block text-sm font-semibold text-[var(--color-navy)]">Name *</label>
+                    <input id="contact-name" className="form-input" type="text" placeholder="Your full name" required aria-required="true" autoComplete="name" value={formData.name} onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))} />
                   </div>
                   <div>
-                    <label htmlFor="contact-phone" className="sr-only">Phone number</label>
-                    <input id="contact-phone" className="form-input" type="tel" placeholder="Phone number (optional)" value={formData.phone} onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))} />
+                    <label htmlFor="contact-phone" className="mb-2 block text-sm font-semibold text-[var(--color-navy)]">Phone number</label>
+                    <input id="contact-phone" className="form-input" type="tel" placeholder="Best contact number" autoComplete="tel" value={formData.phone} onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))} />
                   </div>
                   <div>
-                    <label htmlFor="contact-email" className="sr-only">Email</label>
-                    <input id="contact-email" className="form-input" type="email" placeholder="Email *" required aria-required="true" value={formData.email} onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))} />
+                    <label htmlFor="contact-email" className="mb-2 block text-sm font-semibold text-[var(--color-navy)]">Email *</label>
+                    <input id="contact-email" className="form-input" type="email" placeholder="name@example.com" required aria-required="true" autoComplete="email" value={formData.email} onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))} />
                   </div>
                   <div>
-                    <label htmlFor="contact-message" className="sr-only">Message</label>
-                    <textarea id="contact-message" className="form-input resize-none" placeholder="Message / enquiry *" required aria-required="true" rows={4} value={formData.message} onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))} />
+                    <label htmlFor="contact-message" className="mb-2 block text-sm font-semibold text-[var(--color-navy)]">Message / enquiry *</label>
+                    <textarea id="contact-message" className="form-input resize-none" placeholder="How can we help?" required aria-required="true" rows={4} value={formData.message} onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))} />
+                  </div>
+                  <div className="rounded-2xl bg-[var(--color-surface-alt)] p-4 text-sm text-[var(--color-text-muted)]">
+                    <p className="font-semibold text-[var(--color-navy)]">What happens next</p>
+                    <p className="mt-2">A member of the pharmacy team will review your enquiry and aim to get back to you within 1 business day. Your information is handled confidentially and only used to respond to your request.</p>
                   </div>
                   {submitError && (
                     <div className="rounded-2xl bg-red-50 p-4 text-sm text-red-700">{submitError}</div>

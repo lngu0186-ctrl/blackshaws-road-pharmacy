@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
 import { BrandSignature } from '../components/layout/BrandSignature'
+import { usePageSeo } from '../lib/seo'
 
 const faqGroups = [
   {
@@ -56,18 +56,11 @@ const faqGroups = [
 ]
 
 export default function FAQ() {
-  useEffect(() => {
-    window.scrollTo(0, 0)
-    document.title = 'FAQ | Blackshaws Road Pharmacy'
-
-    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta')
-      metaDescription.name = 'description'
-      document.head.appendChild(metaDescription)
-    }
-    metaDescription.content = 'Frequently asked questions about Blackshaws Road Pharmacy in Altona North including prescriptions, vaccination bookings, pharmacist consultations, online shop, and how to contact our team.'
-  }, [])
+  usePageSeo({
+    title: 'FAQ | Blackshaws Road Pharmacy',
+    description: 'Frequently asked questions about Blackshaws Road Pharmacy in Altona North including prescriptions, vaccination bookings, pharmacist consultations, online shop, and how to contact our team.',
+    canonicalPath: '/faq',
+  })
 
   const faqSchema = {
     '@context': 'https://schema.org',

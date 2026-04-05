@@ -1,7 +1,7 @@
 import { Pill, Syringe, Beaker, Heart, Calendar, Stethoscope, Shield, ShoppingBag, ArrowRight, Leaf, FlaskConical } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Card } from '../ui/Card'
-import { useRef } from 'react'
+import { useIntersectionObserver } from '../../hooks/useIntersectionObserver'
 
 const services = [
   { icon: Pill, title: 'Prescriptions & Dispensing', description: 'Accurate dispensing, thoughtful counselling and dependable medication support with the reassurance of a local pharmacy team that knows its community.' },
@@ -17,8 +17,7 @@ const services = [
 ]
 
 export function ServicesSection() {
-  const ref = useRef(null)
-  const isInView = true
+  const [ref, isInView] = useIntersectionObserver({ threshold: 0.12, rootMargin: '0px 0px -10% 0px' })
 
   return (
     <section id="services" className="section-padding bg-white">

@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Camera, Upload, X, FileText, Shield, CheckCircle,
@@ -7,6 +7,7 @@ import {
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { supabase } from '../integrations/supabase/client'
+import { usePageSeo } from '../lib/seo'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024
 const ACCEPTED_TYPES = ['image/jpeg', 'image/png', 'image/heic', 'image/webp', 'application/pdf']
@@ -32,15 +33,11 @@ export default function UploadPrescription() {
   const [error, setError] = useState<string | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
 
-  useEffect(() => {
-    let metaRobots = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null
-    if (!metaRobots) {
-      metaRobots = document.createElement('meta')
-      metaRobots.name = 'robots'
-      document.head.appendChild(metaRobots)
-    }
-    metaRobots.content = 'index, follow'
-  }, [])
+  usePageSeo({
+    title: 'Prescriptions | Blackshaws Road Pharmacy',
+    description: 'Upload your prescription online for convenient pickup at Blackshaws Road Pharmacy in Altona North. Fast, secure prescription requests with pharmacist review. Call (03) 9391 3257.',
+    canonicalPath: '/prescriptions',
+  })
 
   const validate = useCallback(() => {
     const errors: Record<string, string> = {}
@@ -233,17 +230,17 @@ export default function UploadPrescription() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid gap-6 sm:grid-cols-2">
-                <FormField label="Full name" required error={fieldErrors.fullName}>
-                  <input type="text" value={formData.fullName} onChange={(e) => updateField('fullName', e.target.value)} placeholder="As it appears on the prescription" maxLength={100} className="form-input" />
+                <FormField label="Full name" htmlFor="prescription-full-name" required error={fieldErrors.fullName}>
+                  <input id="prescription-full-name" type="text" value={formData.fullName} onChange={(e) => updateField('fullName', e.target.value)} placeholder="As it appears on the prescription" maxLength={100} autoComplete="name" className="form-input" />
                 </FormField>
-                <FormField label="Date of birth" required error={fieldErrors.dob}>
-                  <input type="date" value={formData.dob} onChange={(e) => updateField('dob', e.target.value)} className="form-input" />
+                <FormField label="Date of birth" htmlFor="prescription-dob" required error={fieldErrors.dob}>
+                  <input id="prescription-dob" type="date" value={formData.dob} onChange={(e) => updateField('dob', e.target.value)} autoComplete="bday" className="form-input" />
                 </FormField>
               </div>
 
-              <FormField label="Phone number" required error={fieldErrors.phone}>
-                <input type="tel" value={formData.phone} onChange={(e) => updateField('phone', e.target.value)} placeholder="04XX XXX XXX" maxLength={20} className="form-input" />
-                <p className="mt-1 text-xs text-[var(--color-text-muted)]">We\'ll call this number to confirm your prescription is ready</p>
+              <FormField label="Phone number" htmlFor="prescription-phone" required error={fieldErrors.phone}>
+                <input id="prescription-phone" type="tel" value={formData.phone} onChange={(e) => updateField('phone', e.target.value)} placeholder="04XX XXX XXX" maxLength={20} autoComplete="tel" className="form-input" />
+                <p className="mt-1 text-xs text-[var(--color-text-muted)]">We\'ll call this number to confirm your prescription is ready and let you know if we need anything else.</p>
               </FormField>
 
               <div>
@@ -283,8 +280,8 @@ export default function UploadPrescription() {
                 </div>
               )}
 
-              <FormField label="Notes for the pharmacist (optional)">
-                <textarea value={formData.notes} onChange={(e) => updateField('notes', e.target.value)} placeholder="Any special instructions, repeats needed, or questions..." maxLength={500} rows={3} className="form-input resize-none" />
+              <FormField label="Notes for the pharmacist (optional)" htmlFor="prescription-notes">
+                <textarea id="prescription-notes" value={formData.notes} onChange={(e) => updateField('notes', e.target.value)} placeholder="Any special instructions, repeats needed, or questions..." maxLength={500} rows={3} className="form-input resize-none" />
               </FormField>
 
               <div className="flex items-start gap-3 rounded-2xl border border-[var(--color-red)]/15 bg-[var(--color-red-soft)] p-4">
@@ -297,6 +294,11 @@ export default function UploadPrescription() {
                 <p className="text-xs text-[var(--color-text-muted)]">
                   <span className="font-semibold text-[var(--color-text-dark)]">Privacy notice:</span> Your health information is handled in accordance with the Australian Privacy Principles under the Privacy Act 1988. We do not store your prescription data beyond processing — it is sent directly to our pharmacist team.
                 </p>
+              </div>
+
+              <div className="rounded-2xl bg-[var(--color-surface-alt)] p-4 text-sm text-[var(--color-text-muted)]">
+                <p className="font-semibold text-[var(--color-navy)]">What happens next</p>
+                <p className="mt-2">Our pharmacist team reviews uploads during pharmacy hours, checks prescription requirements and stock availability, then calls you with the safest next step. Please bring any original paper prescription with you at pickup if required.</p>
               </div>
 
               <Button type="submit" variant="red" size="lg" className="w-full" disabled={submitting}>
@@ -348,18 +350,20 @@ export default function UploadPrescription() {
 
 function FormField({
   label,
+  htmlFor,
   required,
   error,
   children,
 }: {
   label: string
+  htmlFor?: string
   required?: boolean
   error?: string
   children: React.ReactNode
 }) {
   return (
     <div>
-      <label className="block text-sm font-semibold mb-2">
+      <label htmlFor={htmlFor} className="block text-sm font-semibold mb-2">
         {label} {required && <span className="text-[var(--color-red)]">*</span>}
       </label>
       {children}

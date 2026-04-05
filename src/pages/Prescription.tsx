@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { usePageSeo } from '../lib/seo'
 import { Clock3, FileText, ShieldAlert, Phone } from 'lucide-react'
 import UploadPrescription from './UploadPrescription'
 import { Button } from '../components/ui/Button'
@@ -12,18 +12,11 @@ const notes = [
 ]
 
 export default function Prescription() {
-  useEffect(() => {
-    window.scrollTo(0, 0)
-    document.title = 'Prescriptions | Blackshaws Road Pharmacy'
-
-    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta')
-      metaDescription.name = 'description'
-      document.head.appendChild(metaDescription)
-    }
-    metaDescription.content = 'Upload your prescription online for convenient pickup at Blackshaws Road Pharmacy in Altona North. Fast, secure prescription requests with pharmacist review. Call (03) 9391 3257.'
-  }, [])
+  usePageSeo({
+    title: 'Prescriptions | Blackshaws Road Pharmacy',
+    description: 'Upload your prescription online for convenient pickup at Blackshaws Road Pharmacy in Altona North. Fast, secure prescription requests with pharmacist review. Call (03) 9391 3257.',
+    canonicalPath: '/prescriptions',
+  })
 
   return (
     <div className="bg-[var(--color-cream)]">

@@ -8,9 +8,13 @@ export function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-[var(--color-navy-deep)] text-white">
       <div className="absolute inset-0">
-        <div
-          className="absolute inset-0 bg-cover bg-[center_20%] md:bg-[center_30%]"
-          style={{ backgroundImage: 'url(/hero-pharmacy.png)' }}
+        <img
+          src="/hero-pharmacy.webp"
+          alt="Blackshaws Road Pharmacy interior"
+          className="absolute inset-0 h-full w-full object-cover object-[center_20%] md:object-[center_30%]"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-[var(--color-navy-deep)]/68 md:bg-[var(--color-navy-deep)]/58" />
         <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(16,24,63,0.82)_0%,rgba(16,24,63,0.5)_50%,rgba(16,24,63,0.32)_100%)]" />
@@ -47,8 +51,9 @@ export function HeroSection() {
 
             <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
               <Link to="/prescriptions"><Button variant="red" size="lg">Upload a prescription</Button></Link>
+              <Link to="/compounding"><Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">Compounding support</Button></Link>
               <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer"><Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">Book a vaccination</Button></a>
-              <Link to="/shop"><Button variant="ghost" size="lg" className="text-white hover:bg-white/10">Shop online now</Button></Link>
+              <Link to="/contact"><Button variant="ghost" size="lg" className="text-white hover:bg-white/10">Call or contact us</Button></Link>
             </div>
           </div>
 
