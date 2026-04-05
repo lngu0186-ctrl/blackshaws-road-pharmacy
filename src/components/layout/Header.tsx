@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, ShoppingBag, Phone, ChevronDown, Clock3, MapPin, ArrowRight } from 'lucide-react'
+import { Menu, ShoppingBag, Phone, ChevronDown, Clock3, MapPin, ArrowRight, Shield, FileText, FlaskConical, MessageSquare } from 'lucide-react'
 import { Logo } from './Logo'
 import { MobileDrawer } from './MobileDrawer'
 import { useCartStore } from '../../stores/cartStore'
@@ -21,6 +21,34 @@ const navLinks: Array<{ href: string; label: string; isAnchor?: boolean }> = [
   { href: '/contact', label: 'Contact' },
 ]
 
+
+const featuredServiceLinks = [
+  {
+    href: '/prescriptions',
+    label: 'Upload a prescription',
+    description: 'Send it ahead for pharmacist review before pickup.',
+    icon: FileText,
+  },
+  {
+    href: 'https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist',
+    label: 'Book a vaccination',
+    description: 'Fast access to the most common pharmacy bookings.',
+    icon: Shield,
+    external: true,
+  },
+  {
+    href: '/compounding',
+    label: 'Compounding support',
+    description: 'Custom medication help and specialised supply support.',
+    icon: FlaskConical,
+  },
+  {
+    href: '/contact',
+    label: 'Contact the pharmacy',
+    description: 'Call or message us when you need a clear next step.',
+    icon: MessageSquare,
+  },
+]
 
 function NavItem({ href, isActive, isAnchor, children }: { href: string; isActive?: boolean; isAnchor?: boolean; children: ReactNode }) {
   const className = cn('nav-link', isActive ? 'nav-link-active' : '')
@@ -159,27 +187,56 @@ export function Header() {
                             boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
                           }}
                         >
-                          {/* View all link */}
-                          <Link
-                            to="/health-services"
-                            className="mb-4 flex items-center gap-1.5 pb-3 transition-colors"
-                            style={{
-                              borderBottom: '1px solid rgba(255,255,255,0.15)',
-                              fontFamily: 'Nunito, sans-serif',
-                              fontSize: '12px',
-                              fontWeight: 600,
-                              color: 'rgba(255,255,255,0.75)',
-                            }}
-                            onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-                            onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
-                            onClick={() => setServicesDropdownOpen(false)}
-                          >
-                            View all Health Services <ArrowRight className="h-3.5 w-3.5" />
-                          </Link>
-                          {/* 5-column grid */}
-                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', columnGap: '20px' }}>
+                          <div className="mb-5 grid grid-cols-2 gap-3 border-b border-white/15 pb-5">
+                            {featuredServiceLinks.map((item) => {
+                              const Icon = item.icon
+                              const sharedClassName = 'rounded-xl border border-white/10 bg-white/5 p-4 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30'
+
+                              if (item.external) {
+                                return (
+                                  <a
+                                    key={item.href}
+                                    href={item.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={sharedClassName}
+                                    onClick={() => setServicesDropdownOpen(false)}
+                                  >
+                                    <div className="flex items-center gap-2 text-white">
+                                      <Icon className="h-4 w-4 text-[#e6b3ac]" />
+                                      <span className="text-sm font-semibold">{item.label}</span>
+                                    </div>
+                                    <p className="mt-2 text-xs leading-relaxed text-white/68">{item.description}</p>
+                                  </a>
+                                )
+                              }
+
+                              return (
+                                <Link key={item.href} to={item.href} className={sharedClassName} onClick={() => setServicesDropdownOpen(false)}>
+                                  <div className="flex items-center gap-2 text-white">
+                                    <Icon className="h-4 w-4 text-[#e6b3ac]" />
+                                    <span className="text-sm font-semibold">{item.label}</span>
+                                  </div>
+                                  <p className="mt-2 text-xs leading-relaxed text-white/68">{item.description}</p>
+                                </Link>
+                              )
+                            })}
+                          </div>
+
+                          <div className="mb-4 flex items-center justify-between gap-4 pb-3">
+                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/55">Browse by service area</p>
+                            <Link
+                              to="/health-services"
+                              className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/75 transition-colors hover:text-white"
+                              onClick={() => setServicesDropdownOpen(false)}
+                            >
+                              View all Health Services <ArrowRight className="h-3.5 w-3.5" />
+                            </Link>
+                          </div>
+
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '18px' }}>
                             {healthServiceGroups.map((group) => (
-                              <div key={group.id}>
+                              <div key={group.id} className="rounded-xl border border-white/8 bg-white/[0.03] p-4">
                                 <p
                                   style={{
                                     fontFamily: 'Nunito, sans-serif',
@@ -188,32 +245,31 @@ export function Header() {
                                     letterSpacing: '0.08em',
                                     textTransform: 'uppercase',
                                     color: '#c0392b',
-                                    marginBottom: '10px',
+                                    marginBottom: '12px',
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
                                   {group.heading}
                                 </p>
-                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                                   {group.items.map((item) => {
                                     const Icon = item.icon
                                     return (
                                       <Link
-                                        key={item.href}
+                                        key={`${group.id}-${item.href}-${item.title}`}
                                         to={item.href}
-                                        className="group"
+                                        className="group rounded-lg px-2 py-2 transition hover:bg-white/6"
                                         style={{
                                           display: 'flex',
                                           alignItems: 'center',
                                           gap: '8px',
-                                          padding: '5px 0',
                                           textDecoration: 'none',
                                         }}
                                         onClick={() => setServicesDropdownOpen(false)}
                                       >
                                         <Icon style={{ width: '14px', height: '14px', color: 'rgba(255,255,255,0.7)', flexShrink: 0, marginRight: '0' }} />
                                         <span
-                                          className="group-hover:!text-[#c0392b]"
+                                          className="group-hover:!text-[#f0c0b8]"
                                           style={{
                                             fontFamily: 'Nunito, sans-serif',
                                             fontSize: '13px',
@@ -279,6 +335,20 @@ export function Header() {
                 {link.label}
               </MobileNavItem>
             ))}
+          </div>
+          <div className="rounded-[24px] border border-[var(--color-border)] bg-white p-4">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-red)]">Quick actions</p>
+            <div className="grid gap-2">
+              <Link to="/prescriptions" className="rounded-2xl bg-[var(--color-red-soft)] px-4 py-3 text-sm font-semibold text-[var(--color-red)]" onClick={() => setMobileMenuOpen(false)}>
+                Upload a prescription
+              </Link>
+              <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer" className="rounded-2xl bg-[var(--color-navy-soft)] px-4 py-3 text-sm font-semibold text-[var(--color-navy)]" onClick={() => setMobileMenuOpen(false)}>
+                Book a vaccination
+              </a>
+              <Link to="/contact" className="rounded-2xl bg-[var(--color-surface-alt)] px-4 py-3 text-sm font-semibold text-[var(--color-navy)]" onClick={() => setMobileMenuOpen(false)}>
+                Contact the pharmacy
+              </Link>
+            </div>
           </div>
           <div className="rounded-[24px] bg-[var(--color-surface-alt)] p-4">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-red)]">Health Services</p>

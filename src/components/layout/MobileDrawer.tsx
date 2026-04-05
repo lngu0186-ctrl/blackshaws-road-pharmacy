@@ -11,9 +11,11 @@ interface MobileDrawerProps {
 
 export function MobileDrawer({ isOpen, onClose, children }: MobileDrawerProps) {
   const drawerRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     if (!isOpen) return
+    triggerRef.current = document.activeElement as HTMLElement | null
     const drawer = drawerRef.current
     if (!drawer) return
     const focusableElements = drawer.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
@@ -37,6 +39,12 @@ export function MobileDrawer({ isOpen, onClose, children }: MobileDrawerProps) {
     drawer.addEventListener('keydown', handleTab)
     return () => drawer.removeEventListener('keydown', handleTab)
   }, [isOpen, onClose])
+
+  useEffect(() => {
+    if (!isOpen && triggerRef.current) {
+      triggerRef.current.focus()
+    }
+  }, [isOpen])
 
   if (!isOpen) return null
 
