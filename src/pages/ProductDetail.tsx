@@ -8,6 +8,7 @@ import { useToast } from '../context/ToastContext'
 import { getProductByHandle, type ShopifyProduct as Product } from '../services/shopify'
 import { categorizeProduct, PHARMACY_CATEGORIES } from '../utils/productCategories'
 import { Button } from '../components/ui/Button'
+import { applySeo } from '../lib/seo'
 
 interface ProductVariant {
   id: string
@@ -98,49 +99,33 @@ export default function ProductDetail() {
     const title = `${product.title} | Blackshaws Road Pharmacy`
     const description = product.description.replace(/<[^>]*>/g, '').slice(0, 160) || 'Shop online at Blackshaws Road Pharmacy for quality health products.'
     const image = selectedImageUrl || getProductImageUrl(product, 1200, 630)
-    const canonical = `https://blackshawsroadpharmacy.lovable.app/shop/${product.handle}`
+    const canonicalPath = `/shop/${product.handle}`
+    const canonical = `https://blackshawsroadpharmacy.lovable.app${canonicalPath}`
 
-    document.title = title
+    applySeo({
+      title,
+      description,
+      canonicalPath,
+      ogTitle: product.title,
+      ogDescription: description,
+      ogImage: image,
+    })
 
-    let metaDesc = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta')
-      metaDesc.name = 'description'
-      document.head.appendChild(metaDesc)
+    let ogUrl = document.querySelector('meta[property="og:url"]') as HTMLMetaElement | null
+    if (!ogUrl) {
+      ogUrl = document.createElement('meta')
+      ogUrl.setAttribute('property', 'og:url')
+      document.head.appendChild(ogUrl)
     }
-    metaDesc.setAttribute('content', description)
+    ogUrl.content = canonical
 
-    let metaRobots = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null
-    if (!metaRobots) {
-      metaRobots = document.createElement('meta')
-      metaRobots.name = 'robots'
-      document.head.appendChild(metaRobots)
+    let ogType = document.querySelector('meta[property="og:type"]') as HTMLMetaElement | null
+    if (!ogType) {
+      ogType = document.createElement('meta')
+      ogType.setAttribute('property', 'og:type')
+      document.head.appendChild(ogType)
     }
-    metaRobots.content = 'index, follow'
-
-    let linkCanonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null
-    if (!linkCanonical) {
-      linkCanonical = document.createElement('link')
-      linkCanonical.rel = 'canonical'
-      document.head.appendChild(linkCanonical)
-    }
-    linkCanonical.href = canonical
-
-    const setOgTag = (property: string, content: string) => {
-      let el = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement | null
-      if (!el) {
-        el = document.createElement('meta')
-        el.setAttribute('property', property)
-        document.head.appendChild(el)
-      }
-      el.content = content
-    }
-
-    setOgTag('og:title', product.title)
-    setOgTag('og:description', description)
-    setOgTag('og:image', image)
-    setOgTag('og:url', canonical)
-    setOgTag('og:type', 'product')
+    ogType.content = 'product'
 
     const schema = {
       '@context': 'https://schema.org/',
@@ -320,6 +305,27 @@ export default function ProductDetail() {
             </div>
 
             <div className="prose prose-sm max-w-none mb-8 text-[var(--color-gray-700)] leading-relaxed" dangerouslySetInnerHTML={{ __html: product.descriptionHtml || product.description }} />
+
+            <div className="mb-8 grid gap-4 md:grid-cols-3">
+              <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-alt)] p-4">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-red)]">How to use</p>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">
+                  Follow the product label carefully and use exactly as directed. If you are unsure about suitability, dosage, timing, or interactions, our pharmacists can guide you.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-alt)] p-4">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-red)]">Ingredients & product info</p>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">
+                  Product formulations vary by brand and batch. Review the packaging and ingredient panel on arrival, especially if you have allergies, sensitivities, or dietary requirements.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-alt)] p-4">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-red)]">Ask a pharmacist</p>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">
+                  Need help choosing between products or checking whether this suits your health condition or medicines? Call us or send an enquiry for pharmacist advice.
+                </p>
+              </div>
+            </div>
 
             {hasVariants && (
               <div className="mb-8">

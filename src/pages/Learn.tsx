@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Clock3, Calendar } from 'lucide-react'
 import { BrandSignature } from '../components/layout/BrandSignature'
@@ -7,6 +8,12 @@ import { usePageSeo } from '../lib/seo'
 const categories = [...new Set(learnArticles.map((a) => a.category))]
 
 export default function Learn() {
+  const [activeCategory, setActiveCategory] = useState<string>('All Topics')
+  const filteredArticles = useMemo(
+    () => (activeCategory === 'All Topics' ? learnArticles : learnArticles.filter((article) => article.category === activeCategory)),
+    [activeCategory]
+  )
+
   usePageSeo({
     title: 'Health Library | Blackshaws Road Pharmacy',
     description:
@@ -35,17 +42,23 @@ export default function Learn() {
       <section className="section-padding pb-0">
         <div className="container-custom">
           <div className="flex flex-wrap gap-2">
-            <span className="inline-flex items-center rounded-full bg-[var(--color-navy)] px-4 py-2 text-sm font-semibold text-white">
-              All Topics
-            </span>
-            {categories.map((cat) => (
-              <span
-                key={cat}
-                className="inline-flex cursor-pointer items-center rounded-full border border-[var(--color-border)] bg-white px-4 py-2 text-sm font-medium text-[var(--color-navy)] hover:bg-[var(--color-navy-soft)]"
-              >
-                {cat}
-              </span>
-            ))}
+            {['All Topics', ...categories].map((cat) => {
+              const isActive = activeCategory === cat
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setActiveCategory(cat)}
+                  className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                    isActive
+                      ? 'bg-[var(--color-navy)] text-white'
+                      : 'border border-[var(--color-border)] bg-white text-[var(--color-navy)] hover:bg-[var(--color-navy-soft)]'
+                  }`}
+                >
+                  {cat}
+                </button>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -53,8 +66,14 @@ export default function Learn() {
       {/* Article Grid */}
       <section className="section-padding pt-8">
         <div className="container-custom">
+          <div className="mb-6 flex items-center justify-between gap-4">
+            <p className="text-sm text-[var(--color-text-muted)]">
+              Showing {filteredArticles.length} article{filteredArticles.length === 1 ? '' : 's'}
+              {activeCategory !== 'All Topics' ? ` in ${activeCategory}` : ''}
+            </p>
+          </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {learnArticles.map((article) => (
+            {filteredArticles.map((article) => (
               <Link
                 key={article.slug}
                 to={`/learn/${article.slug}`}

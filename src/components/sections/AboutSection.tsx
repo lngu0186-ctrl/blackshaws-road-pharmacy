@@ -1,8 +1,27 @@
 'use client'
 
 import { useRef } from 'react'
-import { Users } from 'lucide-react'
+import { Users, Award, HeartHandshake, ShieldCheck } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { Logo } from '../layout/Logo'
+
+const teamHighlights = [
+  {
+    name: 'Experienced local pharmacists',
+    role: 'Medication reviews, vaccinations, and everyday medicine guidance',
+    icon: Award,
+  },
+  {
+    name: 'Patient-first support team',
+    role: 'Warm, practical help with scripts, repeat medicines, and product selection',
+    icon: HeartHandshake,
+  },
+  {
+    name: 'Clinically focused care',
+    role: 'AHPRA-registered pharmacists working to current Australian standards',
+    icon: ShieldCheck,
+  },
+]
 
 export function AboutSection() {
   const introRef = useRef(null)
@@ -92,15 +111,25 @@ export function AboutSection() {
           }}
         >
           <div>
+            <p className="section-label" style={{ color: 'var(--color-navy)' }}>Our pharmacists</p>
             <h3 className="text-2xl md:text-3xl font-serif font-bold mb-6" style={{ color: 'var(--color-navy)' }}>
               Expert pharmacists you can trust
             </h3>
             <p className="text-[var(--color-gray-600)] mb-4 leading-relaxed">
-              Our pharmacists are registered with AHPRA and undergo continuous professional development to stay at the forefront of clinical practice. From immunisations to medication reviews, from chronic disease management to specialist compounding — we bring expertise and empathy to every consultation.
+              Our pharmacists are registered with AHPRA and undergo continuous professional development to stay at the forefront of clinical practice. From immunisations to medication reviews, from chronic disease management to specialist compounding, we bring expertise and empathy to every consultation.
             </p>
-            <p className="text-[var(--color-gray-600)] mb-4 leading-relaxed">
-              As an IPA member, we&apos;re part of a nationwide network that shares best practices, clinical protocols, and training resources. This means you receive local,personal service backed by national standards of excellence.
+            <p className="text-[var(--color-gray-600)] mb-6 leading-relaxed">
+              As an IPA member, we&apos;re part of a nationwide network that shares best practices, clinical protocols, and training resources. This means you receive local, personal service backed by national standards of excellence.
             </p>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {teamHighlights.map(({ name, role, icon: Icon }) => (
+                <div key={name} className="rounded-2xl border border-[var(--color-gray-200)] bg-white p-4 shadow-sm">
+                  <Icon className="h-6 w-6 text-[var(--color-red)]" />
+                  <p className="mt-3 text-sm font-semibold" style={{ color: 'var(--color-navy)' }}>{name}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--color-gray-600)]">{role}</p>
+                </div>
+              ))}
+            </div>
             <div className="flex flex-wrap gap-3 mt-6">
               <div className="px-4 py-2 bg-white rounded-lg border border-[var(--color-gray-200)] text-sm font-medium" style={{ color: 'var(--color-navy)' }}>
                 AHPRA Registered
@@ -112,14 +141,35 @@ export function AboutSection() {
                 Accredited Immunisers
               </div>
             </div>
+            <div className="mt-6">
+              <Link to="/contact" className="inline-flex items-center rounded-full bg-[var(--color-red)] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-red-hover)]">
+                Speak with our pharmacy team
+              </Link>
+            </div>
           </div>
-          <div className="relative h-80 rounded-2xl overflow-hidden border border-[var(--color-gray-200)] bg-white shadow-md">
+          <div className="relative rounded-2xl overflow-hidden border border-[var(--color-gray-200)] bg-white shadow-md">
             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[var(--color-red-light)] to-[var(--color-navy)] opacity-10" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <Users className="w-24 h-24 mb-4 opacity-30" style={{ color: 'var(--color-navy)' }} />
-              <p className="text-4xl font-serif font-bold mb-2" style={{ color: 'var(--color-navy)' }}>10+</p>
-              <p className="text-sm text-[var(--color-gray-600)]">Dedicated Team Members</p>
-              <p className="text-xs text-[var(--color-gray-600)] mt-2">Including pharmacists, technicians, and support staff</p>
+            <div className="relative grid gap-4 p-6">
+              <div className="flex items-center gap-3 rounded-2xl border border-[var(--color-gray-200)] bg-white/95 p-4">
+                <Users className="h-10 w-10 text-[var(--color-navy)]" />
+                <div>
+                  <p className="text-sm font-semibold text-[var(--color-navy)]">Dedicated local team</p>
+                  <p className="text-xs text-[var(--color-gray-600)]">Pharmacists, dispensary technicians, and support staff focused on continuity of care.</p>
+                </div>
+              </div>
+              <div className="rounded-2xl border border-[var(--color-gray-200)] bg-[var(--color-surface-alt)] p-5">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-red)]">What patients can expect</p>
+                <ul className="mt-4 space-y-3 text-sm text-[var(--color-gray-600)]">
+                  <li>• Clear medicine counselling in plain language</li>
+                  <li>• Respectful help with sensitive health concerns</li>
+                  <li>• Practical coordination with GPs and other care providers</li>
+                  <li>• Support across vaccinations, medication reviews, and everyday care</li>
+                </ul>
+              </div>
+              <div className="rounded-2xl bg-[var(--color-navy)] p-5 text-white">
+                <p className="text-3xl font-serif font-bold">55+ years</p>
+                <p className="mt-2 text-sm text-white/80">Serving Altona North since 1968 with independent, community-based care.</p>
+              </div>
             </div>
           </div>
         </div>
