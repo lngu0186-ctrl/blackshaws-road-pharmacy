@@ -90,8 +90,8 @@ export const healthServiceGroups: HealthServiceGroup[] = [
     heading: 'Life Stage & Wellness',
     items: [
       { title: "Women's Health", href: '/health-services/contraceptive-pill', icon: Venus },
-      { title: "Men's Health", href: '/health-services/contraceptive-pill', icon: Mars },
-      { title: 'Baby & Breastfeeding', href: '/health-services/pregnancy-testing', icon: Baby },
+      { title: "Men's Health", href: '/health-services/mens-health', icon: Mars },
+      { title: 'Baby & Breastfeeding', href: '/health-services/baby-breastfeeding', icon: Baby },
       { title: 'Skin Health', href: '/health-services/skin-health', icon: Sparkles },
       { title: 'UTI Program', href: '/health-services/uti-treatment', icon: Droplet },
     ],

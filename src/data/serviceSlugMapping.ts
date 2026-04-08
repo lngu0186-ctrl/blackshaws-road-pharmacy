@@ -3,36 +3,45 @@
 
 export const SERVICE_SLUG_MAP: Record<string, string> = {
   // Preventive Health
-  'health-checks': 'blood-pressure-check', // Overview page for health checks
-  'vaccinations': 'flu-vaccination', // Landing page for all vaccinations
+  'health-checks': 'blood-pressure-check',
+  'vaccinations': 'flu-vaccination',
   'travel-health': 'travel-vaccinations',
   'blood-pressure': 'blood-pressure-check',
 
   // Medication Services
   'medscheck': 'medscheck',
-  'diabetes-medscheck': 'medscheck', // Points to same service for now
+  'diabetes-medscheck': 'diabetes-management',
   'medication-management': 'prescription-reviews',
   'dose-administration-aids': 'dose-administration-aids',
-  'escripts': 'prescription-reviews', // eScripts handled under prescription reviews
-  'absence-certificates': 'prescription-reviews', // Placeholder
+  'escripts': 'prescription-reviews',
+  'absence-certificates': 'prescription-reviews',
 
   // Chronic Condition Support
   'diabetes': 'diabetes-management',
-  'heart-health': 'hypertension-management', // Heart health uses hypertension service
+  'heart-health': 'hypertension-management',
   'asthma-copd': 'asthma-management',
-  'pain-support': 'pain-support', // Now has real content
-  'gut-health': 'diabetes-management', // Temporary mapping
-  'weight-management': 'diabetes-management', // Temporary mapping
+  'pain-support': 'pain-support',
+  'gut-health': 'diabetes-management',
+  'weight-management': 'diabetes-management',
 
   // Specialised Care
   'wound-care': 'wound-care',
-  'out-of-hospital': 'out-of-hospital', // Now has real content
+  'out-of-hospital': 'out-of-hospital',
   'aged-care': 'aged-care-services',
 
   // Life Stage & Wellness
-  'womens-health': 'contraceptive-pill', // Women's health landing
-  'mens-health': 'mens-health', // Now has real content
-  'baby-breastfeeding': 'baby-breastfeeding', // Now has real content
-  'skin-health': 'skin-health', // Now has real content
+  'womens-health': 'contraceptive-pill',
+  'mens-health': 'mens-health',
+  'baby-breastfeeding': 'baby-breastfeeding',
+  'skin-health': 'skin-health',
   'uti-program': 'uti-treatment',
+
+  // Canonical slugs that should also resolve directly
+  'prescription-reviews': 'prescription-reviews',
+  'hypertension-management': 'hypertension-management',
+  'asthma-management': 'asthma-management',
+  'diabetes-management': 'diabetes-management',
+  'contraceptive-pill': 'contraceptive-pill',
+  'pregnancy-testing': 'pregnancy-testing',
+  'uti-treatment': 'uti-treatment',
 }
