@@ -1,11 +1,6 @@
 import { Star, ExternalLink } from 'lucide-react'
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver'
 
-interface GoogleReviewsWidgetProps {
-  placeId?: string
-  apiKey?: string
-}
-
 /**
  * Google Reviews Widget
  * Displays a summary of Google reviews with a link to the full reviews page.
@@ -14,7 +9,7 @@ interface GoogleReviewsWidgetProps {
  * For a live widget with real-time data, you'd need a Google Places API key and placeId.
  * This component provides a fallback static display that can be enhanced later.
  */
-export function GoogleReviewsWidget(_: GoogleReviewsWidgetProps) {
+export function GoogleReviewsWidget() {
   const [ref, isInView] = useIntersectionObserver({ threshold: 0.12, rootMargin: '0px 0px -10% 0px' })
 
   // Placeholder review data — replace with real API fetch when keys are available

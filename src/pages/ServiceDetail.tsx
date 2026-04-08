@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, Phone, Check, Calendar, Star, ArrowRight } from 'lucide-react'
 import { getServiceBySlug, services, serviceCategories, type Service } from '../data/services'
@@ -35,85 +35,58 @@ export default function ServiceDetail({ slugOverride }: ServiceDetailProps) {
   const { slug: routeSlug } = useParams<{ slug: string }>()
   const slug = slugOverride || routeSlug
 
-  const [service, setService] = useState<Service | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const service = useMemo<Service | null>(() => {
+    if (!slug || slug === 'hub') return null
 
-  // Resolve service: try direct slug, then mapping, then nav title fallback
-  // eslint-disable-next-line react-hooks/set-state-in-effect
+    const directMatch = getServiceBySlug(slug)
+    if (directMatch) return directMatch
+
+    const mappedSlug = SERVICE_SLUG_MAP[slug]
+    if (mappedSlug) {
+      const mappedMatch = getServiceBySlug(mappedSlug)
+      if (mappedMatch) return mappedMatch
+    }
+
+    return services.find(
+      (item) => item.slug.toLowerCase() === slug.toLowerCase() || item.id.toLowerCase() === slug.toLowerCase()
+    ) || null
+  }, [slug])
+
   useEffect(() => {
-    if (!slug) {
-      setIsLoading(false)
-      setService(null)
-      return
-    }
+    if (!slug) return
 
-    setIsLoading(true)
-
-    // 1. Direct lookup
-    let found = getServiceBySlug(slug)
-
-    // 2. Mapping lookup
-    if (!found && SERVICE_SLUG_MAP[slug]) {
-      found = getServiceBySlug(SERVICE_SLUG_MAP[slug])
-    }
-
-    // 3. Try nav slug direct (for slugs like 'medscheck' that match)
-    if (!found) {
-      found = services.find(
-        (s) =>
-          s.slug.toLowerCase() === slug.toLowerCase() ||
-          s.id.toLowerCase() === slug.toLowerCase()
-      )
-    }
-
-    setService(found || null)
-    setIsLoading(false)
-
-    // Scroll to top
     window.scrollTo(0, 0)
 
     const title = slug === 'hub'
       ? 'Health Services | Blackshaws Road Pharmacy'
-      : found
-        ? `${found.title} | Blackshaws Road Pharmacy`
+      : service
+        ? `${service.title} | Blackshaws Road Pharmacy`
         : `${getNavServiceTitle(slug)} | Blackshaws Road Pharmacy`
 
     const description = slug === 'hub'
       ? 'Explore health services at Blackshaws Road Pharmacy in Altona North including vaccinations, health checks, medication reviews, diabetes support, and more. Call (03) 9391 3257 to book.'
-      : found
-        ? `${found.title} at Blackshaws Road Pharmacy, Altona North. ${found.shortDescription} ${found.isFree ? 'Free or bulk-billed.' : found.cost}`
+      : service
+        ? `${service.title} at Blackshaws Road Pharmacy, Altona North. ${service.shortDescription} ${service.isFree ? 'Free or bulk-billed.' : service.cost}`
         : `${getNavServiceTitle(slug)} services at Blackshaws Road Pharmacy in Altona North. Our pharmacists provide professional healthcare support. Call (03) 9391 3257.`
 
     applySeo({
       title,
       description,
-      robots: found || slug === 'hub' ? 'index, follow' : 'noindex, nofollow',
+      robots: service || slug === 'hub' ? 'index, follow' : 'noindex, nofollow',
       canonicalPath: slug === 'hub' ? '/health-services' : `/health-services/${slug}`,
     })
-  }, [slug])
+  }, [service, slug])
 
   // For hub overview page
   if (slug === 'hub' || !slug) {
     return <HealthServicesHub />
   }
 
-  // Loading state
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[var(--color-cream)]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-red)] mx-auto mb-4"></div>
-          <p className="text-[var(--color-text-muted)]">Loading service information...</p>
-        </div>
-      </div>
-    )
-  }
-
   // Service not found — show intelligent fallback
   if (!service) {
     const navTitle = getNavServiceTitle(slug)
     return (
-      <ServiceStubPage slug={slug} title={navTitle} />
+      <ServiceStubPage title={navTitle} />
     )
   }
 
@@ -471,29 +444,7 @@ function HealthServicesHub() {
 /**
  * Stub page for services not yet fully built out
  */
-function ServiceStubPage({ slug, title }: { slug: string; title: string }) {
-  useEffect(() => {
-    window.scrollTo(0, 0)
-
-    // Set meta for stub pages — noindex to avoid indexing thin content
-    let metaRobots = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null
-    if (!metaRobots) {
-      metaRobots = document.createElement('meta')
-      metaRobots.name = 'robots'
-      document.head.appendChild(metaRobots)
-    }
-    metaRobots.content = 'noindex, nofollow'
-
-    // Set description
-    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta')
-      metaDescription.name = 'description'
-      document.head.appendChild(metaDescription)
-    }
-    metaDescription.content = `${title} services at Blackshaws Road Pharmacy in Altona North. Contact our pharmacy team for more information.`
-  }, [slug, title])
-
+function ServiceStubPage({ title }: { title: string }) {
   return (
     <div className="min-h-screen bg-[var(--color-cream)]">
       <section className="section-padding-lg bg-[linear-gradient(135deg,var(--color-navy-deep),var(--color-navy))] text-white">

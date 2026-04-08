@@ -75,8 +75,16 @@ export function applySeo({
   }
 }
 
-export function usePageSeo(input: SeoInput) {
+export function usePageSeo({
+  title,
+  description,
+  robots,
+  canonicalPath,
+  ogTitle,
+  ogDescription,
+  ogImage,
+}: SeoInput) {
   useEffect(() => {
-    applySeo(input)
-  }, [input.title, input.description, input.robots, input.canonicalPath, input.ogTitle, input.ogDescription, input.ogImage])
+    applySeo({ title, description, robots, canonicalPath, ogTitle, ogDescription, ogImage })
+  }, [title, description, robots, canonicalPath, ogTitle, ogDescription, ogImage])
 }

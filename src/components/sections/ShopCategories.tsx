@@ -1,10 +1,11 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Grid, Activity, Baby, Heart, Sparkles, User, Bandage, HeartPulse, Scale, Wind, Shield, Stethoscope, ArrowRight } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { PHARMACY_CATEGORIES } from '../../utils/productCategories'
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver'
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, LucideIcon> = {
   pill: Grid,
   activity: Activity,
   baby: Baby,
