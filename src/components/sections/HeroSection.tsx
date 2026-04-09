@@ -40,7 +40,7 @@ export function HeroSection() {
               />
             </div>
 
-            <h1 className="mt-7 max-w-4xl text-white md:mt-8">Premium everyday pharmacy care for Altona North and the west.</h1>
+            <h1 className="mt-7 max-w-4xl text-white md:mt-8">Family owned independent pharmacy since 1968.</h1>
             <p className="mt-6 text-lg leading-relaxed text-white/78 md:text-xl">Prescriptions, trusted pharmacist advice, vaccinations, medication reviews and a curated online health range — all delivered with the calm confidence of a long-standing local pharmacy.</p>
 
             <div className="mt-8 flex flex-wrap gap-3 text-sm text-white/76">
