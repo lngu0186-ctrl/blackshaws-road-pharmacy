@@ -3,7 +3,7 @@
 const SHOPIFY_API_VERSION = '2025-07'
 const SHOPIFY_STORE_PERMANENT_DOMAIN = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN || 'blackshaws-road-pharmacy.myshopify.com'
 const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`
-const SHOPIFY_STOREFRONT_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN
+const SHOPIFY_STOREFRONT_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN || '7049490ac9a0923d80e14dbe95587f54'
 
 if (!SHOPIFY_STOREFRONT_TOKEN) {
   console.warn('Shopify Storefront token is missing. Set VITE_SHOPIFY_STOREFRONT_TOKEN in your environment.')
