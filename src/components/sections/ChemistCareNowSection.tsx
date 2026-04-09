@@ -44,6 +44,13 @@ export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
   return (
     <section id={id} className="section-padding bg-white">
       <div className="container-custom" ref={ref}>
+        {/* Official logos */}
+        <div className="flex flex-wrap items-center gap-6 mb-10">
+          <img src="/chemist-care-now-logo.png" alt="Chemist Care Now" className="h-12 w-auto" />
+          <div className="h-8 w-px bg-gray-300" />
+          <img src="/vic-gov-logo.png" alt="Victorian Government – Department of Health" className="h-10 w-auto" />
+        </div>
+
         <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-start">
           {/* Left: Intro text */}
           <div>
@@ -86,7 +93,7 @@ export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
               >
                 {/* Top half: blue background with illustration */}
                 <div className="relative h-2/5 bg-[#1a5eab] flex items-center justify-center overflow-hidden">
-                  <service.icon className="w-16 h-16 text-white" />
+                  <service.icon className="w-14 h-14 text-white" />
                 </div>
                 {/* Bottom half: white content */}
                 <div className="relative h-3/5 p-5 flex flex-col justify-center">
