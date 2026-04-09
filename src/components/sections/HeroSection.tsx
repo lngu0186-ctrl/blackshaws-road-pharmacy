@@ -41,7 +41,7 @@ export function HeroSection() {
             </div>
 
             <h1 className="mt-7 max-w-4xl text-white md:mt-8">Family owned independent pharmacy since 1968.</h1>
-            <p className="mt-6 text-lg leading-relaxed text-white/78 md:text-xl">Prescriptions, trusted pharmacist advice, vaccinations, medication reviews and a curated online health range — all delivered with the calm confidence of a long-standing local pharmacy.</p>
+            <p className="mt-6 text-lg leading-relaxed text-white/78 md:text-xl">Trusted pharmacist advice, vaccinations, medication reviews and a vast online practitioners only health range.</p>
 
             <div className="mt-8 flex flex-wrap gap-3 text-sm text-white/76">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2"><MapPin className="h-4 w-4" /> 310A Blackshaws Road, Altona North</span>
