@@ -1,115 +1,113 @@
-// No React import needed with automatic JSX runtime in Vite
+// Clean line-art icons for Chemist Care Now condition cards
 
-// Icon 1: Blister pack / pill sheet
+// Icon 1: Contraceptive pill blister pack
 export function IconContraceptive({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <rect x="12" y="10" width="40" height="44" rx="4" fill="currentColor"/>
-      <rect x="16" y="14" width="8" height="6" rx="1" fill="white"/>
-      <rect x="28" y="14" width="8" height="6" rx="1" fill="white"/>
-      <rect x="40" y="14" width="8" height="6" rx="1" fill="white"/>
-      <rect x="16" y="24" width="8" height="6" rx="1" fill="white"/>
-      <rect x="28" y="24" width="8" height="6" rx="1" fill="white"/>
-      <rect x="40" y="24" width="8" height="6" rx="1" fill="white"/>
-      <rect x="16" y="34" width="8" height="6" rx="1" fill="white"/>
-      <rect x="28" y="34" width="8" height="6" rx="1" fill="white"/>
-      <rect x="40" y="34" width="8" height="6" rx="1" fill="white"/>
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="14" y="10" width="36" height="44" rx="3" />
+      <circle cx="24" cy="20" r="3" />
+      <circle cx="32" cy="20" r="3" />
+      <circle cx="40" cy="20" r="3" />
+      <circle cx="24" cy="30" r="3" />
+      <circle cx="32" cy="30" r="3" />
+      <circle cx="40" cy="30" r="3" />
+      <circle cx="24" cy="40" r="3" />
+      <circle cx="32" cy="40" r="3" />
+      <circle cx="40" cy="40" r="3" />
     </svg>
   )
 }
 
-// Icon 2: Stylised capsule/pill
+// Icon 2: UTI – kidney/bladder outline with droplet
 export function IconUTI({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <ellipse cx="32" cy="28" rx="12" ry="6" fill="currentColor"/>
-      <rect x="20" y="28" width="24" height="12" rx="6" fill="currentColor"/>
-      <ellipse cx="32" cy="40" rx="12" ry="6" fill="currentColor"/>
-      <ellipse cx="32" cy="28" rx="8" ry="4" fill="white"/>
-      <rect x="24" y="28" width="16" height="12" rx="4" fill="white"/>
-      <ellipse cx="32" cy="40" rx="8" ry="4" fill="white"/>
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      {/* Bladder shape */}
+      <path d="M22 18c-6 2-10 8-10 16 0 10 8 18 20 18s20-8 20-18c0-8-4-14-10-16" />
+      {/* Ureters */}
+      <path d="M22 18V10" />
+      <path d="M42 18V10" />
+      {/* Water droplet */}
+      <path d="M32 28c-2 3-5 6-5 9a5 5 0 0010 0c0-3-3-6-5-9z" fill="currentColor" opacity="0.3" />
     </svg>
   )
 }
 
-// Icon 3: Outline of back with blistering rash dots
+// Icon 3: Shingles – skin with rash/blisters
 export function IconShingles({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      {/* Shoulder and back outline */}
-      <path d="M20 24C16 26 14 30 14 34C14 40 18 44 24 46C28 47 32 47 36 46C42 44 46 40 46 34C46 28 44 24 40 22" fill="currentColor"/>
-      <rect x="18" y="22" width="28" height="24" rx="8" fill="currentColor"/>
-      {/* Rash dots */}
-      <circle cx="24" cy="32" r="2" fill="white"/>
-      <circle cx="32" cy="30" r="2" fill="white"/>
-      <circle cx="40" cy="34" r="2" fill="white"/>
-      <circle cx="28" cy="38" r="2" fill="white"/>
-      <circle cx="36" cy="36" r="2" fill="white"/>
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      {/* Body/torso outline */}
+      <path d="M16 14h32v36a4 4 0 01-4 4H20a4 4 0 01-4-4V14z" />
+      <line x1="16" y1="14" x2="48" y2="14" />
+      {/* Rash dots in a band pattern (dermatome) */}
+      <circle cx="24" cy="26" r="2" fill="currentColor" opacity="0.4" />
+      <circle cx="30" cy="24" r="2.5" fill="currentColor" opacity="0.4" />
+      <circle cx="36" cy="27" r="2" fill="currentColor" opacity="0.4" />
+      <circle cx="42" cy="25" r="1.5" fill="currentColor" opacity="0.4" />
+      <circle cx="27" cy="32" r="1.5" fill="currentColor" opacity="0.4" />
+      <circle cx="33" cy="30" r="2" fill="currentColor" opacity="0.4" />
+      <circle cx="39" cy="33" r="1.5" fill="currentColor" opacity="0.4" />
     </svg>
   )
 }
 
-// Icon 4: Arm with patchy skin markings (psoriasis)
+// Icon 4: Psoriasis – arm with patchy skin markings
 export function IconPsoriasis({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      {/* Arm shape */}
-      <path d="M24 14C24 14 20 18 20 26C20 36 24 44 28 48C32 52 44 52 48 48C52 44 56 36 56 28C56 20 52 14 44 14H24Z" fill="currentColor"/>
-      {/* Patchy spots */}
-      <circle cx="28" cy="28" r="4" fill="white"/>
-      <circle cx="36" cy="32" r="3" fill="white"/>
-      <circle cx="44" cy="26" r="3" fill="white"/>
-      <circle cx="40" cy="38" r="3" fill="white"/>
-      <circle cx="32" cy="42" r="3" fill="white"/>
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      {/* Tube of cream */}
+      <rect x="18" y="24" width="28" height="22" rx="3" />
+      <path d="M22 24V18a2 2 0 012-2h16a2 2 0 012 2v6" />
+      <rect x="28" y="12" width="8" height="6" rx="2" />
+      {/* Squiggle of cream coming out */}
+      <path d="M32 10c-1-3-3-3-2-6" strokeWidth="2.5" />
+      {/* Patches on tube label */}
+      <path d="M24 32h16" opacity="0.4" />
+      <path d="M26 36h12" opacity="0.4" />
+      <path d="M28 40h8" opacity="0.4" />
     </svg>
   )
 }
 
-// Icon 5: Commercial aeroplane
+// Icon 5: Travel vaccinations – syringe + plane
 export function IconVaccinations({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      {/* Fuselage */}
-      <path d="M32 16C36 16 40 18 44 22C50 28 52 36 52 42C52 50 48 58 44 60L34 62L24 60C20 58 16 50 16 42C16 36 18 28 24 22C28 18 32 16 32 16Z" fill="currentColor"/>
-      {/* Wings */}
-      <path d="M24 34L16 44L8 42L16 32L24 34Z" fill="currentColor"/>
-      <path d="M40 32L48 42L56 44L48 32L40 32Z" fill="currentColor"/>
-      {/* Tail */}
-      <path d="M34 24L32 20L20 22L22 26L34 24Z" fill="currentColor"/>
-      {/* Windows */}
-      <circle cx="38" cy="26" r="1.5" fill="white"/>
-      <circle cx="42" cy="28" r="1.5" fill="white"/>
-      <circle cx="38" cy="34" r="1.5" fill="white"/>
-      <circle cx="42" cy="36" r="1.5" fill="white"/>
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      {/* Syringe */}
+      <path d="M14 50l6-6" />
+      <path d="M20 44l18-18" strokeWidth="2.5" />
+      <path d="M38 26l4-4" />
+      <path d="M42 22l4 4" />
+      <line x1="24" y1="36" x2="28" y2="40" />
+      <line x1="28" y1="32" x2="32" y2="36" />
+      {/* Small plane */}
+      <path d="M44 10l4 2-8 8-6-2-2 2 4 4-2 2-6-4-2 2 3 3-2 1-4-4" fill="none" />
+      <path d="M48 8l4 4" />
+      <path d="M52 12l-4-4" />
+      {/* Simplified plane in corner */}
+      <path d="M46 12l6-2 4 4-2 6" fill="currentColor" opacity="0.2" />
     </svg>
   )
 }
 
-// Icon 6: Two children with spots (impetigo)
+// Icon 6: Impetigo – child face with sores
 export function IconImpetigo({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      {/* Child 1 (head) */}
-      <circle cx="22" cy="28" r="8" fill="currentColor"/>
-      {/* Child 1 body */}
-      <path d="M18 38C16 42 16 48 18 52" stroke="currentColor" strokeWidth="2" fill="none"/>
-      {/* Spots on face */}
-      <circle cx="20" cy="26" r="1" fill="white"/>
-      <circle cx="24" cy="28" r="1" fill="white"/>
-      <circle cx="22" cy="30" r="1" fill="white"/>
-      {/* Child 2 (head) */}
-      <circle cx="42" cy="28" r="8" fill="currentColor"/>
-      {/* Child 2 body */}
-      <path d="M38 38C36 42 36 48 38 52" stroke="currentColor" strokeWidth="2" fill="none"/>
-      {/* Spots on face */}
-      <circle cx="40" cy="26" r="1" fill="white"/>
-      <circle cx="44" cy="28" r="1" fill="white"/>
-      <circle cx="42" cy="30" r="1" fill="white"/>
-      {/* Body spots */}
-      <circle cx="18" cy="44" r="1.5" fill="white"/>
-      <circle cx="22" cy="46" r="1.5" fill="white"/>
-      <circle cx="38" cy="44" r="1.5" fill="white"/>
-      <circle cx="42" cy="46" r="1.5" fill="white"/>
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      {/* Child face */}
+      <circle cx="32" cy="30" r="16" />
+      {/* Hair */}
+      <path d="M18 24c2-8 8-14 14-14s12 6 14 14" />
+      {/* Eyes */}
+      <circle cx="26" cy="30" r="1.5" fill="currentColor" />
+      <circle cx="38" cy="30" r="1.5" fill="currentColor" />
+      {/* Mouth */}
+      <path d="M28 37c2 2 6 2 8 0" />
+      {/* Sores / red marks */}
+      <circle cx="22" cy="36" r="2.5" fill="currentColor" opacity="0.35" />
+      <circle cx="40" cy="24" r="2" fill="currentColor" opacity="0.35" />
+      <circle cx="36" cy="40" r="2" fill="currentColor" opacity="0.35" />
     </svg>
   )
 }
