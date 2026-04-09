@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { ShoppingBag, Phone, ChevronDown, Clock3, MapPin, ArrowRight, Shield, FileText, FlaskConical, MessageSquare, Pill } from 'lucide-react'
+import { ShoppingBag, Phone, ChevronDown, Clock3, MapPin, ArrowRight, Shield, FileText, FlaskConical, MessageSquare, Menu } from 'lucide-react'
 import { Logo } from './Logo'
 import { MobileDrawer } from './MobileDrawer'
 import { useCartStore } from '../../stores/cartStore'
@@ -138,7 +138,7 @@ export function Header() {
         <div className="container-custom flex h-[var(--header-height-mobile)] items-center justify-between gap-3 md:h-[var(--header-height-desktop)] md:gap-4">
           <div className="flex min-w-0 items-center gap-2.5 md:gap-5">
             <button onClick={() => setMobileMenuOpen(true)} className="icon-btn md:hidden" aria-label="Open menu">
-              <Pill className="h-5 w-5" />
+              <Menu className="h-5 w-5" />
             </button>
             <Logo
               className="brand-logo-header h-[var(--logo-max-height-mobile)] md:h-[var(--logo-max-height)]"
