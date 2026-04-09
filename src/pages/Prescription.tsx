@@ -24,7 +24,7 @@ export default function Prescription() {
         <div className="container-custom grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
             <p className="section-label !text-white/70">Prescriptions</p>
-            <h1 className="max-w-4xl text-white">Upload your prescription for a straightforward pickup process.</h1>
+            <h1 className="max-w-4xl text-white">Upload your prescription and we'll get to work on it today</h1>
             <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">Send your prescription ahead so our pharmacy team can review it, prepare where appropriate and let you know the next step. This helps make pickup faster while still allowing for pharmacist review, medicine availability and prescription requirements.</p>
             <div className="mt-6">
               <BrandSignature tone="dark" className="max-w-xl" />
