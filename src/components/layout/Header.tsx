@@ -137,7 +137,7 @@ export function Header() {
       <div className={cn('transition-all duration-300', scrolled || !isHome ? 'border-b border-[var(--color-border)] bg-[rgba(255,253,250,0.96)] backdrop-blur-xl shadow-[0_20px_40px_-36px_rgba(16,24,63,0.55)]' : 'bg-[rgba(255,253,250,0.88)] backdrop-blur-xl')}>
         <div className="container-custom flex h-[var(--header-height-mobile)] items-center justify-between gap-3 md:h-[var(--header-height-desktop)] md:gap-4">
           <div className="flex min-w-0 items-center gap-2.5 md:gap-5">
-            <button onClick={() => setMobileMenuOpen(true)} className="icon-btn md:hidden" aria-label="Open menu">
+            <button onClick={() => setMobileMenuOpen(true)} className="icon-btn md:!hidden" aria-label="Open menu">
               <Menu className="h-5 w-5" />
             </button>
             <Logo
