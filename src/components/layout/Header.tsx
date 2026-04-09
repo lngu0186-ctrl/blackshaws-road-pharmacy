@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, ShoppingBag, Phone, ChevronDown, Clock3, MapPin, ArrowRight, Shield, FileText, FlaskConical, MessageSquare, Pill } from 'lucide-react'
+import { ShoppingBag, Phone, ChevronDown, Clock3, MapPin, ArrowRight, Shield, FileText, FlaskConical, MessageSquare, Pill } from 'lucide-react'
 import { Logo } from './Logo'
 import { MobileDrawer } from './MobileDrawer'
 import { useCartStore } from '../../stores/cartStore'
