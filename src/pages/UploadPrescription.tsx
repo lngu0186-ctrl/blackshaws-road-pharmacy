@@ -296,9 +296,9 @@ export default function UploadPrescription() {
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-[var(--color-surface-alt)] p-4 text-sm text-[var(--color-text-muted)]">
-                <p className="font-semibold text-[var(--color-navy)]">What happens next</p>
-                <p className="mt-2">Our pharmacist team reviews uploads during pharmacy hours, checks prescription requirements and stock availability, then calls you with the safest next step. Please bring any original paper prescription with you at pickup if required.</p>
+              <div className="rounded-2xl bg-[var(--color-navy-deep)] p-5 text-sm text-white/80">
+                <p className="font-semibold text-white">What happens next</p>
+                <p className="mt-2 leading-relaxed">Our pharmacist team reviews uploads during pharmacy hours, checks prescription requirements and stock availability, then calls you with the safest next step. Please bring any original paper prescription with you at pickup if required.</p>
               </div>
 
               <Button type="submit" variant="red" size="lg" className="w-full" disabled={submitting}>
