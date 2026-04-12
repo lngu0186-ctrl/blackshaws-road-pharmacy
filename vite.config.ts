@@ -24,11 +24,14 @@ export default defineConfig({
             if (id.includes('lucide-react')) {
               return 'ui'
             }
-            if (id.includes('graphql-request')) {
-              return 'shopify'
+            if (id.includes('@supabase/supabase-js')) {
+              return 'supabase'
             }
-            if (id.includes('framer-motion')) {
-              return 'animation'
+            if (id.includes('xlsx') || id.includes('papaparse')) {
+              return 'data-tools'
+            }
+            if (id.includes('remotion')) {
+              return 'media'
             }
           }
         },

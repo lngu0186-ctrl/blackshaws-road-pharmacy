@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
 import { LockKeyhole, ShieldCheck, Stethoscope } from 'lucide-react'
 import { BrandSignature } from '../components/layout/BrandSignature'
+import { usePageSeo } from '../lib/seo'
 
 const sections = [
   {
@@ -33,18 +33,11 @@ const sections = [
 ]
 
 export default function PatientInfo() {
-  useEffect(() => {
-    window.scrollTo(0, 0)
-    document.title = 'Patient Information | Blackshaws Road Pharmacy'
-
-    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta')
-      metaDescription.name = 'description'
-      document.head.appendChild(metaDescription)
-    }
-    metaDescription.content = 'Important patient information for Blackshaws Road Pharmacy including prescription privacy, medicine availability, pharmacist review process, and general health information disclaimers.'
-  }, [])
+  usePageSeo({
+    title: 'Patient Information | Blackshaws Road Pharmacy',
+    description: 'Important patient information for Blackshaws Road Pharmacy including prescription privacy, medicine availability, pharmacist review process, and general health information disclaimers.',
+    canonicalPath: '/patient-info',
+  })
 
   return (
     <div className="bg-[var(--color-cream)]">
