@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Camera, Upload, X, FileText, Shield, CheckCircle,
@@ -32,6 +32,11 @@ export default function UploadPrescription() {
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
+
+  const supabaseConfigured = useMemo(
+    () => Boolean(import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY),
+    [],
+  )
 
   usePageSeo({
     title: 'Prescriptions | Blackshaws Road Pharmacy',
@@ -91,6 +96,11 @@ export default function UploadPrescription() {
     e.preventDefault()
     setError(null)
     if (!validate()) return
+
+    if (!supabaseConfigured) {
+      setError('Prescription upload is not configured yet. Please call the pharmacy on (03) 9391 3257.')
+      return
+    }
 
     setSubmitting(true)
 
@@ -247,6 +257,11 @@ export default function UploadPrescription() {
                 <label className="block text-sm font-semibold mb-2">
                   Prescription photo or scan <span className="text-[var(--color-red)]">*</span>
                 </label>
+                {!supabaseConfigured ? (
+                  <div className="mb-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+                    Online prescription sending is not configured yet. Please call the pharmacy on (03) 9391 3257 before relying on this form.
+                  </div>
+                ) : null}
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button type="button" onClick={() => fileInputRef.current?.click()} className="flex-1 flex items-center justify-center gap-2 h-14 rounded-2xl border-2 border-dashed border-[var(--color-border)] text-sm font-medium text-[var(--color-navy)] hover:border-[var(--color-navy)] hover:bg-[var(--color-navy-soft)] transition-colors">
                     <Upload className="h-5 w-5" /> Choose file
@@ -301,7 +316,7 @@ export default function UploadPrescription() {
                 <p className="mt-2">Our pharmacist team reviews uploads during pharmacy hours, checks prescription requirements and stock availability, then calls you with the safest next step. Please bring any original paper prescription with you at pickup if required.</p>
               </div>
 
-              <Button type="submit" variant="red" size="lg" className="w-full" disabled={submitting}>
+              <Button type="submit" variant="red" size="lg" className="w-full" disabled={submitting || !supabaseConfigured}>
                 {submitting ? (
                   <span className="flex items-center justify-center gap-2">
                     <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />

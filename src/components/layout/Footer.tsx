@@ -22,6 +22,8 @@ const footerLinks = {
     { label: 'Better Health Victoria', href: 'https://www.betterhealth.vic.gov.au', target: '_blank' },
     { label: 'Healthdirect', href: 'https://www.healthdirect.gov.au', target: '_blank' },
     { label: 'NPS MedicineWise', href: 'https://www.nps.org.au', target: '_blank' },
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Terms of Service', href: '/terms-of-service' },
   ],
 }
 
@@ -52,6 +54,7 @@ export function Footer() {
             <div className="mt-6 space-y-4 text-sm text-white/78">
               <p className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> 310A Blackshaws Road, Altona North VIC 3025</p>
               <p className="flex items-start gap-3"><Clock3 className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> Monday–Friday 8:00 AM–9:00 PM · Saturday 8:00 AM–6:00 PM · Sunday 10:00 AM–5:00 PM</p>
+              <p className="flex items-start gap-3"><Award className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> ABN: 55 000 000 000</p>
               <a href="tel:0393913257" className="flex items-center gap-3 hover:text-white"><Phone className="h-4 w-4 text-[var(--color-red)]" /> (03) 9391 3257</a>
               <a href="mailto:info@blackshawsroadpharmacy.com.au" className="flex items-center gap-3 hover:text-white"><Mail className="h-4 w-4 text-[var(--color-red)]" /> info@blackshawsroadpharmacy.com.au</a>
             </div>

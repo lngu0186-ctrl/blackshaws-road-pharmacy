@@ -92,9 +92,22 @@ export default function Shop() {
   const handleLoadMore = () => setCurrentPage((prev) => prev + 1)
 
   const handleAddToCart = async (product: Product) => {
+    const availableVariant = product.variants.edges.find((edge) => edge.node.availableForSale)?.node
     const firstVariant = product.variants.edges[0]?.node
-    if (!firstVariant) return
-    await addItem({ product, variantId: firstVariant.id, variantTitle: firstVariant.title, price: firstVariant.price, quantity: 1, selectedOptions: firstVariant.selectedOptions || [] })
+    const variant = availableVariant || firstVariant
+    if (!variant) return
+
+    if (product.variants.edges.length > 1) {
+      window.location.href = `/shop/${product.handle}`
+      return
+    }
+
+    if (!variant.availableForSale) {
+      showToast('This product is currently out of stock', 'error')
+      return
+    }
+
+    await addItem({ product, variantId: variant.id, variantTitle: variant.title, price: variant.price, quantity: 1, selectedOptions: variant.selectedOptions || [] })
     openCart()
   }
 
@@ -178,9 +191,8 @@ export default function Shop() {
 
             <div className={`products-grid mt-8 ${viewMode === 'grid' ? 'grid-view' : 'list-view'}`}>
               {paginatedProducts.map((product) => {
-                const firstVariant = product.variants.edges[0]?.node
                 const imageUrl = getProductImageUrl(product, 600, 600)
-                const isAvailable = firstVariant?.availableForSale ?? true
+                const isAvailable = product.variants.edges.some((edge) => edge.node.availableForSale)
                 const onSale = isOnSale(product)
                 const salePrice = onSale ? getSalePrice(product) : null
                 const regularPrice = product.priceRange.minVariantPrice
@@ -201,7 +213,7 @@ export default function Shop() {
                         <div>
                           {onSale && salePrice ? <div className="flex items-center gap-2"><span className="text-xl font-bold text-[var(--color-red)]">{formatPrice(salePrice.amount, salePrice.currencyCode)}</span><span className="text-sm text-gray-400 line-through">{formatPrice(regularPrice.amount, regularPrice.currencyCode)}</span></div> : <span className="text-xl font-bold text-[var(--color-navy)]">{formatPrice(regularPrice.amount, regularPrice.currencyCode)}</span>}
                         </div>
-                        <Button variant="primary" size="sm" onClick={(e) => { e.preventDefault(); handleAddToCart(product) }} disabled={!isAvailable}><ShoppingBag className="mr-2 h-4 w-4" /> Add</Button>
+                        <Button variant="primary" size="sm" className="min-h-11" onClick={(e) => { e.preventDefault(); handleAddToCart(product) }} disabled={!isAvailable}><ShoppingBag className="mr-2 h-4 w-4" /> {product.variants.edges.length > 1 ? 'Choose options' : 'Add'}</Button>
                       </div>
                     </div>
                   </Link>

@@ -137,9 +137,9 @@ export default function ProductDetail() {
       brand: { '@type': 'Brand', name: product.vendor },
       offers: {
         '@type': 'Offer',
-        availability: product.variants.edges[0]?.node.availableForSale ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-        priceCurrency: product.priceRange.minVariantPrice.currencyCode,
-        price: parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2),
+        availability: product.variants.edges.some((edge) => edge.node.availableForSale) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+        priceCurrency: selectedVariant?.price.currencyCode || product.priceRange.minVariantPrice.currencyCode,
+        price: parseFloat(selectedVariant?.price.amount || product.priceRange.minVariantPrice.amount).toFixed(2),
         url: canonical,
       },
     }

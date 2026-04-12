@@ -10,7 +10,6 @@ import {
   type ShopifyProduct,
 } from '../services/shopify'
 
-// ─── Types ───────────────────────────────────────────────────────
 export interface CartItem {
   lineId: string | null
   product: ShopifyProduct
@@ -28,6 +27,7 @@ interface CartStore {
   isLoading: boolean
   isSyncing: boolean
   isCartOpen: boolean
+  lastError: string | null
   addItem: (item: Omit<CartItem, 'lineId'>) => Promise<void>
   updateQuantity: (variantId: string, quantity: number) => Promise<void>
   removeItem: (variantId: string) => Promise<void>
@@ -36,9 +36,9 @@ interface CartStore {
   getCheckoutUrl: () => string | null
   openCart: () => void
   closeCart: () => void
+  clearError: () => void
 }
 
-// ─── Helpers ────────────────────────────────────────────────────
 function formatCheckoutUrl(checkoutUrl: string): string {
   try {
     const url = new URL(checkoutUrl)
@@ -65,7 +65,6 @@ async function createShopifyCart(
   })
 
   if (data?.data?.cartCreate?.userErrors?.length > 0) {
-    console.error('Cart creation failed:', data.data.cartCreate.userErrors)
     return null
   }
 
@@ -90,7 +89,6 @@ async function addLineToShopifyCart(
   const userErrors = data?.data?.cartLinesAdd?.userErrors || []
   if (isCartNotFoundError(userErrors)) return { success: false, cartNotFound: true }
   if (userErrors.length > 0) {
-    console.error('Add line failed:', userErrors)
     return { success: false }
   }
 
@@ -115,7 +113,6 @@ async function updateShopifyCartLine(
   const userErrors = data?.data?.cartLinesUpdate?.userErrors || []
   if (isCartNotFoundError(userErrors)) return { success: false, cartNotFound: true }
   if (userErrors.length > 0) {
-    console.error('Update line failed:', userErrors)
     return { success: false }
   }
   return { success: true }
@@ -133,13 +130,11 @@ async function removeLineFromShopifyCart(
   const userErrors = data?.data?.cartLinesRemove?.userErrors || []
   if (isCartNotFoundError(userErrors)) return { success: false, cartNotFound: true }
   if (userErrors.length > 0) {
-    console.error('Remove line failed:', userErrors)
     return { success: false }
   }
   return { success: true }
 }
 
-// ─── Store ──────────────────────────────────────────────────────
 export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
@@ -149,15 +144,17 @@ export const useCartStore = create<CartStore>()(
       isLoading: false,
       isSyncing: false,
       isCartOpen: false,
+      lastError: null,
 
       openCart: () => set({ isCartOpen: true }),
       closeCart: () => set({ isCartOpen: false }),
+      clearError: () => set({ lastError: null }),
 
       addItem: async (item) => {
         const { items, cartId, clearCart } = get()
         const existingItem = items.find((i) => i.variantId === item.variantId)
 
-        set({ isLoading: true })
+        set({ isLoading: true, lastError: null })
         try {
           if (!cartId) {
             const result = await createShopifyCart({ ...item, lineId: null })
@@ -167,11 +164,13 @@ export const useCartStore = create<CartStore>()(
                 checkoutUrl: result.checkoutUrl,
                 items: [{ ...item, lineId: result.lineId }],
               })
+            } else {
+              set({ lastError: 'We could not start your cart just now. Please try again.' })
             }
           } else if (existingItem) {
             const newQuantity = existingItem.quantity + item.quantity
             if (!existingItem.lineId) {
-              console.error('Cannot update quantity for item without lineId:', existingItem)
+              set({ lastError: 'This cart item could not be updated. Please remove it and add it again.' })
               return
             }
             const result = await updateShopifyCartLine(cartId, existingItem.lineId, newQuantity)
@@ -184,6 +183,9 @@ export const useCartStore = create<CartStore>()(
               })
             } else if (result.cartNotFound) {
               clearCart()
+              set({ lastError: 'Your previous cart expired, so we cleared it. Please add the item again.' })
+            } else {
+              set({ lastError: 'We could not update that item right now. Please try again.' })
             }
           } else {
             const result = await addLineToShopifyCart(cartId, { ...item, lineId: null })
@@ -192,10 +194,13 @@ export const useCartStore = create<CartStore>()(
               set({ items: [...currentItems, { ...item, lineId: result.lineId ?? null }] })
             } else if (result.cartNotFound) {
               clearCart()
+              set({ lastError: 'Your previous cart expired, so we cleared it. Please add the item again.' })
+            } else {
+              set({ lastError: 'We could not add that item right now. Please try again.' })
             }
           }
         } catch (error) {
-          console.error('Failed to add item:', error)
+          set({ lastError: error instanceof Error ? error.message : 'We could not add that item right now. Please try again.' })
         } finally {
           set({ isLoading: false })
         }
@@ -211,7 +216,7 @@ export const useCartStore = create<CartStore>()(
         const item = items.find((i) => i.variantId === variantId)
         if (!item?.lineId || !cartId) return
 
-        set({ isLoading: true })
+        set({ isLoading: true, lastError: null })
         try {
           const result = await updateShopifyCartLine(cartId, item.lineId, quantity)
           if (result.success) {
@@ -223,9 +228,12 @@ export const useCartStore = create<CartStore>()(
             })
           } else if (result.cartNotFound) {
             clearCart()
+            set({ lastError: 'Your cart expired, so we cleared it. Please add the item again.' })
+          } else {
+            set({ lastError: 'We could not update the quantity right now. Please try again.' })
           }
         } catch (error) {
-          console.error('Failed to update quantity:', error)
+          set({ lastError: error instanceof Error ? error.message : 'We could not update the quantity right now. Please try again.' })
         } finally {
           set({ isLoading: false })
         }
@@ -236,7 +244,7 @@ export const useCartStore = create<CartStore>()(
         const item = items.find((i) => i.variantId === variantId)
         if (!item?.lineId || !cartId) return
 
-        set({ isLoading: true })
+        set({ isLoading: true, lastError: null })
         try {
           const result = await removeLineFromShopifyCart(cartId, item.lineId)
           if (result.success) {
@@ -249,15 +257,18 @@ export const useCartStore = create<CartStore>()(
             }
           } else if (result.cartNotFound) {
             clearCart()
+            set({ lastError: 'Your cart expired, so we cleared it.' })
+          } else {
+            set({ lastError: 'We could not remove that item right now. Please try again.' })
           }
         } catch (error) {
-          console.error('Failed to remove item:', error)
+          set({ lastError: error instanceof Error ? error.message : 'We could not remove that item right now. Please try again.' })
         } finally {
           set({ isLoading: false })
         }
       },
 
-      clearCart: () => set({ items: [], cartId: null, checkoutUrl: null }),
+      clearCart: () => set({ items: [], cartId: null, checkoutUrl: null, lastError: null }),
       getCheckoutUrl: () => get().checkoutUrl,
 
       syncCart: async () => {
@@ -271,7 +282,7 @@ export const useCartStore = create<CartStore>()(
           const cart = data?.data?.cart
           if (!cart || cart.totalQuantity === 0) clearCart()
         } catch (error) {
-          console.error('Failed to sync cart with Shopify:', error)
+          set({ lastError: error instanceof Error ? error.message : 'We could not sync your cart with Shopify.' })
         } finally {
           set({ isSyncing: false })
         }

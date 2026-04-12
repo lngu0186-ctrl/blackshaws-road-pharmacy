@@ -84,7 +84,7 @@ export type Product = ShopifyProduct
 
 export async function storefrontApiRequest(query: string, variables: Record<string, unknown> = {}) {
   if (!SHOPIFY_STOREFRONT_TOKEN) {
-    throw new Error('Missing Shopify Storefront token. Set VITE_SHOPIFY_STOREFRONT_TOKEN.')
+    throw new Error('Shopify storefront is not configured. Add VITE_SHOPIFY_STOREFRONT_TOKEN to your environment.')
   }
 
   const response = await fetch(SHOPIFY_STOREFRONT_URL, {
@@ -97,8 +97,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
   })
 
   if (response.status === 402) {
-    console.error('Shopify: Payment required — your store needs an active billing plan.')
-    return null
+    throw new Error('Shopify storefront is unavailable because the store billing setup needs attention.')
   }
 
   if (!response.ok) {

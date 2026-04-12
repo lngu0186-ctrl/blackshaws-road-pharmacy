@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Phone, MapPin, MessageSquare, Send, Loader2 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { BrandSignature } from '../components/layout/BrandSignature'
@@ -22,6 +22,11 @@ export default function Contact() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
+  const supabaseConfigured = useMemo(
+    () => Boolean(import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY),
+    [],
+  )
+
   usePageSeo({
     title: 'Contact | Blackshaws Road Pharmacy',
     description: 'Contact Blackshaws Road Pharmacy in Altona North. Call (03) 9391 3257, visit us at 310A Blackshaws Road, or send us an online enquiry. Open 7 days with extended weekday hours.',
@@ -32,6 +37,12 @@ export default function Contact() {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitError(null)
+
+    if (!supabaseConfigured) {
+      setSubmitError('Contact form is not configured yet. Please call the pharmacy on (03) 9391 3257 or email info@blackshawsroadpharmacy.com.au.')
+      setIsSubmitting(false)
+      return
+    }
 
     try {
       const { data, error } = await supabase.functions.invoke('send-contact', {
@@ -52,7 +63,6 @@ export default function Contact() {
       setSubmitted(true)
       setFormData({ name: '', phone: '', email: '', message: '' })
     } catch (err) {
-      console.error('Contact form error:', err)
       setSubmitError(err instanceof Error ? err.message : 'Failed to send message. Please try again or call us directly.')
     } finally {
       setIsSubmitting(false)
@@ -123,6 +133,11 @@ export default function Contact() {
                     <label htmlFor="contact-message" className="mb-2 block text-sm font-semibold text-[var(--color-navy)]">Message / enquiry *</label>
                     <textarea id="contact-message" className="form-input resize-none" placeholder="How can we help?" required aria-required="true" rows={4} value={formData.message} onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))} />
                   </div>
+                  {!supabaseConfigured ? (
+                    <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+                      Online contact sending is not configured yet. Please call (03) 9391 3257 or email info@blackshawsroadpharmacy.com.au.
+                    </div>
+                  ) : null}
                   <div className="rounded-2xl bg-[var(--color-surface-alt)] p-4 text-sm text-[var(--color-text-muted)]">
                     <p className="font-semibold text-[var(--color-navy)]">What happens next</p>
                     <p className="mt-2">A member of the pharmacy team will review your enquiry and aim to get back to you within 1 business day. Your information is handled confidentially and only used to respond to your request.</p>

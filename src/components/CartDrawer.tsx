@@ -5,7 +5,7 @@ import { useCartStore } from '../stores/cartStore'
 import { Button } from './ui/Button'
 
 export default function CartDrawer() {
-  const { items, isLoading, isSyncing, isCartOpen, updateQuantity, removeItem, getCheckoutUrl, closeCart, syncCart } = useCartStore()
+  const { items, isLoading, isSyncing, isCartOpen, lastError, clearError, updateQuantity, removeItem, getCheckoutUrl, closeCart, syncCart } = useCartStore()
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
   const totalPrice = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0)
@@ -14,12 +14,13 @@ export default function CartDrawer() {
   useEffect(() => {
     if (isCartOpen) {
       document.body.style.overflow = 'hidden'
+      clearError()
       syncCart()
     } else {
       document.body.style.overflow = 'auto'
     }
     return () => { document.body.style.overflow = 'auto' }
-  }, [isCartOpen, syncCart])
+  }, [isCartOpen, clearError, syncCart])
 
   if (!isCartOpen) return null
 
@@ -54,6 +55,11 @@ export default function CartDrawer() {
 
         {/* Cart Items */}
         <div className="flex-1 overflow-y-auto px-6 py-4">
+          {lastError ? (
+            <div className="mb-4 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+              {lastError}
+            </div>
+          ) : null}
           {items.length === 0 ? (
             <div className="text-center py-12">
               <ShoppingBag className="w-16 h-16 mx-auto mb-4 opacity-30" style={{ color: 'var(--color-gray-300)' }} />
