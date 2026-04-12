@@ -1,9 +1,8 @@
-'use client'
-
 import { useRef } from 'react'
 import { Users, Award, HeartHandshake, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Logo } from '../layout/Logo'
+import { usePageSeo } from '../../lib/seo'
 
 const teamHighlights = [
   {
@@ -24,6 +23,14 @@ const teamHighlights = [
 ]
 
 export function AboutSection() {
+  usePageSeo({
+    title: 'About Blackshaws Road Pharmacy | Trusted Local Pharmacy Since 1968',
+    description: 'Learn about Blackshaws Road Pharmacy, serving Altona North since 1968 with AHPRA-registered pharmacists, trusted local care, and Independent Pharmacies Australia support.',
+    canonicalPath: '/#about',
+    ogTitle: 'About Blackshaws Road Pharmacy',
+    ogDescription: 'Trusted local pharmacy care in Altona North since 1968.',
+  })
+
   const introRef = useRef(null)
   const isIntroInView = true
 
@@ -50,7 +57,7 @@ export function AboutSection() {
             Your local pharmacy, backed by national strength
           </h2>
           <p className="text-lg text-[var(--color-gray-600)] leading-relaxed mb-5">
-            Since 1968, Blackshaws Road Pharmacy has been a trusted part of the Altona North community. As a proud member of Independent Pharmacies Australia (IPA), we combine the personaltouch of an independent local pharmacy with the resources and clinical rigour of Australia's largest independent pharmacy network.
+            Since 1968, Blackshaws Road Pharmacy has been a trusted part of the Altona North community. As a proud member of Independent Pharmacies Australia (IPA), we combine the personal touch of an independent local pharmacy with the resources and clinical rigour of one of Australia&apos;s leading independent pharmacy networks.
           </p>
           <p className="text-lg text-[var(--color-gray-600)] leading-relaxed">
             Whether it&apos;s everyday healthcare, prescription management, vaccinations, or our Chemist Care Now service, you&apos;ll always find expert advice and genuine care from people who know your name.

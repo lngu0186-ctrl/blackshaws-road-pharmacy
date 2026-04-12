@@ -33,11 +33,11 @@ import { usePageSeo } from './lib/seo'
 
 function HomePage() {
   usePageSeo({
-    title: 'Blackshaws Road Pharmacy | Your Trusted Local Health Partner',
-    description: 'Blackshaws Road Pharmacy in Altona North offers prescriptions, vaccinations, pharmacist advice, medication reviews, health services, and online shopping with trusted local support.',
+    title: 'Blackshaws Road Pharmacy | Your Trusted Local Health Partner in Altona North',
+    description: 'Shop online or visit Blackshaws Road Pharmacy in Altona North for prescriptions, vaccinations, pharmacist advice, medication reviews, and trusted local health support.',
     canonicalPath: '/',
-    ogTitle: 'Blackshaws Road Pharmacy',
-    ogDescription: 'Your trusted local health partner, shop online or visit us in-store in Altona North.',
+    ogTitle: 'Blackshaws Road Pharmacy | Altona North Pharmacy',
+    ogDescription: 'Your trusted local health partner in Altona North, shop online or visit us in-store.',
     ogImage: '/hero-pharmacy.webp',
   })
 

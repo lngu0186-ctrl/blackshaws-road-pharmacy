@@ -4,13 +4,13 @@ import { Logo } from '../layout/Logo'
 const pillars = [
   {
     icon: Shield,
-    title: 'AHPRA-registered pharmacists',
-    description: 'Clinical advice and dispensing decisions stay grounded in registered professional oversight.',
+    title: 'Australian registered pharmacy',
+    description: 'Clinical advice and dispensing decisions stay grounded in registered professional oversight and Australian pharmacy standards.',
   },
   {
     icon: BadgeCheck,
-    title: 'Independent community pharmacy care',
-    description: 'Long-standing local care with the strength of Alliance Pharmacy support and training.',
+    title: 'Qualified pharmacists',
+    description: 'AHPRA-registered pharmacists providing practical medicine advice, review, and follow-up care.',
   },
   {
     icon: HeartHandshake,
@@ -19,8 +19,8 @@ const pillars = [
   },
   {
     icon: Award,
-    title: 'Trusted by local families since 1968',
-    description: 'A premium but approachable pharmacy experience shaped by decades of community trust.',
+    title: 'Secure payments and trusted supply',
+    description: 'Shop online with secure checkout and the reassurance of a real local pharmacy behind every order.',
   },
 ]
 

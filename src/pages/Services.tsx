@@ -5,6 +5,7 @@ import { serviceCategories, getServicesByCategory, getCategories } from '../data
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 import './Services.css'
+import { usePageSeo } from '../lib/seo'
 
 const iconMap: Record<string, React.ElementType> = {
   activity: ActivityIcon,
@@ -25,9 +26,16 @@ const iconMap: Record<string, React.ElementType> = {
 }
 
 export default function Services() {
+  usePageSeo({
+    title: 'Health Services | Blackshaws Road Pharmacy Altona North',
+    description: 'Explore pharmacist-led health services at Blackshaws Road Pharmacy, including vaccinations, medication reviews, minor ailment support, and preventative health care in Altona North.',
+    canonicalPath: '/health-services',
+    ogTitle: 'Health Services | Blackshaws Road Pharmacy',
+    ogDescription: 'Vaccinations, medication reviews, minor ailment care, and pharmacist-led support in Altona North.',
+  })
+
   useEffect(() => {
     window.scrollTo(0, 0)
-    document.title = 'Health Services | Blackshaws Road Pharmacy'
   }, [])
 
   const categories = getCategories()

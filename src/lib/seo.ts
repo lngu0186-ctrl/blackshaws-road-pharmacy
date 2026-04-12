@@ -64,6 +64,27 @@ export function applySeo({
   })
   ogImageMeta.setAttribute('content', ogImage)
 
+  const twitterTitleMeta = ensureMeta('meta[name="twitter:title"]', () => {
+    const node = document.createElement('meta')
+    node.setAttribute('name', 'twitter:title')
+    return node
+  })
+  twitterTitleMeta.setAttribute('content', ogTitle || title)
+
+  const twitterDescriptionMeta = ensureMeta('meta[name="twitter:description"]', () => {
+    const node = document.createElement('meta')
+    node.setAttribute('name', 'twitter:description')
+    return node
+  })
+  twitterDescriptionMeta.setAttribute('content', ogDescription || description)
+
+  const twitterImageMeta = ensureMeta('meta[name="twitter:image"]', () => {
+    const node = document.createElement('meta')
+    node.setAttribute('name', 'twitter:image')
+    return node
+  })
+  twitterImageMeta.setAttribute('content', ogImage)
+
   if (canonicalPath) {
     const canonical = ensureMeta('link[rel="canonical"]', () => {
       const node = document.createElement('link')
