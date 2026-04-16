@@ -3,7 +3,7 @@
 // Icon 1: Contraceptive pill blister pack
 export function IconContraceptive({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> aria-hidden="true" focusable="false"
       <rect x="14" y="10" width="36" height="44" rx="3" />
       <circle cx="24" cy="20" r="3" />
       <circle cx="32" cy="20" r="3" />
@@ -21,7 +21,7 @@ export function IconContraceptive({ className }: { className?: string }) {
 // Icon 2: UTI – kidney/bladder outline with droplet
 export function IconUTI({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> aria-hidden="true" focusable="false"
       {/* Bladder shape */}
       <path d="M22 18c-6 2-10 8-10 16 0 10 8 18 20 18s20-8 20-18c0-8-4-14-10-16" />
       {/* Ureters */}
@@ -36,7 +36,7 @@ export function IconUTI({ className }: { className?: string }) {
 // Icon 3: Shingles – skin with rash/blisters
 export function IconShingles({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> aria-hidden="true" focusable="false"
       {/* Body/torso outline */}
       <path d="M16 14h32v36a4 4 0 01-4 4H20a4 4 0 01-4-4V14z" />
       <line x1="16" y1="14" x2="48" y2="14" />
@@ -55,7 +55,7 @@ export function IconShingles({ className }: { className?: string }) {
 // Icon 4: Psoriasis – arm with patchy skin markings
 export function IconPsoriasis({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> aria-hidden="true" focusable="false"
       {/* Tube of cream */}
       <rect x="18" y="24" width="28" height="22" rx="3" />
       <path d="M22 24V18a2 2 0 012-2h16a2 2 0 012 2v6" />
@@ -73,7 +73,7 @@ export function IconPsoriasis({ className }: { className?: string }) {
 // Icon 5: Travel vaccinations – syringe + plane
 export function IconVaccinations({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> aria-hidden="true" focusable="false"
       {/* Syringe */}
       <path d="M14 50l6-6" />
       <path d="M20 44l18-18" strokeWidth="2.5" />
@@ -94,7 +94,7 @@ export function IconVaccinations({ className }: { className?: string }) {
 // Icon 6: Impetigo – child face with sores
 export function IconImpetigo({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> aria-hidden="true" focusable="false"
       {/* Child face */}
       <circle cx="32" cy="30" r="16" />
       {/* Hair */}
