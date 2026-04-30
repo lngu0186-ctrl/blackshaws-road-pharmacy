@@ -10,7 +10,6 @@ export type PharmacyCategory = {
 }
 
 export const PHARMACY_CATEGORIES: PharmacyCategory[] = [
-  // Primary categories
   {
     id: 'medicines',
     name: 'Medicines & Treatments',
@@ -19,46 +18,18 @@ export const PHARMACY_CATEGORIES: PharmacyCategory[] = [
     icon: 'pill',
   },
   {
-    id: 'vitamins-supplements',
-    name: 'Vitamins & Supplements',
-    slug: 'vitamins-supplements',
-    description: 'Nutritional supplements, vitamins, minerals, and wellness products',
+    id: 'vitamins',
+    name: 'Vitamins',
+    slug: 'vitamins',
+    description: 'Daily multivitamins and individual vitamin supplements',
     icon: 'activity',
   },
   {
-    id: 'baby-child',
-    name: 'Baby & Children',
-    slug: 'baby-child',
-    description: 'Products for babies and children including formula, nappies, and childcare essentials',
-    icon: 'baby',
-  },
-  {
-    id: 'skincare',
-    name: 'Skin Care',
-    slug: 'skincare',
-    description: 'Skincare products, cleansers, moisturisers, treatments, and sun protection',
-    icon: 'sparkles',
-  },
-  {
-    id: 'beauty',
-    name: 'Beauty & Cosmetics',
-    slug: 'beauty',
-    description: 'Makeup, cosmetics, and beauty tools',
-    icon: 'heart',
-  },
-  {
-    id: 'personal-care',
-    name: 'Personal Care',
-    slug: 'personal-care',
-    description: 'Oral care, hair care, body care, and hygiene products',
-    icon: 'user',
-  },
-  {
-    id: 'first-aid',
-    name: 'First Aid',
-    slug: 'first-aid',
-    description: 'Bandages, antiseptics, wound care, and emergency supplies',
-    icon: 'bandage',
+    id: 'practitioner-only',
+    name: 'Practitioner Only Supplements',
+    slug: 'practitioner-only',
+    description: 'High-strength supplements available with pharmacist guidance',
+    icon: 'stethoscope',
   },
   {
     id: 'health-devices',
@@ -66,62 +37,6 @@ export const PHARMACY_CATEGORIES: PharmacyCategory[] = [
     slug: 'health-devices',
     description: 'Medical devices, monitors, thermometers, and home health equipment',
     icon: 'heart-pulse',
-  },
-  {
-    id: 'weight-management',
-    name: 'Weight Management',
-    slug: 'weight-management',
-    description: 'Meal replacements, protein powders, and weight loss supplements',
-    icon: 'scale',
-  },
-  {
-    id: 'dental-care',
-    name: 'Dental Care',
-    slug: 'dental-care',
-    description: 'Toothpaste, toothbrushes, floss, and oral hygiene products',
-    icon: 'tooth',
-  },
-  {
-    id: 'hair-care',
-    name: 'Hair Care',
-    slug: 'hair-care',
-    description: 'Shampoo, conditioner, styling products, and hair treatments',
-    icon: 'wind',
-  },
-  {
-    id: 'mens-health',
-    name: "Men's Health",
-    slug: 'mens-health',
-    description: 'Prostate health, testosterone support, and men-specific wellness products',
-    icon: 'shield',
-  },
-  {
-    id: 'womens-health',
-    name: "Women's Health",
-    slug: 'womens-health',
-    description: 'Feminine hygiene, pregnancy, menopause, and women-specific supplements',
-    icon: 'heart',
-  },
-  {
-    id: 'sports-nutrition',
-    name: 'Sports & Nutrition',
-    slug: 'sports-nutrition',
-    description: 'Protein powders, energy supplements, and sports recovery products',
-    icon: 'zap',
-  },
-  {
-    id: 'home-health',
-    name: 'Home Health',
-    slug: 'home-health',
-    description: 'Home medical supplies, mobility aids, and health monitoring devices',
-    icon: 'home',
-  },
-  {
-    id: 'pharmacy-essentials',
-    name: 'Pharmacy Essentials',
-    slug: 'pharmacy-essentials',
-    description: 'General health and wellness products that belong in every household',
-    icon: 'stethoscope',
   },
 ]
 
