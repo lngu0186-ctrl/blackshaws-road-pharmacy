@@ -30,6 +30,7 @@ const ServiceDetail = lazy(() => import('./pages/ServiceDetail'))
 const ChemistCareNow = lazy(() => import('./pages/ChemistCareNow'))
 const Learn = lazy(() => import('./pages/Learn'))
 const LearnArticle = lazy(() => import('./pages/LearnArticle'))
+const SearchPage = lazy(() => import('./pages/Search'))
 
 function LoadingFallback() {
   return (
@@ -89,6 +90,7 @@ function App() {
               <Route path="/chemist-care-now" element={<ChemistCareNow />} />
               <Route path="/learn" element={<Learn />} />
               <Route path="/learn/:slug" element={<LearnArticle />} />
+              <Route path="/search" element={<SearchPage />} />
               <Route path="/" element={
                 <>
                   <HeroSection />
