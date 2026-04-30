@@ -84,7 +84,10 @@ export const CATEGORY_RULES: Record<string, CategoryRule> = {
  * Categorize a product based on its metadata
  * Returns an array of category IDs that best describe the product
  */
+const categorizeCache: WeakMap<Product, string[]> = new WeakMap()
 export function categorizeProduct(product: Product): string[] {
+  const cached = categorizeCache.get(product)
+  if (cached) return cached
   const categories: Set<string> = new Set()
 
   // Helper to match keywords in text
