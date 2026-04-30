@@ -22,11 +22,18 @@ function stripHtml(html: string): string {
   return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
 }
 
+type SortOption = 'relevance' | 'newest' | 'price-asc' | 'price-desc'
+const VALID_SORTS: SortOption[] = ['relevance', 'newest', 'price-asc', 'price-desc']
+
 export default function SearchPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const initial = searchParams.get('q') || ''
+  const initialSort = (VALID_SORTS.includes(searchParams.get('sort') as SortOption)
+    ? (searchParams.get('sort') as SortOption)
+    : 'relevance')
   const [query, setQuery] = useState(initial)
   const [committed, setCommitted] = useState(initial)
+  const [sort, setSort] = useState<SortOption>(initialSort)
   const cachedProducts = useProductStore((s) => s.products)
   const setGlobalProducts = useProductStore((s) => s.setProducts)
   const [products, setProducts] = useState<Product[]>(cachedProducts)
@@ -69,11 +76,15 @@ export default function SearchPage() {
 
   const articleResults = useMemo(() => {
     if (!q) return []
-    return learnArticles.filter((a) => {
+    const filtered = learnArticles.filter((a) => {
       const haystack = `${a.title} ${a.excerpt} ${a.category} ${stripHtml(a.content)}`.toLowerCase()
       return haystack.includes(q)
     })
-  }, [q])
+    if (sort === 'newest') {
+      return [...filtered].sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+    }
+    return filtered
+  }, [q, sort])
 
   const serviceResults = useMemo(() => {
     if (!q) return []
@@ -82,18 +93,39 @@ export default function SearchPage() {
 
   const productResults = useMemo(() => {
     if (!q) return []
-    return products.filter((p) =>
+    const filtered = products.filter((p) =>
       `${p.title} ${p.description} ${p.vendor} ${p.productType} ${p.tags.join(' ')}`.toLowerCase().includes(q)
-    ).slice(0, 12)
-  }, [products, q])
+    )
+    const sorted = [...filtered]
+    if (sort === 'price-asc') {
+      sorted.sort((a, b) => parseFloat(a.priceRange.minVariantPrice.amount) - parseFloat(b.priceRange.minVariantPrice.amount))
+    } else if (sort === 'price-desc') {
+      sorted.sort((a, b) => parseFloat(b.priceRange.minVariantPrice.amount) - parseFloat(a.priceRange.minVariantPrice.amount))
+    } else if (sort === 'newest') {
+      sorted.sort((a, b) => (b.publishedAt || '').localeCompare(a.publishedAt || ''))
+    }
+    return sorted.slice(0, 12)
+  }, [products, q, sort])
 
   const totalResults = articleResults.length + serviceResults.length + productResults.length
+
+  const updateUrl = (nextQ: string, nextSort: SortOption) => {
+    const params: Record<string, string> = {}
+    if (nextQ) params.q = nextQ
+    if (nextSort !== 'relevance') params.sort = nextSort
+    setSearchParams(params, { replace: true })
+  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     const trimmed = query.trim()
     setCommitted(trimmed)
-    setSearchParams(trimmed ? { q: trimmed } : {}, { replace: true })
+    updateUrl(trimmed, sort)
+  }
+
+  const handleSortChange = (next: SortOption) => {
+    setSort(next)
+    updateUrl(committed, next)
   }
 
   return (
@@ -130,12 +162,28 @@ export default function SearchPage() {
             <p className="text-[var(--color-text-muted)]">Type a term above to begin.</p>
           ) : (
             <>
-              <p className="mb-8 text-sm text-[var(--color-text-muted)]">
-                {loadingProducts && productResults.length === 0
-                  ? 'Searching…'
-                  : `${totalResults} result${totalResults === 1 ? '' : 's'} for `}
-                {!loadingProducts || productResults.length > 0 ? <strong className="text-[var(--color-navy)]">"{committed}"</strong> : null}
-              </p>
+              <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+                <p className="text-sm text-[var(--color-text-muted)]">
+                  {loadingProducts && productResults.length === 0
+                    ? 'Searching…'
+                    : `${totalResults} result${totalResults === 1 ? '' : 's'} for `}
+                  {!loadingProducts || productResults.length > 0 ? <strong className="text-[var(--color-navy)]">"{committed}"</strong> : null}
+                </p>
+                <label className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+                  Sort by
+                  <select
+                    value={sort}
+                    onChange={(e) => handleSortChange(e.target.value as SortOption)}
+                    aria-label="Sort results"
+                    className="rounded-full border border-[var(--color-border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--color-navy)] focus:outline-none focus:ring-2 focus:ring-[var(--color-red)]"
+                  >
+                    <option value="relevance">Relevance</option>
+                    <option value="newest">Newest articles</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                  </select>
+                </label>
+              </div>
 
               {totalResults === 0 && !loadingProducts && (
                 <div className="rounded-[28px] border border-[var(--color-border)] bg-white p-8 text-center">
