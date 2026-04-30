@@ -162,12 +162,28 @@ export default function SearchPage() {
             <p className="text-[var(--color-text-muted)]">Type a term above to begin.</p>
           ) : (
             <>
-              <p className="mb-8 text-sm text-[var(--color-text-muted)]">
-                {loadingProducts && productResults.length === 0
-                  ? 'Searching…'
-                  : `${totalResults} result${totalResults === 1 ? '' : 's'} for `}
-                {!loadingProducts || productResults.length > 0 ? <strong className="text-[var(--color-navy)]">"{committed}"</strong> : null}
-              </p>
+              <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+                <p className="text-sm text-[var(--color-text-muted)]">
+                  {loadingProducts && productResults.length === 0
+                    ? 'Searching…'
+                    : `${totalResults} result${totalResults === 1 ? '' : 's'} for `}
+                  {!loadingProducts || productResults.length > 0 ? <strong className="text-[var(--color-navy)]">"{committed}"</strong> : null}
+                </p>
+                <label className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+                  Sort by
+                  <select
+                    value={sort}
+                    onChange={(e) => handleSortChange(e.target.value as SortOption)}
+                    aria-label="Sort results"
+                    className="rounded-full border border-[var(--color-border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--color-navy)] focus:outline-none focus:ring-2 focus:ring-[var(--color-red)]"
+                  >
+                    <option value="relevance">Relevance</option>
+                    <option value="newest">Newest articles</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                  </select>
+                </label>
+              </div>
 
               {totalResults === 0 && !loadingProducts && (
                 <div className="rounded-[28px] border border-[var(--color-border)] bg-white p-8 text-center">
