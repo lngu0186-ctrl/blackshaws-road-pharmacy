@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { ShoppingBag, Phone, ChevronDown, Clock3, MapPin, ArrowRight, Shield, FileText, FlaskConical, MessageSquare, Menu } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { ShoppingBag, Phone, ChevronDown, Clock3, MapPin, ArrowRight, Shield, FileText, FlaskConical, MessageSquare, Menu, Search } from 'lucide-react'
 import { Logo } from './Logo'
 import { MobileDrawer } from './MobileDrawer'
 import { useCartStore } from '../../stores/cartStore'
@@ -66,14 +66,25 @@ function MobileNavItem({ href, isAnchor, onClick, children }: { href: string; is
 
 export function Header() {
   const location = useLocation()
+  const navigate = useNavigate()
   const scrolled = useScrolled(10)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false)
   const [expandedMobileGroup, setExpandedMobileGroup] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [mobileSearchQuery, setMobileSearchQuery] = useState('')
   const cartCount = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0))
   const openCart = useCartStore((s) => s.openCart)
   const servicesButtonRef = useRef<HTMLButtonElement>(null)
   const servicesMenuRef = useRef<HTMLDivElement>(null)
+
+  const handleSearchSubmit = (e: FormEvent, q: string, closeMobile = false) => {
+    e.preventDefault()
+    const trimmed = q.trim()
+    if (!trimmed) return
+    navigate(`/search?q=${encodeURIComponent(trimmed)}`)
+    if (closeMobile) setMobileMenuOpen(false)
+  }
 
   const isHome = location.pathname === '/'
   const activeHref = useMemo(() => navLinks.find((link) => !link.isAnchor && link.href === location.pathname)?.href, [location.pathname])
