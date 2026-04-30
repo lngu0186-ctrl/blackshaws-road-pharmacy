@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { ShoppingBag, Search, X, Grid, List, SlidersHorizontal } from 'lucide-react'
 import { useCartStore } from '../stores/cartStore'
 import { useToast } from '../context/ToastContext'
-import { getAllProducts, type Product } from '../services/shopify'
+import type { Product } from '../services/shopify'
 import { getAllCategories, classifyProduct, formatPrice, getProductImageUrl, isOnSale, getSalePrice, buildCategoryIndex } from '../utils/categoryMapping'
 import { useProductStore } from '../stores/productStore'
 import { Button } from '../components/ui/Button'
@@ -14,8 +14,9 @@ import './Shop.css'
 const PRODUCTS_PER_PAGE = 48
 
 export default function Shop() {
-  const [products, setProducts] = useState<Product[]>([])
-  const [loading, setLoading] = useState(true)
+  const products = useProductStore((s) => s.products)
+  const storeLoading = useProductStore((s) => s.loading)
+  const fetchAllProducts = useProductStore((s) => s.fetchAllProducts)
   const [error, setError] = useState<string | null>(null)
   const [searchParams, setSearchParams] = useSearchParams()
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '')
@@ -28,25 +29,17 @@ export default function Shop() {
   const addItem = useCartStore((s) => s.addItem)
   const openCart = useCartStore((s) => s.openCart)
   const { showToast } = useToast()
-  const { setProducts: setGlobalProducts } = useProductStore()
+
+  // Show cached products immediately; only block on the network when we have nothing.
+  const loading = storeLoading && products.length === 0
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true)
-        const data = await getAllProducts()
-        setProducts(data)
-        setGlobalProducts(data)
-      } catch (err) {
-        console.error('Failed to fetch products:', err)
-        setError('Unable to load products. Please try again later.')
-        showToast('Failed to load products', 'error')
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchProducts()
-  }, [showToast, setGlobalProducts])
+    fetchAllProducts().catch((err) => {
+      console.error('Failed to fetch products:', err)
+      setError('Unable to load products. Please try again later.')
+      showToast('Failed to load products', 'error')
+    })
+  }, [fetchAllProducts, showToast])
 
   useEffect(() => {
     const params = new URLSearchParams()
