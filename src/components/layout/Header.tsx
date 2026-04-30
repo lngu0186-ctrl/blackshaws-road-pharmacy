@@ -358,6 +358,24 @@ export function Header() {
             <p className="mt-4 text-xs uppercase tracking-[0.25em] text-white/65">Blackshaws Road Pharmacy</p>
             <p className="mt-2 text-lg font-semibold">Trusted local care, prescriptions, services and online shopping.</p>
           </div>
+          <form
+            onSubmit={(e) => handleSearchSubmit(e, mobileSearchQuery, true)}
+            role="search"
+            className="flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-white px-3 py-2 focus-within:border-[var(--color-navy)]"
+          >
+            <Search className="h-4 w-4 text-[var(--color-navy)]" aria-hidden="true" />
+            <input
+              type="search"
+              value={mobileSearchQuery}
+              onChange={(e) => setMobileSearchQuery(e.target.value)}
+              placeholder="Search the site…"
+              aria-label="Search the site"
+              className="flex-1 bg-transparent text-sm text-[var(--color-navy)] placeholder:text-[var(--color-text-muted)] focus:outline-none"
+            />
+            <button type="submit" className="rounded-full bg-[var(--color-red)] px-3 py-1 text-xs font-semibold text-white">
+              Go
+            </button>
+          </form>
           <div className="space-y-1">
             {navLinks.map((link) => (
               <MobileNavItem key={link.href} href={link.href} isAnchor={link.isAnchor} onClick={() => setMobileMenuOpen(false)}>
