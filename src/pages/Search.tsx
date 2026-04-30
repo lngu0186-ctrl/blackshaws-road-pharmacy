@@ -76,11 +76,15 @@ export default function SearchPage() {
 
   const articleResults = useMemo(() => {
     if (!q) return []
-    return learnArticles.filter((a) => {
+    const filtered = learnArticles.filter((a) => {
       const haystack = `${a.title} ${a.excerpt} ${a.category} ${stripHtml(a.content)}`.toLowerCase()
       return haystack.includes(q)
     })
-  }, [q])
+    if (sort === 'newest') {
+      return [...filtered].sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+    }
+    return filtered
+  }, [q, sort])
 
   const serviceResults = useMemo(() => {
     if (!q) return []
@@ -89,18 +93,39 @@ export default function SearchPage() {
 
   const productResults = useMemo(() => {
     if (!q) return []
-    return products.filter((p) =>
+    const filtered = products.filter((p) =>
       `${p.title} ${p.description} ${p.vendor} ${p.productType} ${p.tags.join(' ')}`.toLowerCase().includes(q)
-    ).slice(0, 12)
-  }, [products, q])
+    )
+    const sorted = [...filtered]
+    if (sort === 'price-asc') {
+      sorted.sort((a, b) => parseFloat(a.priceRange.minVariantPrice.amount) - parseFloat(b.priceRange.minVariantPrice.amount))
+    } else if (sort === 'price-desc') {
+      sorted.sort((a, b) => parseFloat(b.priceRange.minVariantPrice.amount) - parseFloat(a.priceRange.minVariantPrice.amount))
+    } else if (sort === 'newest') {
+      sorted.sort((a, b) => (b.publishedAt || '').localeCompare(a.publishedAt || ''))
+    }
+    return sorted.slice(0, 12)
+  }, [products, q, sort])
 
   const totalResults = articleResults.length + serviceResults.length + productResults.length
+
+  const updateUrl = (nextQ: string, nextSort: SortOption) => {
+    const params: Record<string, string> = {}
+    if (nextQ) params.q = nextQ
+    if (nextSort !== 'relevance') params.sort = nextSort
+    setSearchParams(params, { replace: true })
+  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     const trimmed = query.trim()
     setCommitted(trimmed)
-    setSearchParams(trimmed ? { q: trimmed } : {}, { replace: true })
+    updateUrl(trimmed, sort)
+  }
+
+  const handleSortChange = (next: SortOption) => {
+    setSort(next)
+    updateUrl(committed, next)
   }
 
   return (
