@@ -127,13 +127,12 @@ const GET_ALL_PRODUCTS = `
           handle
           title
           description
-          descriptionHtml
           productType
           vendor
           tags
           publishedAt
           updatedAt
-          images(first: 10) {
+          images(first: 1) {
             edges {
               node {
                 url
@@ -143,7 +142,7 @@ const GET_ALL_PRODUCTS = `
               }
             }
           }
-          variants(first: 100) {
+          variants(first: 5) {
             edges {
               node {
                 id
@@ -162,12 +161,6 @@ const GET_ALL_PRODUCTS = `
                   name
                   value
                 }
-                image {
-                  url
-                  altText
-                  width
-                  height
-                }
               }
             }
           }
@@ -181,7 +174,7 @@ const GET_ALL_PRODUCTS = `
               currencyCode
             }
           }
-          collections(first: 10) {
+          collections(first: 5) {
             edges {
               node {
                 id
