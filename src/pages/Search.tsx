@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { Search as SearchIcon, ArrowRight, BookOpen, Stethoscope, ShoppingBag } from 'lucide-react'
 import { learnArticles } from '../data/learnArticles'
 import { healthServiceGroups } from '../data/healthServicesNav'
-import type { Product } from '../services/shopify'
+
 import { useProductStore } from '../stores/productStore'
 import { formatPrice, getProductImageUrl } from '../utils/categoryMapping'
 import { usePageSeo } from '../lib/seo'
