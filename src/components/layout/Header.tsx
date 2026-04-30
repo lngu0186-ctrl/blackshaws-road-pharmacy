@@ -318,6 +318,24 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2 md:gap-3">
+            <form
+              onSubmit={(e) => handleSearchSubmit(e, searchQuery)}
+              role="search"
+              className="hidden lg:flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-white px-3 py-1.5 focus-within:border-[var(--color-navy)] focus-within:ring-2 focus-within:ring-[var(--color-navy)]/20"
+            >
+              <Search className="h-4 w-4 text-[var(--color-navy)]" aria-hidden="true" />
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search…"
+                aria-label="Search the site"
+                className="w-32 bg-transparent text-sm text-[var(--color-navy)] placeholder:text-[var(--color-text-muted)] focus:outline-none xl:w-44"
+              />
+            </form>
+            <Link to="/search" className="icon-btn lg:hidden" aria-label="Search">
+              <Search className="h-5 w-5" />
+            </Link>
             <a href="tel:+61393913257" className="hidden rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-semibold text-[var(--color-navy)] transition-colors hover:bg-[var(--color-navy-soft)] md:inline-flex">
               Call the pharmacy
             </a>
