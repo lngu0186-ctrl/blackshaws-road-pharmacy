@@ -36,7 +36,13 @@ function matchesAnyKeyword(product: ShopifyProduct, keywords: string[]): boolean
 }
 
 // Classify product into category paths (e.g., "vitamins-minerals/multivitamins")
+// Cached per product reference to avoid recomputing on every render.
+const classifyCache: WeakMap<ShopifyProduct, string[]> = new WeakMap()
+
 export function classifyProduct(product: ShopifyProduct): string[] {
+  const cached = classifyCache.get(product)
+  if (cached) return cached
+
   const matches = new Set<string>()
 
   for (const cat of CATEGORIES) {
@@ -53,7 +59,9 @@ export function classifyProduct(product: ShopifyProduct): string[] {
     }
   }
 
-  return Array.from(matches)
+  const result = Array.from(matches)
+  classifyCache.set(product, result)
+  return result
 }
 
 // Build index: path -> { count, products }
