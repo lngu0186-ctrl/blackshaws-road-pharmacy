@@ -53,10 +53,6 @@ export function classifyProduct(product: ShopifyProduct): string[] {
     }
   }
 
-  if (matches.size === 0) {
-    matches.add('pharmacy-essentials')
-  }
-
   return Array.from(matches)
 }
 
