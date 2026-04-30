@@ -136,7 +136,9 @@ export function categorizeProduct(product: Product): string[] {
     }
   }
 
-  return Array.from(categories)
+  const result = Array.from(categories)
+  categorizeCache.set(product, result)
+  return result
 }
 
 /**
