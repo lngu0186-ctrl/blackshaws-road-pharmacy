@@ -63,7 +63,7 @@ export default function Shop() {
   }, [searchParams])
 
   const filteredProducts = useMemo(() => {
-    let result = [...products]
+    let result = products.filter((p) => classifyProduct(p).length > 0)
     if (selectedCategoryPath) result = result.filter((p) => classifyProduct(p).includes(selectedCategoryPath))
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase()
