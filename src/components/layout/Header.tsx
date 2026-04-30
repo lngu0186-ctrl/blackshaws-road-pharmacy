@@ -89,6 +89,25 @@ export function Header() {
   const isHome = location.pathname === '/'
   const activeHref = useMemo(() => navLinks.find((link) => !link.isAnchor && link.href === location.pathname)?.href, [location.pathname])
 
+  // Warm the Shopify product cache in the background so /shop and /search feel instant.
+  useEffect(() => {
+    const ric: typeof window.requestIdleCallback | undefined =
+      typeof window !== 'undefined' ? window.requestIdleCallback : undefined
+    const run = () => {
+      import('../../stores/productStore')
+        .then(({ useProductStore }) => useProductStore.getState().fetchAllProducts())
+        .catch(() => {})
+    }
+    const handle = ric ? ric(run, { timeout: 4000 }) : window.setTimeout(run, 1500)
+    return () => {
+      if (ric && typeof window.cancelIdleCallback === 'function') {
+        window.cancelIdleCallback(handle as number)
+      } else {
+        window.clearTimeout(handle as number)
+      }
+    }
+  }, [])
+
   useEffect(() => {
     if (!servicesDropdownOpen) return
 

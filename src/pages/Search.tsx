@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { Search as SearchIcon, ArrowRight, BookOpen, Stethoscope, ShoppingBag } from 'lucide-react'
 import { learnArticles } from '../data/learnArticles'
 import { healthServiceGroups } from '../data/healthServicesNav'
-import { getAllProducts, type Product } from '../services/shopify'
+
 import { useProductStore } from '../stores/productStore'
 import { formatPrice, getProductImageUrl } from '../utils/categoryMapping'
 import { usePageSeo } from '../lib/seo'
@@ -34,10 +34,10 @@ export default function SearchPage() {
   const [query, setQuery] = useState(initial)
   const [committed, setCommitted] = useState(initial)
   const [sort, setSort] = useState<SortOption>(initialSort)
-  const cachedProducts = useProductStore((s) => s.products)
-  const setGlobalProducts = useProductStore((s) => s.setProducts)
-  const [products, setProducts] = useState<Product[]>(cachedProducts)
-  const [loadingProducts, setLoadingProducts] = useState(cachedProducts.length === 0)
+  const products = useProductStore((s) => s.products)
+  const fetchAllProducts = useProductStore((s) => s.fetchAllProducts)
+  const storeLoading = useProductStore((s) => s.loading)
+  const loadingProducts = storeLoading && products.length === 0
 
   usePageSeo({
     title: committed ? `Search: ${committed} | Blackshaws Road Pharmacy` : 'Search | Blackshaws Road Pharmacy',
@@ -51,26 +51,8 @@ export default function SearchPage() {
   }, [initial])
 
   useEffect(() => {
-    if (cachedProducts.length > 0) {
-      setProducts(cachedProducts)
-      setLoadingProducts(false)
-      return
-    }
-    let active = true
-    getAllProducts()
-      .then((data) => {
-        if (!active) return
-        setProducts(data)
-        setGlobalProducts(data)
-      })
-      .catch((err) => console.error('Search: product load failed', err))
-      .finally(() => {
-        if (active) setLoadingProducts(false)
-      })
-    return () => {
-      active = false
-    }
-  }, [cachedProducts, setGlobalProducts])
+    fetchAllProducts().catch((err) => console.error('Search: product load failed', err))
+  }, [fetchAllProducts])
 
   const q = committed.trim().toLowerCase()
 
