@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { ShoppingBag, Phone, ChevronDown, Clock3, MapPin, ArrowRight, Shield, FileText, FlaskConical, MessageSquare, Menu } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { ShoppingBag, Phone, ChevronDown, Clock3, MapPin, ArrowRight, Shield, FileText, FlaskConical, MessageSquare, Menu, Search } from 'lucide-react'
 import { Logo } from './Logo'
 import { MobileDrawer } from './MobileDrawer'
 import { useCartStore } from '../../stores/cartStore'
@@ -66,14 +66,25 @@ function MobileNavItem({ href, isAnchor, onClick, children }: { href: string; is
 
 export function Header() {
   const location = useLocation()
+  const navigate = useNavigate()
   const scrolled = useScrolled(10)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false)
   const [expandedMobileGroup, setExpandedMobileGroup] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [mobileSearchQuery, setMobileSearchQuery] = useState('')
   const cartCount = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0))
   const openCart = useCartStore((s) => s.openCart)
   const servicesButtonRef = useRef<HTMLButtonElement>(null)
   const servicesMenuRef = useRef<HTMLDivElement>(null)
+
+  const handleSearchSubmit = (e: FormEvent, q: string, closeMobile = false) => {
+    e.preventDefault()
+    const trimmed = q.trim()
+    if (!trimmed) return
+    navigate(`/search?q=${encodeURIComponent(trimmed)}`)
+    if (closeMobile) setMobileMenuOpen(false)
+  }
 
   const isHome = location.pathname === '/'
   const activeHref = useMemo(() => navLinks.find((link) => !link.isAnchor && link.href === location.pathname)?.href, [location.pathname])
@@ -307,6 +318,24 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2 md:gap-3">
+            <form
+              onSubmit={(e) => handleSearchSubmit(e, searchQuery)}
+              role="search"
+              className="hidden lg:flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-white px-3 py-1.5 focus-within:border-[var(--color-navy)] focus-within:ring-2 focus-within:ring-[var(--color-navy)]/20"
+            >
+              <Search className="h-4 w-4 text-[var(--color-navy)]" aria-hidden="true" />
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search…"
+                aria-label="Search the site"
+                className="w-32 bg-transparent text-sm text-[var(--color-navy)] placeholder:text-[var(--color-text-muted)] focus:outline-none xl:w-44"
+              />
+            </form>
+            <Link to="/search" className="icon-btn lg:hidden" aria-label="Search">
+              <Search className="h-5 w-5" />
+            </Link>
             <a href="tel:+61393913257" className="hidden rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-semibold text-[var(--color-navy)] transition-colors hover:bg-[var(--color-navy-soft)] md:inline-flex">
               Call the pharmacy
             </a>
@@ -329,6 +358,24 @@ export function Header() {
             <p className="mt-4 text-xs uppercase tracking-[0.25em] text-white/65">Blackshaws Road Pharmacy</p>
             <p className="mt-2 text-lg font-semibold">Trusted local care, prescriptions, services and online shopping.</p>
           </div>
+          <form
+            onSubmit={(e) => handleSearchSubmit(e, mobileSearchQuery, true)}
+            role="search"
+            className="flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-white px-3 py-2 focus-within:border-[var(--color-navy)]"
+          >
+            <Search className="h-4 w-4 text-[var(--color-navy)]" aria-hidden="true" />
+            <input
+              type="search"
+              value={mobileSearchQuery}
+              onChange={(e) => setMobileSearchQuery(e.target.value)}
+              placeholder="Search the site…"
+              aria-label="Search the site"
+              className="flex-1 bg-transparent text-sm text-[var(--color-navy)] placeholder:text-[var(--color-text-muted)] focus:outline-none"
+            />
+            <button type="submit" className="rounded-full bg-[var(--color-red)] px-3 py-1 text-xs font-semibold text-white">
+              Go
+            </button>
+          </form>
           <div className="space-y-1">
             {navLinks.map((link) => (
               <MobileNavItem key={link.href} href={link.href} isAnchor={link.isAnchor} onClick={() => setMobileMenuOpen(false)}>
