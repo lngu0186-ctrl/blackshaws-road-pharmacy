@@ -133,11 +133,6 @@ export function categorizeProduct(product: Product): string[] {
     }
   }
 
-  // Ensure at least one category
-  if (categories.size === 0) {
-    categories.add('pharmacy-essentials')
-  }
-
   return Array.from(categories)
 }
 
