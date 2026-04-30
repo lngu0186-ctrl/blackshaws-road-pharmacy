@@ -22,11 +22,18 @@ function stripHtml(html: string): string {
   return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
 }
 
+type SortOption = 'relevance' | 'newest' | 'price-asc' | 'price-desc'
+const VALID_SORTS: SortOption[] = ['relevance', 'newest', 'price-asc', 'price-desc']
+
 export default function SearchPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const initial = searchParams.get('q') || ''
+  const initialSort = (VALID_SORTS.includes(searchParams.get('sort') as SortOption)
+    ? (searchParams.get('sort') as SortOption)
+    : 'relevance')
   const [query, setQuery] = useState(initial)
   const [committed, setCommitted] = useState(initial)
+  const [sort, setSort] = useState<SortOption>(initialSort)
   const cachedProducts = useProductStore((s) => s.products)
   const setGlobalProducts = useProductStore((s) => s.setProducts)
   const [products, setProducts] = useState<Product[]>(cachedProducts)
