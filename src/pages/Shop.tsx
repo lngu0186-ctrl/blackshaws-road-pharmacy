@@ -170,6 +170,9 @@ export default function Shop() {
               <div className="mt-4 text-sm text-[var(--color-text-muted)]">Showing <strong>{paginatedProducts.length}</strong> of <strong>{totalFiltered}</strong> products</div>
             </div>
 
+            {loading ? (
+              <ProductCardSkeleton count={9} variant="shop" />
+            ) : (
             <div className={`products-grid mt-8 ${viewMode === 'grid' ? 'grid-view' : 'list-view'}`}>
               {paginatedProducts.map((product) => {
                 const firstVariant = product.variants.edges[0]?.node
@@ -202,6 +205,7 @@ export default function Shop() {
                 )
               })}
             </div>
+            )}
 
             {paginatedProducts.length === 0 && <div className="empty-state mt-8"><p className="mb-4 text-[var(--color-text-muted)]">No products match your current filters.</p><Button variant="outline" onClick={() => { setSearchQuery(''); setSelectedCategoryPath('') }}>Clear filters</Button></div>}
             {paginatedProducts.length < totalFiltered && <div className="mt-10 text-center"><Button variant="outline" size="lg" onClick={handleLoadMore}>Load more products</Button></div>}
