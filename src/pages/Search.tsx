@@ -5,6 +5,7 @@ import { learnArticles } from '../data/learnArticles'
 import { healthServiceGroups } from '../data/healthServicesNav'
 
 import { useProductStore } from '../stores/productStore'
+import { ProductCardSkeleton } from '../components/ui/ProductCardSkeleton'
 import { formatPrice, getProductImageUrl } from '../utils/categoryMapping'
 import { usePageSeo } from '../lib/seo'
 
