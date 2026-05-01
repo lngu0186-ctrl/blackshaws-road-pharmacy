@@ -92,7 +92,6 @@ export default function Shop() {
     openCart()
   }
 
-  if (loading) return <div className="shop-page min-h-screen bg-[var(--color-cream)]"><div className="container-custom py-20 text-center text-[var(--color-text-muted)]">Loading products…</div></div>
   if (error) return <div className="shop-page min-h-screen bg-[var(--color-cream)]"><div className="container-custom py-20 text-center"><p className="mb-4 text-red-600">{error}</p><Button variant="primary" onClick={() => window.location.reload()}>Try Again</Button></div></div>
 
   return (
