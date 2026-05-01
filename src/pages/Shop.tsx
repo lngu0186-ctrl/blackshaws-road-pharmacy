@@ -9,6 +9,7 @@ import { useProductStore } from '../stores/productStore'
 import { Button } from '../components/ui/Button'
 import { Breadcrumb } from '../components/layout/Breadcrumb'
 import { BrandSignature } from '../components/layout/BrandSignature'
+import { ProductCardSkeleton } from '../components/ui/ProductCardSkeleton'
 import './Shop.css'
 
 const PRODUCTS_PER_PAGE = 48
@@ -91,7 +92,6 @@ export default function Shop() {
     openCart()
   }
 
-  if (loading) return <div className="shop-page min-h-screen bg-[var(--color-cream)]"><div className="container-custom py-20 text-center text-[var(--color-text-muted)]">Loading products…</div></div>
   if (error) return <div className="shop-page min-h-screen bg-[var(--color-cream)]"><div className="container-custom py-20 text-center"><p className="mb-4 text-red-600">{error}</p><Button variant="primary" onClick={() => window.location.reload()}>Try Again</Button></div></div>
 
   return (
@@ -169,6 +169,9 @@ export default function Shop() {
               <div className="mt-4 text-sm text-[var(--color-text-muted)]">Showing <strong>{paginatedProducts.length}</strong> of <strong>{totalFiltered}</strong> products</div>
             </div>
 
+            {loading ? (
+              <ProductCardSkeleton count={9} variant="shop" />
+            ) : (
             <div className={`products-grid mt-8 ${viewMode === 'grid' ? 'grid-view' : 'list-view'}`}>
               {paginatedProducts.map((product) => {
                 const firstVariant = product.variants.edges[0]?.node
@@ -201,8 +204,9 @@ export default function Shop() {
                 )
               })}
             </div>
+            )}
 
-            {paginatedProducts.length === 0 && <div className="empty-state mt-8"><p className="mb-4 text-[var(--color-text-muted)]">No products match your current filters.</p><Button variant="outline" onClick={() => { setSearchQuery(''); setSelectedCategoryPath('') }}>Clear filters</Button></div>}
+            {!loading && paginatedProducts.length === 0 && <div className="empty-state mt-8"><p className="mb-4 text-[var(--color-text-muted)]">No products match your current filters.</p><Button variant="outline" onClick={() => { setSearchQuery(''); setSelectedCategoryPath('') }}>Clear filters</Button></div>}
             {paginatedProducts.length < totalFiltered && <div className="mt-10 text-center"><Button variant="outline" size="lg" onClick={handleLoadMore}>Load more products</Button></div>}
           </div>
         </div>

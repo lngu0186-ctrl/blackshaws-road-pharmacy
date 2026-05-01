@@ -5,6 +5,7 @@ import { learnArticles } from '../data/learnArticles'
 import { healthServiceGroups } from '../data/healthServicesNav'
 
 import { useProductStore } from '../stores/productStore'
+import { ProductCardSkeleton } from '../components/ui/ProductCardSkeleton'
 import { formatPrice, getProductImageUrl } from '../utils/categoryMapping'
 import { usePageSeo } from '../lib/seo'
 
@@ -219,6 +220,15 @@ export default function SearchPage() {
                       </Link>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {loadingProducts && productResults.length === 0 && (
+                <div className="mb-12">
+                  <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold text-[var(--color-navy)]">
+                    <ShoppingBag className="h-5 w-5 text-[var(--color-red)]" /> Shop
+                  </h2>
+                  <ProductCardSkeleton count={6} variant="search" />
                 </div>
               )}
 
