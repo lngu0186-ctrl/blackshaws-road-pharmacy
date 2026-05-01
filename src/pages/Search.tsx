@@ -223,6 +223,15 @@ export default function SearchPage() {
                 </div>
               )}
 
+              {loadingProducts && productResults.length === 0 && (
+                <div className="mb-12">
+                  <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold text-[var(--color-navy)]">
+                    <ShoppingBag className="h-5 w-5 text-[var(--color-red)]" /> Shop
+                  </h2>
+                  <ProductCardSkeleton count={6} variant="search" />
+                </div>
+              )}
+
               {productResults.length > 0 && (
                 <div className="mb-12">
                   <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold text-[var(--color-navy)]">
