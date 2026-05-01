@@ -9,6 +9,7 @@ import { useProductStore } from '../stores/productStore'
 import { Button } from '../components/ui/Button'
 import { Breadcrumb } from '../components/layout/Breadcrumb'
 import { BrandSignature } from '../components/layout/BrandSignature'
+import { ProductCardSkeleton } from '../components/ui/ProductCardSkeleton'
 import './Shop.css'
 
 const PRODUCTS_PER_PAGE = 48
