@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom'
 import { MapPin, Phone, Mail, Clock, MessageSquare, FileText } from 'lucide-react'
+import { useUploadPrescriptionStore } from '../stores/uploadPrescriptionStore'
 
 export function PhoneMockup() {
+  const openUpload = useUploadPrescriptionStore((s) => s.open)
   return (
     <div className="flex justify-center lg:justify-end">
       <div
@@ -102,13 +103,14 @@ export function PhoneMockup() {
               </div>
             </div>
 
-            <Link
-              to="/prescriptions"
+            <button
+              type="button"
+              onClick={openUpload}
               className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[var(--color-red)] px-5 py-3 text-[0.9rem] font-bold text-white shadow-lg transition-transform hover:scale-[1.02]"
               style={{ boxShadow: '0 12px 28px -10px rgba(192,57,43,0.6)' }}
             >
               Upload Prescription
-            </Link>
+            </button>
           </div>
 
           <div className="mx-auto mt-2 h-[4px] w-[100px] rounded-full bg-white/20" />

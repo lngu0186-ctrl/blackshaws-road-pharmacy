@@ -1,6 +1,5 @@
 import { usePageSeo } from '../lib/seo'
 import { Clock3, FileText, ShieldAlert, Phone } from 'lucide-react'
-import UploadPrescription from './UploadPrescription'
 import { Button } from '../components/ui/Button'
 import { BrandSignature } from '../components/layout/BrandSignature'
 
@@ -49,7 +48,18 @@ export default function Prescription() {
         </div>
       </section>
 
-      <UploadPrescription />
+      <section className="section-padding pt-0">
+        <div className="container-custom">
+          <div className="overflow-hidden rounded-[28px] border border-[var(--color-border)] bg-white shadow-[0_24px_60px_-46px_rgba(16,24,63,0.18)]">
+            <iframe
+              src="https://blackshawsrx.lovable.app/"
+              title="Upload Prescription"
+              className="h-[80vh] min-h-[640px] w-full border-0"
+              allow="clipboard-write; camera; microphone"
+            />
+          </div>
+        </div>
+      </section>
 
       <section className="section-padding pt-0">
         <div className="container-custom grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">

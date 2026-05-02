@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Clock3, FileText, PackageCheck, ShieldCheck } from 'lucide-react'
 import { Button } from '../ui/Button'
+import { useUploadPrescriptionStore } from '../../stores/uploadPrescriptionStore'
 
 const steps = [
   {
@@ -21,6 +22,7 @@ const steps = [
 ]
 
 export function PrescriptionPathwaySection() {
+  const openUpload = useUploadPrescriptionStore((s) => s.open)
   return (
     <section id="prescriptions" className="section-padding bg-[var(--color-surface)]">
       <div className="container-custom">
@@ -39,7 +41,7 @@ export function PrescriptionPathwaySection() {
                 <p className="flex items-start gap-3"><ShieldCheck className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> For controlled, urgent or clinically complex medicines, the pharmacist may need to speak with you or your prescriber before supply.</p>
               </div>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <Link to="/prescriptions"><Button variant="red" size="lg">Upload a prescription</Button></Link>
+                <Button variant="red" size="lg" onClick={openUpload}>Upload a prescription</Button>
                 <a href="tel:0393913257"><Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">Call the pharmacy</Button></a>
               </div>
             </div>

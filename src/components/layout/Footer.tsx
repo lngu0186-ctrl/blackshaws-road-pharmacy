@@ -1,9 +1,12 @@
 import { Phone, Mail, Award, Shield, MapPin, ArrowUpRight, Clock3 } from 'lucide-react'
 import { Logo } from './Logo'
+import { useUploadPrescriptionStore } from '../../stores/uploadPrescriptionStore'
 
-const footerLinks = {
+type FooterLink = { label: string; href: string; target?: string; action?: 'upload' }
+
+const footerLinks: { services: FooterLink[]; explore: FooterLink[]; resources: FooterLink[] } = {
   services: [
-    { label: 'Upload a prescription', href: '/prescriptions' },
+    { label: 'Upload a prescription', href: '#', action: 'upload' },
     { label: 'Plant Based Therapies', href: '/plant-based-therapies' },
     { label: 'Compounding', href: '/compounding' },
     { label: 'Vaccinations', href: '/health-services/vaccinations' },
@@ -104,16 +107,23 @@ export function Footer() {
   )
 }
 
-function FooterColumn({ title, links }: { title: string; links: Array<{ label: string; href: string; target?: string }> }) {
+function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) {
+  const openUpload = useUploadPrescriptionStore((s) => s.open)
   return (
     <div>
       <h4 className="font-serif text-xl font-semibold">{title}</h4>
       <ul className="mt-6 space-y-3 text-sm text-white/76">
         {links.map((link) => (
           <li key={link.label}>
-            <a href={link.href} target={link.target} rel={link.target ? 'noopener noreferrer' : undefined} className="inline-flex items-center gap-2 hover:text-white">
-              {link.label} {link.target && <ArrowUpRight className="h-3.5 w-3.5" />}
-            </a>
+            {link.action === 'upload' ? (
+              <button type="button" onClick={openUpload} className="inline-flex items-center gap-2 hover:text-white">
+                {link.label}
+              </button>
+            ) : (
+              <a href={link.href} target={link.target} rel={link.target ? 'noopener noreferrer' : undefined} className="inline-flex items-center gap-2 hover:text-white">
+                {link.label} {link.target && <ArrowUpRight className="h-3.5 w-3.5" />}
+              </a>
+            )}
           </li>
         ))}
       </ul>

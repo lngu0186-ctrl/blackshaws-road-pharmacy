@@ -7,6 +7,7 @@ import { useCartStore } from '../../stores/cartStore'
 import { useScrolled } from '../../hooks/useScrolled'
 import { cn } from '../../utils/cn'
 import { healthServiceGroups } from '../../data/healthServicesNav'
+import { useUploadPrescriptionStore } from '../../stores/uploadPrescriptionStore'
 import type { ReactNode } from 'react'
 
 const navLinks: Array<{ href: string; label: string; isAnchor?: boolean }> = [
@@ -28,6 +29,7 @@ const featuredServiceLinks = [
     label: 'Upload a prescription',
     description: 'Send it ahead for pharmacist review before pickup.',
     icon: FileText,
+    action: 'upload' as const,
   },
   {
     href: 'https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist',
@@ -75,6 +77,7 @@ export function Header() {
   const [mobileSearchQuery, setMobileSearchQuery] = useState('')
   const cartCount = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0))
   const openCart = useCartStore((s) => s.openCart)
+  const openUpload = useUploadPrescriptionStore((s) => s.open)
   const servicesButtonRef = useRef<HTMLButtonElement>(null)
   const servicesMenuRef = useRef<HTMLDivElement>(null)
 
@@ -238,6 +241,26 @@ export function Header() {
                                     </div>
                                     <p className="mt-2 text-xs leading-relaxed text-white/68">{item.description}</p>
                                   </a>
+                                )
+                              }
+
+                              if ('action' in item && item.action === 'upload') {
+                                return (
+                                  <button
+                                    key={item.label}
+                                    type="button"
+                                    className={`${sharedClassName} text-left`}
+                                    onClick={() => {
+                                      setServicesDropdownOpen(false)
+                                      openUpload()
+                                    }}
+                                  >
+                                    <div className="flex items-center gap-2 text-white">
+                                      <Icon className="h-4 w-4 text-[#e6b3ac]" />
+                                      <span className="text-sm font-semibold">{item.label}</span>
+                                    </div>
+                                    <p className="mt-2 text-xs leading-relaxed text-white/68">{item.description}</p>
+                                  </button>
                                 )
                               }
 
@@ -405,9 +428,13 @@ export function Header() {
           <div className="rounded-[24px] border border-[var(--color-border)] bg-white p-4">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-red)]">Quick actions</p>
             <div className="grid gap-2">
-              <Link to="/prescriptions" className="rounded-2xl bg-[var(--color-red-soft)] px-4 py-3 text-sm font-semibold text-[var(--color-red)]" onClick={() => setMobileMenuOpen(false)}>
+              <button
+                type="button"
+                className="rounded-2xl bg-[var(--color-red-soft)] px-4 py-3 text-left text-sm font-semibold text-[var(--color-red)]"
+                onClick={() => { setMobileMenuOpen(false); openUpload() }}
+              >
                 Upload a prescription
-              </Link>
+              </button>
               <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer" className="rounded-2xl bg-[var(--color-navy-soft)] px-4 py-3 text-sm font-semibold text-[var(--color-navy)]" onClick={() => setMobileMenuOpen(false)}>
                 Book a vaccination
               </a>
@@ -454,8 +481,14 @@ export function Header() {
           <div className="rounded-[24px] border border-[var(--color-border)] p-4">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-red)]">Helpful links</p>
             <div className="space-y-1">
+              <button
+                type="button"
+                onClick={() => { setMobileMenuOpen(false); openUpload() }}
+                className="block w-full rounded-xl px-3 py-2 text-left text-sm text-[var(--color-text-muted)] hover:bg-[var(--color-navy-soft)] hover:text-[var(--color-navy)]"
+              >
+                Upload a prescription
+              </button>
               {[
-                { href: '/prescriptions', label: 'Upload a prescription' },
                 { href: '/faq', label: 'Read FAQs' },
                 { href: '/patient-info', label: 'Patient information' },
               ].map((link) => (
