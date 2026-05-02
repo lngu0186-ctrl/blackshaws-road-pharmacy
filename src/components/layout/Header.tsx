@@ -428,9 +428,13 @@ export function Header() {
           <div className="rounded-[24px] border border-[var(--color-border)] bg-white p-4">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-red)]">Quick actions</p>
             <div className="grid gap-2">
-              <Link to="/prescriptions" className="rounded-2xl bg-[var(--color-red-soft)] px-4 py-3 text-sm font-semibold text-[var(--color-red)]" onClick={() => setMobileMenuOpen(false)}>
+              <button
+                type="button"
+                className="rounded-2xl bg-[var(--color-red-soft)] px-4 py-3 text-left text-sm font-semibold text-[var(--color-red)]"
+                onClick={() => { setMobileMenuOpen(false); openUpload() }}
+              >
                 Upload a prescription
-              </Link>
+              </button>
               <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer" className="rounded-2xl bg-[var(--color-navy-soft)] px-4 py-3 text-sm font-semibold text-[var(--color-navy)]" onClick={() => setMobileMenuOpen(false)}>
                 Book a vaccination
               </a>
@@ -477,8 +481,14 @@ export function Header() {
           <div className="rounded-[24px] border border-[var(--color-border)] p-4">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-red)]">Helpful links</p>
             <div className="space-y-1">
+              <button
+                type="button"
+                onClick={() => { setMobileMenuOpen(false); openUpload() }}
+                className="block w-full rounded-xl px-3 py-2 text-left text-sm text-[var(--color-text-muted)] hover:bg-[var(--color-navy-soft)] hover:text-[var(--color-navy)]"
+              >
+                Upload a prescription
+              </button>
               {[
-                { href: '/prescriptions', label: 'Upload a prescription' },
                 { href: '/faq', label: 'Read FAQs' },
                 { href: '/patient-info', label: 'Patient information' },
               ].map((link) => (
