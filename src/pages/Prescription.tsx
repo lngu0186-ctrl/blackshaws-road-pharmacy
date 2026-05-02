@@ -1,6 +1,5 @@
 import { usePageSeo } from '../lib/seo'
 import { Clock3, FileText, ShieldAlert, Phone } from 'lucide-react'
-import UploadPrescription from './UploadPrescription'
 import { Button } from '../components/ui/Button'
 import { BrandSignature } from '../components/layout/BrandSignature'
 
