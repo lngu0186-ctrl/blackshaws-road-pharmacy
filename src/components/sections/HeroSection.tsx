@@ -3,8 +3,10 @@ import { Button } from '../ui/Button'
 import { Clock3, MapPin, Phone } from 'lucide-react'
 import { Logo } from '../layout/Logo'
 import { PhoneMockup } from '../PhoneMockup'
+import { useUploadPrescriptionStore } from '../../stores/uploadPrescriptionStore'
 
 export function HeroSection() {
+  const openUpload = useUploadPrescriptionStore((s) => s.open)
   return (
     <section className="relative overflow-hidden bg-[var(--color-navy-deep)] text-white">
       <div className="absolute inset-0">
@@ -50,7 +52,7 @@ export function HeroSection() {
             </div>
 
             <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-              <Link to="/prescriptions"><Button variant="red" size="lg">Upload a prescription</Button></Link>
+              <Button variant="red" size="lg" onClick={openUpload}>Upload a prescription</Button>
               <Link to="/compounding"><Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">Compounding support</Button></Link>
               <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer"><Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">Book a vaccination</Button></a>
               <Link to="/contact"><Button variant="ghost" size="lg" className="text-white hover:bg-white/10">Call or contact us</Button></Link>
