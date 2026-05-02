@@ -2,6 +2,7 @@ import { usePageSeo } from '../lib/seo'
 import { Clock3, FileText, ShieldAlert, Phone } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { BrandSignature } from '../components/layout/BrandSignature'
+import { PrescriptionIframe } from '../components/features/PrescriptionIframe'
 
 const notes = [
   'Please upload a clear photo or PDF of the full prescription.',
