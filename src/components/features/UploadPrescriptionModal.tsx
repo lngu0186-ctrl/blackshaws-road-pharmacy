@@ -42,12 +42,7 @@ export function UploadPrescriptionModal() {
         >
           <X className="h-5 w-5" />
         </button>
-        <iframe
-          src={UPLOAD_URL}
-          title="Upload Prescription"
-          className="h-full w-full border-0"
-          allow="clipboard-write; camera; microphone"
-        />
+        <PrescriptionIframe className="h-full w-full" />
       </div>
     </div>
   )
