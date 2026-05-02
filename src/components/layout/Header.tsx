@@ -77,6 +77,7 @@ export function Header() {
   const [mobileSearchQuery, setMobileSearchQuery] = useState('')
   const cartCount = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0))
   const openCart = useCartStore((s) => s.openCart)
+  const openUpload = useUploadPrescriptionStore((s) => s.open)
   const servicesButtonRef = useRef<HTMLButtonElement>(null)
   const servicesMenuRef = useRef<HTMLDivElement>(null)
 
@@ -240,6 +241,26 @@ export function Header() {
                                     </div>
                                     <p className="mt-2 text-xs leading-relaxed text-white/68">{item.description}</p>
                                   </a>
+                                )
+                              }
+
+                              if ('action' in item && item.action === 'upload') {
+                                return (
+                                  <button
+                                    key={item.label}
+                                    type="button"
+                                    className={`${sharedClassName} text-left`}
+                                    onClick={() => {
+                                      setServicesDropdownOpen(false)
+                                      openUpload()
+                                    }}
+                                  >
+                                    <div className="flex items-center gap-2 text-white">
+                                      <Icon className="h-4 w-4 text-[#e6b3ac]" />
+                                      <span className="text-sm font-semibold">{item.label}</span>
+                                    </div>
+                                    <p className="mt-2 text-xs leading-relaxed text-white/68">{item.description}</p>
+                                  </button>
                                 )
                               }
 
