@@ -4,6 +4,7 @@ import { Button } from '../components/ui/Button'
 import { BrandSignature } from '../components/layout/BrandSignature'
 import { supabase } from '../integrations/supabase/client'
 import { usePageSeo } from '../lib/seo'
+import { useUploadPrescriptionStore } from '../stores/uploadPrescriptionStore'
 
 const hours = [
   { label: 'Monday–Friday', value: '8:00 AM – 9:00 PM' },
@@ -12,6 +13,7 @@ const hours = [
 ]
 
 export default function Contact() {
+  const openUpload = useUploadPrescriptionStore((s) => s.open)
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -147,7 +149,7 @@ export default function Contact() {
           </div>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-            <a href="/prescriptions"><Button variant="red" size="lg">Upload a Prescription</Button></a>
+            <Button variant="red" size="lg" onClick={openUpload}>Upload a Prescription</Button>
             <a href="/health-services"><Button variant="outline" size="lg">View Health Services</Button></a>
           </div>
 
