@@ -14,6 +14,7 @@ import { LocationSection } from './components/sections/LocationSection'
 import { PrescriptionPathwaySection } from './components/sections/PrescriptionPathwaySection'
 import { PatientTrustSection } from './components/sections/PatientTrustSection'
 import { FaqPreviewSection } from './components/sections/FaqPreviewSection'
+import { UploadPrescriptionModal } from './components/features/UploadPrescriptionModal'
 import { useCartSync } from './hooks/useCartSync'
 import './App.css'
 
@@ -116,6 +117,7 @@ function App() {
         {DeferredChat && <DeferredChat />}
         {DeferredCart && <DeferredCart />}
         {DeferredToast && <DeferredToast />}
+        <UploadPrescriptionModal />
       </div>
     </BrowserRouter>
   )
