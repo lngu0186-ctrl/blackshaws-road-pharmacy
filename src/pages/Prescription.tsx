@@ -52,12 +52,7 @@ export default function Prescription() {
       <section className="section-padding pt-0">
         <div className="container-custom">
           <div className="overflow-hidden rounded-[28px] border border-[var(--color-border)] bg-white shadow-[0_24px_60px_-46px_rgba(16,24,63,0.18)]">
-            <iframe
-              src="https://blackshawsrx.lovable.app/"
-              title="Upload Prescription"
-              className="h-[80vh] min-h-[640px] w-full border-0"
-              allow="clipboard-write; camera; microphone"
-            />
+            <PrescriptionIframe className="h-[80vh] min-h-[640px] w-full" />
           </div>
         </div>
       </section>
