@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
 import { X } from 'lucide-react'
 import { useUploadPrescriptionStore } from '../../stores/uploadPrescriptionStore'
-
-const UPLOAD_URL = 'https://blackshawsrx.lovable.app/'
+import { PrescriptionIframe } from './PrescriptionIframe'
 
 export function UploadPrescriptionModal() {
   const { isOpen, close } = useUploadPrescriptionStore()
