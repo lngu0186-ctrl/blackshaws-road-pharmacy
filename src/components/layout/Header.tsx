@@ -7,6 +7,7 @@ import { useCartStore } from '../../stores/cartStore'
 import { useScrolled } from '../../hooks/useScrolled'
 import { cn } from '../../utils/cn'
 import { healthServiceGroups } from '../../data/healthServicesNav'
+import { useUploadPrescriptionStore } from '../../stores/uploadPrescriptionStore'
 import type { ReactNode } from 'react'
 
 const navLinks: Array<{ href: string; label: string; isAnchor?: boolean }> = [
@@ -28,6 +29,7 @@ const featuredServiceLinks = [
     label: 'Upload a prescription',
     description: 'Send it ahead for pharmacist review before pickup.',
     icon: FileText,
+    action: 'upload' as const,
   },
   {
     href: 'https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist',
