@@ -1,0 +1,1 @@
+import{t as e}from"./supabase-BDHcAyIA.js";var t=e(void 0,void 0,{auth:{storage:localStorage,persistSession:!0,autoRefreshToken:!0}});export{t};

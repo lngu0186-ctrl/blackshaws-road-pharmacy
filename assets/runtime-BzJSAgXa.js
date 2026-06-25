@@ -1,0 +1,1 @@
+function e(){return window.location.protocol===`file:`||navigator.userAgent.includes(`Electron`)}function t(e){return`./${e.replace(/^\//,``)}`}export{e as n,t};

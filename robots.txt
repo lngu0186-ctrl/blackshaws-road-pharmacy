@@ -1,0 +1,11 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow admin or private routes if they exist
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://blackshawsroadpharmacy.lovable.app/sitemap.xml
