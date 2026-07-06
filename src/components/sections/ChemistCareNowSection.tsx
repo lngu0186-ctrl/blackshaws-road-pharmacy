@@ -1,37 +1,37 @@
 import { useRef } from 'react'
 import { Button } from '../ui/Button'
-import { IconContraceptive, IconUTI, IconShingles, IconPsoriasis, IconVaccinations, IconImpetigo } from './ChemistCareCards'
+import { Pill, Droplets, Sparkles, HandHeart, Plane, Baby } from 'lucide-react'
 
 interface ChemistCareNowSectionProps { id?: string }
 
 const chemistCareServices = [
   {
-    icon: IconContraceptive,
+    icon: Pill,
     title: 'Contraceptive options',
     description: 'Is your contraceptive running low? If you have a previous prescription, you might be able to get a resupply from your chemist.'
   },
   {
-    icon: IconUTI,
+    icon: Droplets,
     title: 'Urinary tract infections',
     description: 'Frequent bathroom visits? A burning sensation when you pee? You may have a UTI. Treatment may be available at your chemist.'
   },
   {
-    icon: IconShingles,
+    icon: Sparkles,
     title: 'Shingles',
     description: 'A painful blistering rash or a tingling, burning sensation on the skin? You may have shingles. If you are 18 or older treatment is available.'
   },
   {
-    icon: IconPsoriasis,
+    icon: HandHeart,
     title: 'Psoriasis',
     description: 'Has your psoriasis flared up? You may be able to get a resupply of your cream or ointment.'
   },
   {
-    icon: IconVaccinations,
+    icon: Plane,
     title: 'Vaccinations for travel',
     description: 'Heading overseas? A range of travel vaccinations can be administered by your chemist.'
   },
   {
-    icon: IconImpetigo,
+    icon: Baby,
     title: 'Impetigo (school sores)',
     description: 'Red sores on the face or body? You may have impetigo (school sores). Treatment may be available at your chemist.'
   }
@@ -80,32 +80,24 @@ export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
           </div>
 
           {/* Right: Cards grid */}
-          <div className="grid gap-5 md:grid-cols-2" style={{ opacity: isInView ? 1 : 0, transform: `translateY(${isInView ? 0 : '24px'})`, transition: 'opacity 0.6s ease, transform 0.6s ease' }}>
+          <div className="grid gap-5 sm:grid-cols-2" style={{ opacity: isInView ? 1 : 0, transform: `translateY(${isInView ? 0 : '24px'})`, transition: 'opacity 0.6s ease, transform 0.6s ease' }}>
             {chemistCareServices.map((service, index) => (
               <div
                 key={index}
-                className="group relative overflow-hidden rounded-2xl transition-all duration-250 ease-out hover:shadow-lg"
-                style={{
-                  backgroundColor: 'white',
-                  border: '1px solid var(--color-gray-200)',
-                  minHeight: '280px'
-                }}
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--color-gray-200)] bg-white shadow-[0_10px_30px_-20px_rgba(16,24,63,0.18)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_50px_-24px_rgba(16,24,63,0.35)]"
               >
-                {/* Top half: blue background with illustration */}
-                <div className="relative h-2/5 bg-[#1a5eab] flex items-center justify-center overflow-hidden">
-                  <service.icon className="w-14 h-14 text-white" />
-                </div>
-                {/* Bottom half: white content */}
-                <div className="relative h-3/5 p-5 flex flex-col justify-center">
-                  <h3 className="text-lg font-bold" style={{ color: '#2a9d5c' }}>{service.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-gray-700">{service.description}</p>
-                </div>
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-[#1a5eab] opacity-0 group-hover:opacity-100 transition-opacity duration-250 ease-out pointer-events-none">
-                  <div className="flex flex-col h-full p-5 justify-center">
-                    <h3 className="text-lg font-bold text-white">{service.title}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-white">{service.description}</p>
+                {/* Icon header */}
+                <div className="flex items-center gap-3 bg-[var(--color-navy-deep)] px-6 py-5">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/15">
+                    <service.icon className="h-5 w-5 text-white" strokeWidth={1.75} aria-hidden="true" />
                   </div>
+                  <h3 className="text-base font-semibold leading-snug text-white">
+                    {service.title}
+                  </h3>
+                </div>
+                {/* Body */}
+                <div className="flex flex-1 flex-col px-6 py-5">
+                  <p className="text-sm leading-relaxed text-[var(--color-text-muted)]">{service.description}</p>
                 </div>
               </div>
             ))}
