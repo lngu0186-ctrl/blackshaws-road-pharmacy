@@ -1,7 +1,6 @@
 /** Logo — renders the official brand artwork linked to the homepage. */
 import { Link } from 'react-router-dom'
 import { cn } from '../../utils/cn'
-import logoWhite2026 from '../../../public/logo-white-2026.png.asset.json'
 
 interface LogoProps {
   className?: string
@@ -13,16 +12,16 @@ interface LogoProps {
 
 const logoMap = {
   default: {
-    wordmark: '/logo-1040.png',
-    mark: '/logo-mark-512.png',
+    wordmark: '/blackshaws-logo-navy.png',
+    mark: '/blackshaws-favicon.png',
   },
   dark: {
-    wordmark: logoWhite2026.url,
-    mark: '/logo-mark-512.png',
+    wordmark: '/blackshaws-logo-white.png',
+    mark: '/blackshaws-favicon.png',
   },
   white: {
-    wordmark: logoWhite2026.url,
-    mark: '/logo-mark-512.png',
+    wordmark: '/blackshaws-logo-white.png',
+    mark: '/blackshaws-favicon.png',
   },
 } as const
 
