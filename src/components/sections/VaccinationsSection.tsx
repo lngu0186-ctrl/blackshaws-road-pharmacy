@@ -68,6 +68,8 @@ export function VaccinationsSection() {
         <div className="mt-10 text-center">
           <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer"><Button variant="red" size="lg">Book your vaccination online</Button></a>
         </div>
+
+        <p className="mt-8 text-center text-xs text-[var(--color-text-muted)] max-w-3xl mx-auto">Eligibility criteria and NIP funding are subject to change. Information current as of July 2026 — please contact us or check the Australian Immunisation Register for your personal eligibility.</p>
       </div>
     </section>
   )
