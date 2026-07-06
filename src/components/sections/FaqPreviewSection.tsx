@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
+import { Reveal } from '../ui/Reveal'
 
 const faqs = [
   {
@@ -25,21 +26,23 @@ export function FaqPreviewSection() {
     <section className="section-padding bg-white">
       <div className="container-custom">
         <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
-          <div>
+          <Reveal>
             <p className="section-label" style={{ color: 'var(--color-navy)' }}>Frequently asked questions</p>
             <h2 className="text-[var(--color-navy)]">Questions we hear a lot.</h2>
             <p className="mt-4 text-lg text-[var(--color-text-muted)]">Quick answers about scripts, bookings and pharmacy care. The full FAQ covers prescriptions, services, shopping and store policies.</p>
             <Link to="/faq" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-navy)]">
               View all FAQs <ChevronRight className="h-4 w-4" />
             </Link>
-          </div>
+          </Reveal>
 
           <div className="grid gap-4">
-            {faqs.map((item) => (
-              <div key={item.question} className="rounded-[24px] border border-[var(--color-border)] bg-[var(--color-surface-alt)] p-6">
-                <h3 className="text-xl text-[var(--color-navy)]">{item.question}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">{item.answer}</p>
-              </div>
+            {faqs.map((item, index) => (
+              <Reveal key={item.question} delay={index * 90}>
+                <div className="rounded-[24px] border border-[var(--color-border)] bg-[var(--color-surface-alt)] p-6">
+                  <h3 className="text-xl text-[var(--color-navy)]">{item.question}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">{item.answer}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>

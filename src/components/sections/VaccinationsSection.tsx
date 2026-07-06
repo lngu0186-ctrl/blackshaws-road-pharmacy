@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Button } from '../ui/Button'
+import { Reveal } from '../ui/Reveal'
 import { Shield, Baby, Users, Heart, BabyIcon, Plane, AlertCircle } from 'lucide-react'
 
 const vaccineTabs = [
@@ -18,14 +19,14 @@ export function VaccinationsSection() {
   return (
     <section id="vaccination" className="section-padding bg-white">
       <div className="container-custom">
-        <div className="mb-12 max-w-3xl">
+        <Reveal className="mb-12 max-w-3xl">
           <p className="section-label" style={{ color: 'var(--color-navy)' }}>Immunisation services</p>
           <h2 className="text-[var(--color-navy)]">Vaccinations for every stage of life.</h2>
           <p className="mt-4 text-lg text-[var(--color-text-muted)]">Book online or ask at the counter. Our accredited pharmacist immunisers look after school-aged children (5+), adults, travellers and high-risk patients under the Victorian NIPVIP program. Children under 5 must see their GP or council immunisation service.</p>
-        </div>
+        </Reveal>
 
         <div className="grid gap-8 lg:grid-cols-[0.74fr_1.26fr] lg:items-start">
-          <div className="rounded-[30px] bg-[var(--color-surface-alt)] p-4">
+          <Reveal className="rounded-[30px] bg-[var(--color-surface-alt)] p-4">
             {vaccineTabs.map((tab) => (
               <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`mb-2 flex w-full items-center gap-3 rounded-[22px] px-4 py-4 text-left text-sm font-semibold transition ${activeTab === tab.id ? 'tab-active' : 'text-[var(--color-text-muted)] hover:bg-white hover:text-[var(--color-navy)]'}`}>
                 <tab.icon className="h-5 w-5" /> {tab.label}

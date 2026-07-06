@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Clock3, FileText, PackageCheck, ShieldCheck } from 'lucide-react'
 import { Button } from '../ui/Button'
+import { Reveal } from '../ui/Reveal'
 import { useUploadPrescriptionStore } from '../../stores/uploadPrescriptionStore'
 
 const steps = [
@@ -27,7 +28,7 @@ export function PrescriptionPathwaySection() {
     <section id="prescriptions" className="section-padding bg-[var(--color-surface)]">
       <div className="container-custom">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-          <div>
+          <Reveal>
             <p className="section-label" style={{ color: 'var(--color-navy)' }}>Prescriptions</p>
             <h2 className="text-[var(--color-navy)]">Getting your script filled is simple</h2>
             <p className="mt-5 text-lg leading-relaxed text-[var(--color-text-muted)]">
@@ -45,22 +46,27 @@ export function PrescriptionPathwaySection() {
                 <a href="tel:0393913257"><Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">Call the pharmacy</Button></a>
               </div>
             </div>
-          </div>
+          </Reveal>
 
           <div className="grid gap-5 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-            {steps.map((step) => (
-              <div key={step.title} className="rounded-[28px] border border-[var(--color-border)] bg-white p-6 shadow-[0_24px_60px_-46px_rgba(16,24,63,0.2)]">
-                <div className="flex h-14 w-14 items-center justify-center rounded-[20px] bg-[var(--color-red-soft)] text-[var(--color-red)]"><step.icon className="h-7 w-7" /></div>
-                <h3 className="mt-5 text-2xl text-[var(--color-navy)]">{step.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">{step.description}</p>
-              </div>
+            {steps.map((step, index) => (
+              <Reveal key={step.title} delay={index * 130}>
+                <div className="relative h-full rounded-[28px] border border-[var(--color-border)] bg-white p-6 shadow-[0_24px_60px_-46px_rgba(16,24,63,0.2)]">
+                  <span aria-hidden="true" className="absolute right-6 top-6 font-serif text-3xl font-bold text-[var(--color-navy)]/12">{index + 1}</span>
+                  <div className="icon-tile flex h-14 w-14 items-center justify-center rounded-[20px] bg-[var(--color-red-soft)] text-[var(--color-red)]"><step.icon className="h-7 w-7" /></div>
+                  <h3 className="mt-5 text-2xl text-[var(--color-navy)]"><span className="sr-only">Step {index + 1}: </span>{step.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">{step.description}</p>
+                </div>
+              </Reveal>
             ))}
-            <Link to="/patient-info" className="group rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface-alt)] p-6 text-[var(--color-navy)] transition hover:-translate-y-1">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-red)]">Patient information</p>
-              <h3 className="mt-4 text-2xl">Privacy, safety and what to expect</h3>
-              <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">Read how we handle prescription requests, health information and pharmacist follow-up.</p>
-              <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold">View patient information <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></div>
-            </Link>
+            <Reveal delay={390}>
+              <Link to="/patient-info" className="group block h-full rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface-alt)] p-6 text-[var(--color-navy)] transition hover:-translate-y-1">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-red)]">Patient information</p>
+                <h3 className="mt-4 text-2xl">Privacy, safety and what to expect</h3>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">Read how we handle prescription requests, health information and pharmacist follow-up.</p>
+                <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold">View patient information <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></div>
+              </Link>
+            </Reveal>
           </div>
         </div>
       </div>

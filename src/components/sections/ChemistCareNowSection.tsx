@@ -1,6 +1,6 @@
-import { useRef } from 'react'
 import { Button } from '../ui/Button'
 import { Pill, Droplets, Sparkles, HandHeart, Plane, Baby } from 'lucide-react'
+import { Reveal } from '../ui/Reveal'
 
 interface ChemistCareNowSectionProps { id?: string }
 
@@ -38,22 +38,19 @@ const chemistCareServices = [
 ]
 
 export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
-  const ref = useRef(null)
-  const isInView = true
-
   return (
     <section id={id} className="section-padding bg-white">
-      <div className="container-custom" ref={ref}>
+      <div className="container-custom">
         {/* Official logos */}
-        <div className="flex flex-wrap items-center gap-6 mb-10">
+        <Reveal className="flex flex-wrap items-center gap-6 mb-10">
           <img src="/chemist-care-now-logo.png" alt="Chemist Care Now" className="h-12 w-auto" />
           <div className="h-8 w-px bg-gray-300" />
           <img src="/vic-gov-logo.png" alt="Victorian Government – Department of Health" className="h-10 w-auto" />
-        </div>
+        </Reveal>
 
         <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-start">
           {/* Left: Intro text */}
-          <div>
+          <Reveal>
             <span className="badge-red">Victorian Government-backed care</span>
             <h2 className="mt-5 text-[var(--color-navy-deep)]">Chemist Care Now, delivered with faster access and trusted pharmacy judgement.</h2>
             <p className="mt-5 text-lg text-[var(--color-text-muted)]">For eligible everyday conditions, the pharmacy can provide an easier path to treatment while keeping advice clinically grounded, private and community-focused.</p>
@@ -77,29 +74,28 @@ export function ChemistCareNowSection({ id }: ChemistCareNowSectionProps) {
                 <Button variant="sage" size="lg">Learn more at Better Health Victoria</Button>
               </a>
             </div>
-          </div>
+          </Reveal>
 
           {/* Right: Cards grid */}
-          <div className="grid gap-5 sm:grid-cols-2" style={{ opacity: isInView ? 1 : 0, transform: `translateY(${isInView ? 0 : '24px'})`, transition: 'opacity 0.6s ease, transform 0.6s ease' }}>
+          <div className="grid gap-5 sm:grid-cols-2">
             {chemistCareServices.map((service, index) => (
-              <div
-                key={index}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--color-gray-200)] bg-white shadow-[0_10px_30px_-20px_rgba(16,24,63,0.18)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_50px_-24px_rgba(16,24,63,0.35)]"
-              >
-                {/* Icon header */}
-                <div className="flex items-center gap-3 bg-[var(--color-navy-deep)] px-6 py-5">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/15">
-                    <service.icon className="h-5 w-5 text-white" strokeWidth={1.75} aria-hidden="true" />
+              <Reveal key={index} delay={(index % 2) * 90}>
+                <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--color-gray-200)] bg-white shadow-[0_10px_30px_-20px_rgba(16,24,63,0.18)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_50px_-24px_rgba(16,24,63,0.35)]">
+                  {/* Icon header */}
+                  <div className="flex items-center gap-3 bg-[var(--color-navy-deep)] px-6 py-5">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/15">
+                      <service.icon className="h-5 w-5 text-white" strokeWidth={1.75} aria-hidden="true" />
+                    </div>
+                    <h3 className="text-base font-semibold leading-snug text-white">
+                      {service.title}
+                    </h3>
                   </div>
-                  <h3 className="text-base font-semibold leading-snug text-white">
-                    {service.title}
-                  </h3>
+                  {/* Body */}
+                  <div className="flex flex-1 flex-col px-6 py-5">
+                    <p className="text-sm leading-relaxed text-[var(--color-text-muted)]">{service.description}</p>
+                  </div>
                 </div>
-                {/* Body */}
-                <div className="flex flex-1 flex-col px-6 py-5">
-                  <p className="text-sm leading-relaxed text-[var(--color-text-muted)]">{service.description}</p>
-                </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>

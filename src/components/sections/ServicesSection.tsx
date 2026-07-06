@@ -1,6 +1,6 @@
 import { ArrowRight, FlaskConical, HeartPulse, Leaf, MessageCircle, Package, Pill, ShoppingBag, Syringe } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { useIntersectionObserver } from '../../hooks/useIntersectionObserver'
+import { Reveal } from '../ui/Reveal'
 
 const coreServices = [
   {
@@ -49,35 +49,34 @@ const specialtyServices = [
 ]
 
 export function ServicesSection() {
-  const [ref, isInView] = useIntersectionObserver({ threshold: 0.12, rootMargin: '0px 0px -10% 0px' })
-
   return (
     <section id="services" className="section-padding bg-white">
-      <div className="container-custom" ref={ref}>
-        <div className="mb-12 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+      <div className="container-custom">
+        <Reveal className="mb-12 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="section-label" style={{ color: 'var(--color-navy)' }}>Our services</p>
             <h2 className="max-w-3xl text-[var(--color-navy)]">What we can help with</h2>
           </div>
           <p className="max-w-xl text-base text-[var(--color-text-muted)]">Walk in, call, or book. Most services need no appointment.</p>
-        </div>
+        </Reveal>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3" style={{ opacity: isInView ? 1 : 0, transform: `translateY(${isInView ? 0 : '24px'})`, transition: 'opacity 0.6s ease, transform 0.6s ease' }}>
-          {coreServices.map((service) => (
-            <Link
-              key={service.title}
-              to={service.href}
-              className={`card group flex h-full flex-col no-underline ${service.highlight ? 'border-[var(--color-sage)] bg-[linear-gradient(180deg,white,rgba(238,245,239,0.75))]' : ''}`}
-            >
-              <div className={`flex h-14 w-14 items-center justify-center rounded-[20px] ${service.highlight ? 'bg-[var(--color-sage-soft)] text-[var(--color-sage)]' : 'bg-[var(--color-red-soft)] text-[var(--color-red)]'}`}>
-                <service.icon aria-hidden="true" className="h-7 w-7" />
-              </div>
-              <h3 className="mt-6 text-2xl text-[var(--color-navy)]">{service.title}</h3>
-              <p className="mt-4 flex-grow text-sm leading-relaxed text-[var(--color-text-muted)]">{service.description}</p>
-              <div className="mt-6 inline-flex items-center gap-2 border-t border-[var(--color-border)] pt-4 text-sm font-semibold text-[var(--color-navy)]">
-                Learn more <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </div>
-            </Link>
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {coreServices.map((service, index) => (
+            <Reveal key={service.title} delay={index * 70} className="h-full">
+              <Link
+                to={service.href}
+                className={`card group flex h-full flex-col no-underline ${service.highlight ? 'border-[var(--color-sage)] bg-[linear-gradient(180deg,white,rgba(238,245,239,0.75))]' : ''}`}
+              >
+                <div className={`icon-tile flex h-14 w-14 items-center justify-center rounded-[20px] ${service.highlight ? 'bg-[var(--color-sage-soft)] text-[var(--color-sage)]' : 'bg-[var(--color-red-soft)] text-[var(--color-red)]'}`}>
+                  <service.icon aria-hidden="true" className="h-7 w-7" />
+                </div>
+                <h3 className="mt-6 text-2xl text-[var(--color-navy)]">{service.title}</h3>
+                <p className="mt-4 flex-grow text-sm leading-relaxed text-[var(--color-text-muted)]">{service.description}</p>
+                <div className="mt-6 inline-flex items-center gap-2 border-t border-[var(--color-border)] pt-4 text-sm font-semibold text-[var(--color-navy)]">
+                  Learn more <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </div>
+              </Link>
+            </Reveal>
           ))}
         </div>
 

@@ -1,6 +1,7 @@
 import { MapPin, Phone, Clock, Car } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { BrandSignature } from '../layout/BrandSignature'
+import { Reveal } from '../ui/Reveal'
 import { displayHours, getOpenStatus, pharmacyInfo } from '../../data/pharmacyInfo'
 
 export function LocationSection() {
@@ -8,7 +9,7 @@ export function LocationSection() {
     <section id="location" className="section-padding">
       <div className="container-custom">
         <div className="grid lg:grid-cols-2 gap-12">
-          <div className="relative h-96 lg:h-[600px] rounded-2xl overflow-hidden border-2 border-[var(--color-gray-200)] shadow-lg">
+          <Reveal variant="scale" className="relative h-96 lg:h-[600px] rounded-2xl overflow-hidden border-2 border-[var(--color-gray-200)] shadow-lg">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509374!2d144.8235793153158!3d-37.87324797975917!2m3!1f0!2f0!3f0!2m3!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad64e7c4ab2b3b5%3A0x504567521000ce1!2s310A%20Blackshaws%20Rd%2C%20Altona%20North%20VIC%203025!5e0!3m2!1sen!2sau!4v1620000000000!5m2!1sen!2sau"
               width="100%"
@@ -19,9 +20,9 @@ export function LocationSection() {
               referrerPolicy="no-referrer-when-downgrade"
               title="Blackshaws Road Pharmacy location"
             />
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal delay={100}>
             <p className="section-label" style={{ color: 'var(--color-red)' }}>VISIT US</p>
             <h2 className="mb-8" style={{ color: 'var(--color-navy)' }}>
               Find us on Blackshaws Road
@@ -103,7 +104,7 @@ export function LocationSection() {
                 </a>
               </Button>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

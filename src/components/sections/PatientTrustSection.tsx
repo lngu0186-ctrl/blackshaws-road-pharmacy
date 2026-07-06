@@ -1,4 +1,5 @@
 import { Award, BadgeCheck, ExternalLink, HeartHandshake, Shield } from 'lucide-react'
+import { Reveal } from '../ui/Reveal'
 
 const GOOGLE_REVIEWS_URL =
   'https://www.google.com/maps/place/Blackshaws+Road+Pharmacy/@-37.8732479,144.8235793,17z/data=!4m8!3m7!1s0x6ad64e7c4ab2b3b5:0x504567521000ce1!8m2!3d-37.8732479!4d144.825768!9m1!1b1!16s%2Fg%2F11c5lqwz8y'
@@ -30,23 +31,25 @@ export function PatientTrustSection() {
   return (
     <section className="section-padding bg-alt">
       <div className="container-custom">
-        <div className="mb-12 max-w-3xl">
+        <Reveal className="mb-12 max-w-3xl">
           <p className="section-label" style={{ color: 'var(--color-navy)' }}>Why locals trust us</p>
           <h2 className="text-[var(--color-navy)]">A pharmacy that knows your name.</h2>
           <p className="mt-4 text-lg text-[var(--color-text-muted)]">No queues of strangers, no call centres. Just registered pharmacists and a local team who take the time to help properly.</p>
-        </div>
+        </Reveal>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {pillars.map((pillar) => (
-            <div key={pillar.title} className="rounded-[28px] border border-[var(--color-border)] bg-white p-6 shadow-[0_24px_60px_-46px_rgba(16,24,63,0.18)]">
-              <div className="flex h-14 w-14 items-center justify-center rounded-[20px] bg-[var(--color-navy-soft)] text-[var(--color-navy)]"><pillar.icon aria-hidden="true" className="h-7 w-7" /></div>
-              <h3 className="mt-5 text-2xl text-[var(--color-navy)]">{pillar.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">{pillar.description}</p>
-            </div>
+          {pillars.map((pillar, index) => (
+            <Reveal key={pillar.title} delay={index * 80} className="h-full">
+              <div className="group h-full rounded-[28px] border border-[var(--color-border)] bg-white p-6 shadow-[0_24px_60px_-46px_rgba(16,24,63,0.18)]">
+                <div className="icon-tile flex h-14 w-14 items-center justify-center rounded-[20px] bg-[var(--color-navy-soft)] text-[var(--color-navy)]"><pillar.icon aria-hidden="true" className="h-7 w-7" /></div>
+                <h3 className="mt-5 text-2xl text-[var(--color-navy)]">{pillar.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">{pillar.description}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
 
-        <div className="mt-10 flex flex-col items-start justify-between gap-4 rounded-[28px] border border-[var(--color-border)] bg-white p-6 sm:flex-row sm:items-center">
+        <Reveal variant="scale" delay={120} className="mt-10 flex flex-col items-start justify-between gap-4 rounded-[28px] border border-[var(--color-border)] bg-white p-6 sm:flex-row sm:items-center">
           <div>
             <h3 className="text-xl text-[var(--color-navy)]">Don't take our word for it.</h3>
             <p className="mt-2 text-sm text-[var(--color-text-muted)]">Read what locals say about us on Google, or leave a review after your next visit.</p>
@@ -59,7 +62,7 @@ export function PatientTrustSection() {
           >
             Reviews on Google <ExternalLink aria-hidden="true" className="h-4 w-4" />
           </a>
-        </div>
+        </Reveal>
       </div>
     </section>
   )

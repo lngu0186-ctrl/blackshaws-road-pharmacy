@@ -1,6 +1,7 @@
 import { Users, Award, HeartHandshake, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Logo } from '../layout/Logo'
+import { Reveal } from '../ui/Reveal'
 
 const teamHighlights = [
   {
@@ -25,7 +26,7 @@ export function AboutSection() {
     <section id="about" className="section-padding bg-alt">
       <div className="container-custom">
         {/* Intro */}
-        <div className="max-w-3xl mb-16">
+        <Reveal className="max-w-3xl mb-16">
           <p className="section-label" style={{ color: 'var(--color-navy)' }}>Our story</p>
           <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6" style={{ color: 'var(--color-navy)' }}>
             Part of Altona North since 1968
@@ -36,11 +37,11 @@ export function AboutSection() {
           <p className="text-lg text-[var(--color-gray-600)] leading-relaxed">
             Many of our customers have been coming here since they were kids. Whether you need a script filled, a vaccination, or honest advice about a medicine, you will get a straight answer from someone local.
           </p>
-        </div>
+        </Reveal>
 
         {/* History block */}
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
-          <div className="order-2 lg:order-1">
+          <Reveal className="order-2 lg:order-1">
             <h3 className="text-2xl md:text-3xl font-serif font-bold mb-6" style={{ color: 'var(--color-navy)' }}>
               Over five decades of community health
             </h3>
@@ -50,9 +51,9 @@ export function AboutSection() {
             <p className="text-[var(--color-gray-600)] mb-4 leading-relaxed">
               Our pharmacists do more than dispense medicines. They listen, explain, and help you make sense of your treatment, in plain language.
             </p>
-          </div>
+          </Reveal>
           {/* TODO(owner): replace this graphic card with a real photo of the shop or team when available (see design/visual-assets-plan.md, photo-team.webp). */}
-          <div className="order-1 lg:order-2 relative h-80 rounded-2xl overflow-hidden border border-[var(--color-gray-200)] bg-white shadow-md">
+          <Reveal variant="scale" delay={120} className="order-1 lg:order-2 relative h-80 rounded-2xl overflow-hidden border border-[var(--color-gray-200)] bg-white shadow-md">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(192,57,43,0.12),transparent_34%),linear-gradient(180deg,rgba(27,42,107,0.02),rgba(27,42,107,0.08))]" />
             <div className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-[var(--color-navy-soft)]/70 blur-2xl" />
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
@@ -68,12 +69,12 @@ export function AboutSection() {
                 </span>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
 
         {/* Team & IPA */}
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div>
+          <Reveal>
             <p className="section-label" style={{ color: 'var(--color-navy)' }}>Our pharmacists</p>
             <h3 className="text-2xl md:text-3xl font-serif font-bold mb-6" style={{ color: 'var(--color-navy)' }}>
               Pharmacists you can talk to
@@ -109,8 +110,8 @@ export function AboutSection() {
                 Speak with our pharmacy team
               </Link>
             </div>
-          </div>
-          <div className="relative rounded-2xl overflow-hidden border border-[var(--color-gray-200)] bg-white shadow-md">
+          </Reveal>
+          <Reveal variant="scale" delay={120} className="relative rounded-2xl overflow-hidden border border-[var(--color-gray-200)] bg-white shadow-md">
             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[var(--color-red-light)] to-[var(--color-navy)] opacity-10" />
             <div className="relative grid gap-4 p-6">
               <div className="flex items-center gap-3 rounded-2xl border border-[var(--color-gray-200)] bg-white/95 p-4">
@@ -134,7 +135,7 @@ export function AboutSection() {
                 <p className="mt-2 text-sm text-white/85">Independent, community-based care in Altona North.</p>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

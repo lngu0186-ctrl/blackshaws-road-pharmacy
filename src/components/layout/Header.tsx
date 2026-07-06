@@ -209,7 +209,7 @@ export function Header() {
                         <div
                           ref={servicesMenuRef}
                           id="health-services-menu"
-                          className="absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2"
+                          className="mega-pop absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2"
                           role="navigation"
                           aria-label="Health services"
                           style={{

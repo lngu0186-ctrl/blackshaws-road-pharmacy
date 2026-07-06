@@ -286,15 +286,107 @@ p { max-width: 72ch; }
 
 .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; }
 
+/* ── Motion system ─────────────────────────────────────────────
+   Transform/opacity only. Content is hidden pre-reveal only when
+   JS is running (html.js-motion, set in main.tsx), so the site
+   stays fully readable without JS or when the observer fails. */
+
+:root {
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-reveal: 700ms;
+}
+
+.js-motion .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity var(--dur-reveal) var(--ease-out-soft) var(--reveal-delay, 0ms),
+    transform var(--dur-reveal) var(--ease-out-soft) var(--reveal-delay, 0ms);
+}
+.js-motion .reveal-scale { transform: translateY(14px) scale(0.975); }
+.js-motion .reveal.is-inview { opacity: 1; transform: none; }
+
+/* Hero entrance: each direct child rises in sequence on load */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+.js-motion .hero-choreo > * { animation: rise-in 0.7s var(--ease-out-soft) both; }
+.js-motion .hero-choreo > *:nth-child(2) { animation-delay: 90ms; }
+.js-motion .hero-choreo > *:nth-child(3) { animation-delay: 180ms; }
+.js-motion .hero-choreo > *:nth-child(4) { animation-delay: 260ms; }
+.js-motion .hero-choreo > *:nth-child(5) { animation-delay: 340ms; }
+.js-motion .hero-choreo > *:nth-child(6) { animation-delay: 420ms; }
+
+/* Hero image: slow settle on load, then scroll-linked drift where supported.
+   The 1.08 base scale gives the parallax translate room inside overflow-hidden. */
+@keyframes hero-settle {
+  from { transform: scale(1.14); }
+  to { transform: scale(1.08); }
+}
+.hero-img-settle { animation: hero-settle 2s var(--ease-out-soft) both; transform: scale(1.08); }
+
+@supports (animation-timeline: scroll(root)) {
+  @keyframes hero-drift { to { transform: translateY(7%); } }
+  .hero-parallax {
+    animation: hero-drift linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 120vh;
+  }
+}
+
+/* Ambient float for the hero phone mockup */
+@keyframes float-gentle { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+.float-gentle { animation: float-gentle 3.4s ease-in-out infinite alternate; }
+
+/* Mobile drawer choreography */
+@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes drawer-in { from { transform: translateX(-100%); } to { transform: none; } }
+.drawer-backdrop { animation: backdrop-in 0.25s ease-out both; }
+.drawer-panel { animation: drawer-in 0.32s var(--ease-out-soft) both; }
+[data-closing] .drawer-backdrop { animation: backdrop-in 0.2s ease-in reverse both; }
+[data-closing] .drawer-panel { animation: drawer-in 0.22s ease-in reverse both; }
+.drawer-stagger > * { animation: rise-in 0.45s var(--ease-out-soft) both; animation-delay: 320ms; }
+.drawer-stagger > *:nth-child(1) { animation-delay: 60ms; }
+.drawer-stagger > *:nth-child(2) { animation-delay: 125ms; }
+.drawer-stagger > *:nth-child(3) { animation-delay: 190ms; }
+.drawer-stagger > *:nth-child(4) { animation-delay: 255ms; }
+
+/* Desktop mega menu pop (final transform must keep the -50% centring) */
+@keyframes menu-pop {
+  from { opacity: 0; transform: translate(-50%, -8px) scale(0.985); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+.mega-pop { animation: menu-pop 0.22s var(--ease-out-soft) both; }
+
+/* Tab/panel content swap */
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.panel-in { animation: panel-in 0.35s var(--ease-out-soft) both; }
+
+/* Micro-interactions */
+.btn:active { transform: translateY(0) scale(0.98); }
+.icon-tile { transition: transform 260ms var(--ease-out-soft); }
+.group:hover .icon-tile,
+a:hover > .icon-tile { transform: scale(1.07) rotate(-3deg); }
+.footer-link { transition: transform 200ms var(--ease-out-soft), color 200ms ease; }
+.footer-link:hover { transform: translateX(3px); }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .animate-fade-in-up { animation: none; opacity: 1; }
+  .js-motion .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .js-motion .hero-choreo > * { animation: none; }
+  .hero-img-settle, .hero-parallax, .float-gentle { animation: none; }
   .btn:hover,
   .card:hover { transform: none; }
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }

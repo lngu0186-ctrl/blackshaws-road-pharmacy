@@ -11,11 +11,11 @@ export function HeroSection() {
 
   return (
     <section className="relative overflow-hidden bg-[var(--color-navy-deep)] text-white">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 hero-parallax">
         <img
           src="/hero-pharmacy.webp"
           alt="Blackshaws Road Pharmacy interior"
-          className="absolute inset-0 h-full w-full object-cover object-[center_20%] md:object-[center_30%]"
+          className="hero-img-settle absolute inset-0 h-full w-full object-cover object-[center_20%] md:object-[center_30%]"
           loading="eager"
           fetchPriority="high"
           decoding="async"
@@ -29,7 +29,7 @@ export function HeroSection() {
 
       <div className="container-custom relative z-10 py-10 md:py-14">
         <div className="grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="max-w-4xl">
+          <div className="hero-choreo max-w-4xl">
             <div className="flex flex-wrap gap-3">
               <span className="badge-red">Est. 1968</span>
               <span className="badge-soft">Open 7 days</span>
@@ -69,7 +69,9 @@ export function HeroSection() {
           </div>
 
           <div className="hidden lg:block">
-            <PhoneMockup />
+            <div className="float-gentle">
+              <PhoneMockup />
+            </div>
           </div>
         </div>
       </div>
