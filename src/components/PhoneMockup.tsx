@@ -97,9 +97,9 @@ export function PhoneMockup() {
                 <p className="text-[0.8rem] font-bold text-[var(--color-navy-deep)]">Opening Hours</p>
               </div>
               <div className="mt-2 space-y-1 text-[0.82rem] font-medium text-[var(--color-text-dark)]">
-                <div className="flex justify-between"><span>Mon – Fri</span><span className="font-medium text-[var(--color-navy-deep)]">8am – 9pm</span></div>
-                <div className="flex justify-between"><span>Saturday</span><span className="font-medium text-[var(--color-navy-deep)]">8am – 6pm</span></div>
-                <div className="flex justify-between"><span>Sunday</span><span className="font-medium text-[var(--color-navy-deep)]">10am – 5pm</span></div>
+                <div className="flex justify-between"><span>Mon – Fri</span><span className="font-medium text-[var(--color-navy-deep)]">8am – 8pm</span></div>
+                <div className="flex justify-between"><span>Saturday</span><span className="font-medium text-[var(--color-navy-deep)]">8am – 2pm</span></div>
+                <div className="flex justify-between"><span>Sunday</span><span className="font-medium text-[var(--color-navy-deep)]">8am – 1pm</span></div>
               </div>
             </div>
 
