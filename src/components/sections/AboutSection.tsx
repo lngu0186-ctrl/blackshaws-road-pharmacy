@@ -142,7 +142,7 @@ export function AboutSection() {
               </div>
             </div>
             <div className="mt-6">
-              <Link to="/contact" className="inline-flex items-center rounded-full bg-[var(--color-red)] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-red-hover)]">
+              <Link to="/contact" className="inline-flex items-center rounded-full bg-[var(--color-red)] px-5 py-3 text-sm font-semibold transition-colors hover:bg-[var(--color-red-hover)]" style={{ color: '#ffffff' }}>
                 Speak with our pharmacy team
               </Link>
             </div>

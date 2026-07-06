@@ -77,7 +77,7 @@ export function Footer() {
             <h4 className="mt-3 font-serif text-2xl">Speak with the pharmacy team.</h4>
             <p className="mt-3 text-sm text-white/72">We can guide you on bookings, prescriptions, vaccination eligibility and the right care pathway.</p>
             <div className="mt-5 flex flex-wrap gap-3">
-              <a href="tel:0393913257" className="inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-[var(--color-navy-deep)]">Call (03) 9391 3257</a>
+              <a href="tel:0393913257" className="inline-flex rounded-full bg-red-600 px-5 py-3 text-sm font-semibold text-white">Call (03) 9391 3257</a>
               <a href="/faq" className="inline-flex rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:bg-white/8">Read FAQs</a>
             </div>
           </div>
