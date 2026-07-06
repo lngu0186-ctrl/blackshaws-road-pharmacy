@@ -55,7 +55,7 @@ export function VaccinationsSection() {
                 </div>
                 <div className="rounded-[26px] bg-[var(--color-navy-deep)] p-6 text-white">
                   <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/60">Need advice?</p>
-                  <p className="mt-3 text-lg font-semibold">Our pharmacists can help you check eligibility, timing and vaccine history.</p>
+                  <p className="mt-3 text-base font-semibold leading-relaxed">Vaccine eligibility, funding, and age thresholds change regularly — especially pneumococcal and RSV vaccines, which were updated in 2026. Our pharmacists can check your eligibility and vaccination history against the Australian Immunisation Register before you book.</p>
                   <a href={activeContent.content.cta.url} target={activeContent.content.cta.url.startsWith('http') ? '_blank' : undefined} rel={activeContent.content.cta.url.startsWith('http') ? 'noopener noreferrer' : undefined} className="mt-5 inline-block">
                     <Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">{activeContent.content.cta.text}</Button>
                   </a>
