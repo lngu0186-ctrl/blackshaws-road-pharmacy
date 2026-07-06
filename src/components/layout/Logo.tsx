@@ -1,6 +1,7 @@
 /** Logo — renders the official brand artwork linked to the homepage. */
 import { Link } from 'react-router-dom'
 import { cn } from '../../utils/cn'
+import logoWhite2026 from '../../../public/logo-white-2026.png.asset.json'
 
 interface LogoProps {
   className?: string
@@ -16,11 +17,11 @@ const logoMap = {
     mark: '/logo-mark-512.png',
   },
   dark: {
-    wordmark: '/logo-white.png',
+    wordmark: logoWhite2026.url,
     mark: '/logo-mark-512.png',
   },
   white: {
-    wordmark: '/logo-white.png',
+    wordmark: logoWhite2026.url,
     mark: '/logo-mark-512.png',
   },
 } as const
