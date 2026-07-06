@@ -1,37 +1,37 @@
 import { useRef } from 'react'
 import { Button } from '../ui/Button'
-import { IconContraceptive, IconUTI, IconShingles, IconPsoriasis, IconVaccinations, IconImpetigo } from './ChemistCareCards'
+import { Pill, Droplets, Sparkles, HandHeart, Plane, Baby } from 'lucide-react'
 
 interface ChemistCareNowSectionProps { id?: string }
 
 const chemistCareServices = [
   {
-    icon: IconContraceptive,
+    icon: Pill,
     title: 'Contraceptive options',
     description: 'Is your contraceptive running low? If you have a previous prescription, you might be able to get a resupply from your chemist.'
   },
   {
-    icon: IconUTI,
+    icon: Droplets,
     title: 'Urinary tract infections',
     description: 'Frequent bathroom visits? A burning sensation when you pee? You may have a UTI. Treatment may be available at your chemist.'
   },
   {
-    icon: IconShingles,
+    icon: Sparkles,
     title: 'Shingles',
     description: 'A painful blistering rash or a tingling, burning sensation on the skin? You may have shingles. If you are 18 or older treatment is available.'
   },
   {
-    icon: IconPsoriasis,
+    icon: HandHeart,
     title: 'Psoriasis',
     description: 'Has your psoriasis flared up? You may be able to get a resupply of your cream or ointment.'
   },
   {
-    icon: IconVaccinations,
+    icon: Plane,
     title: 'Vaccinations for travel',
     description: 'Heading overseas? A range of travel vaccinations can be administered by your chemist.'
   },
   {
-    icon: IconImpetigo,
+    icon: Baby,
     title: 'Impetigo (school sores)',
     description: 'Red sores on the face or body? You may have impetigo (school sores). Treatment may be available at your chemist.'
   }
