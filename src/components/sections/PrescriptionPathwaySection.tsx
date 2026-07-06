@@ -6,18 +6,18 @@ import { useUploadPrescriptionStore } from '../../stores/uploadPrescriptionStore
 const steps = [
   {
     icon: FileText,
-    title: 'Send your prescription',
-    description: 'Upload a clear image of your script or call the team if you need guidance before submitting.',
+    title: 'Send it or bring it in',
+    description: 'Upload a photo of your script, send your eScript token, or drop the paper script at the counter.',
   },
   {
     icon: ShieldCheck,
-    title: 'Pharmacist review',
-    description: 'We check the prescription details, medicine availability and anything that may need a quick follow-up call.',
+    title: 'We prepare it',
+    description: 'A pharmacist checks and dispenses your medicine, and calls you if anything needs clarifying.',
   },
   {
     icon: PackageCheck,
-    title: 'Pickup confirmation',
-    description: 'Once ready, the team can confirm collection timing and any important counselling points for safe use.',
+    title: 'Pick it up',
+    description: 'Collect in store when it suits you, or ask us about delivery options for regular medicines.',
   },
 ]
 
@@ -28,10 +28,10 @@ export function PrescriptionPathwaySection() {
       <div className="container-custom">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
-            <p className="section-label" style={{ color: 'var(--color-navy)' }}>Prescriptions made easier</p>
-            <h2 className="text-[var(--color-navy)]">Upload your prescription here</h2>
+            <p className="section-label" style={{ color: 'var(--color-navy)' }}>Prescriptions</p>
+            <h2 className="text-[var(--color-navy)]">Getting your script filled is simple</h2>
             <p className="mt-5 text-lg leading-relaxed text-[var(--color-text-muted)]">
-              For patients who want less waiting and more certainty, we offer a simple prescription pathway backed by real pharmacist oversight. It is designed for convenience without sounding like medicine is guaranteed before review.
+              Send your script ahead so it is ready when you arrive, or bring it in and we will sort it while you wait. Questions about a new medicine? Our pharmacists will walk you through how to take it.
             </p>
 
             <div className="mt-8 rounded-[30px] bg-[var(--color-navy-deep)] p-6 text-white md:p-7">

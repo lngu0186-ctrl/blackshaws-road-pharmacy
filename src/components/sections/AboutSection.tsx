@@ -1,6 +1,3 @@
-'use client'
-
-import { useRef } from 'react'
 import { Users, Award, HeartHandshake, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Logo } from '../layout/Logo'
@@ -24,70 +21,44 @@ const teamHighlights = [
 ]
 
 export function AboutSection() {
-  const introRef = useRef(null)
-  const isIntroInView = true
-
-  const historyRef = useRef(null)
-  const isHistoryInView = true
-
-  const teamRef = useRef(null)
-  const isTeamInView = true
-
   return (
     <section id="about" className="section-padding bg-alt">
       <div className="container-custom">
-        {/* Intro: headline + two paragraphs */}
-        <div
-          ref={introRef}
-          className="max-w-3xl mb-16"
-          style={{
-            opacity: isIntroInView ? 1 : 0,
-            transform: `translateY(${isIntroInView ? 0 : '30px'})`,
-            transition: 'opacity 0.8s ease, transform 0.8s ease',
-          }}
-        >
+        {/* Intro */}
+        <div className="max-w-3xl mb-16">
+          <p className="section-label" style={{ color: 'var(--color-navy)' }}>Our story</p>
           <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6" style={{ color: 'var(--color-navy)' }}>
-            Your local pharmacy, backed by national strength
+            Part of Altona North since 1968
           </h2>
           <p className="text-lg text-[var(--color-gray-600)] leading-relaxed mb-5">
-            Since 1968, Blackshaws Road Pharmacy has been a trusted part of the Altona North community. As a proud member of Independent Pharmacies Australia (IPA), we combine the personaltouch of an independent local pharmacy with the resources and clinical rigour of Australia's largest independent pharmacy network.
+            Blackshaws Road Pharmacy has served Altona North, Brooklyn, South Kingsville, and the surrounding suburbs for over five decades. We are an independent, family-run pharmacy, and a member of Independent Pharmacies Australia, which gives a local business the training and resources of a national network.
           </p>
           <p className="text-lg text-[var(--color-gray-600)] leading-relaxed">
-            Whether it&apos;s everyday healthcare, prescription management, vaccinations, or our Chemist Care Now service, you&apos;ll always find expert advice and genuine care from people who know your name.
+            Many of our customers have been coming here since they were kids. Whether you need a script filled, a vaccination, or honest advice about a medicine, you will get a straight answer from someone local.
           </p>
         </div>
 
         {/* History block */}
-        <div
-          ref={historyRef}
-          className="grid lg:grid-cols-2 gap-16 items-center mb-24"
-          style={{
-            opacity: isHistoryInView ? 1 : 0,
-            transform: `translateY(${isHistoryInView ? 0 : '30px'})`,
-            transition: 'opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s',
-          }}
-        >
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
           <div className="order-2 lg:order-1">
             <h3 className="text-2xl md:text-3xl font-serif font-bold mb-6" style={{ color: 'var(--color-navy)' }}>
-              55+ years of community health
+              Over five decades of community health
             </h3>
             <p className="text-[var(--color-gray-600)] mb-4 leading-relaxed">
-              Founded in 1968, we&apos;ve grown with the community, adapting to new health challenges while never losing sight of what makes a pharmacy great: trust, accessibility, and compassionate care.
+              Founded in 1968, we have grown with the community, adapting to new health challenges without losing sight of what makes a pharmacy useful: trust, access, and care that feels personal.
             </p>
             <p className="text-[var(--color-gray-600)] mb-4 leading-relaxed">
-              Today, our team of registered pharmacists brings together decades of combined experience. We don&apos;t just dispense medication — we listen, advise, and support you through every health journey.
+              Our pharmacists do more than dispense medicines. They listen, explain, and help you make sense of your treatment, in plain language.
             </p>
           </div>
+          {/* TODO(owner): replace this graphic card with a real photo of the shop or team when available (see design/visual-assets-plan.md, photo-team.webp). */}
           <div className="order-1 lg:order-2 relative h-80 rounded-2xl overflow-hidden border border-[var(--color-gray-200)] bg-white shadow-md">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(192,57,43,0.12),transparent_34%),linear-gradient(180deg,rgba(27,42,107,0.02),rgba(27,42,107,0.08))]" />
             <div className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-[var(--color-navy-soft)]/70 blur-2xl" />
-            <div className="absolute bottom-5 right-5 opacity-[0.06]">
-              <Logo className="h-20 w-[12rem]" imageClassName="object-contain" />
-            </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
               <Logo className="h-16 max-w-[220px] mb-4" imageClassName="opacity-70 object-contain" />
               <p className="text-5xl font-serif font-bold mb-2" style={{ color: 'var(--color-navy)' }}>1968</p>
-              <p className="text-sm text-[var(--color-gray-600)] uppercase tracking-wider">Your trusted local pharmacy</p>
+              <p className="text-sm text-[var(--color-gray-600)] uppercase tracking-wider">Your local pharmacy</p>
               <div className="mt-6 flex items-center gap-2">
                 <span className="px-3 py-1 text-xs font-semibold rounded-full" style={{ backgroundColor: 'var(--color-red)', color: 'white' }}>
                   Est. 1968
@@ -101,30 +72,22 @@ export function AboutSection() {
         </div>
 
         {/* Team & IPA */}
-        <div
-          ref={teamRef}
-          className="grid lg:grid-cols-2 gap-16 items-center"
-          style={{
-            opacity: isTeamInView ? 1 : 0,
-            transform: `translateY(${isTeamInView ? 0 : '30px'})`,
-            transition: 'opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s',
-          }}
-        >
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <p className="section-label" style={{ color: 'var(--color-navy)' }}>Our pharmacists</p>
             <h3 className="text-2xl md:text-3xl font-serif font-bold mb-6" style={{ color: 'var(--color-navy)' }}>
-              Expert pharmacists you can trust
+              Pharmacists you can talk to
             </h3>
             <p className="text-[var(--color-gray-600)] mb-4 leading-relaxed">
-              Our pharmacists are registered with AHPRA and undergo continuous professional development to stay at the forefront of clinical practice. From immunisations to medication reviews, from chronic disease management to specialist compounding, we bring expertise and empathy to every consultation.
+              Our pharmacists are registered with AHPRA and keep their training current. From immunisations to medication reviews to compounding support, you can expect clear explanations and practical help, not a rushed handover.
             </p>
             <p className="text-[var(--color-gray-600)] mb-6 leading-relaxed">
-              As an IPA member, we&apos;re part of a nationwide network that shares best practices, clinical protocols, and training resources. This means you receive local, personal service backed by national standards of excellence.
+              As an IPA member pharmacy, we share clinical protocols and training with independent pharmacies across Australia. You get local, personal service with solid clinical backing.
             </p>
             <div className="grid gap-4 sm:grid-cols-3">
               {teamHighlights.map(({ name, role, icon: Icon }) => (
                 <div key={name} className="rounded-2xl border border-[var(--color-gray-200)] bg-white p-4 shadow-sm">
-                  <Icon className="h-6 w-6 text-[var(--color-red)]" />
+                  <Icon aria-hidden="true" className="h-6 w-6 text-[var(--color-red)]" />
                   <p className="mt-3 text-sm font-semibold" style={{ color: 'var(--color-navy)' }}>{name}</p>
                   <p className="mt-2 text-sm leading-relaxed text-[var(--color-gray-600)]">{role}</p>
                 </div>
@@ -151,24 +114,24 @@ export function AboutSection() {
             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[var(--color-red-light)] to-[var(--color-navy)] opacity-10" />
             <div className="relative grid gap-4 p-6">
               <div className="flex items-center gap-3 rounded-2xl border border-[var(--color-gray-200)] bg-white/95 p-4">
-                <Users className="h-10 w-10 text-[var(--color-navy)]" />
+                <Users aria-hidden="true" className="h-10 w-10 text-[var(--color-navy)]" />
                 <div>
                   <p className="text-sm font-semibold text-[var(--color-navy)]">Dedicated local team</p>
                   <p className="text-xs text-[var(--color-gray-600)]">Pharmacists, dispensary technicians, and support staff focused on continuity of care.</p>
                 </div>
               </div>
               <div className="rounded-2xl border border-[var(--color-gray-200)] bg-[var(--color-surface-alt)] p-5">
-                <p className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-red)]">What patients can expect</p>
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-red)]">What you can expect</p>
                 <ul className="mt-4 space-y-3 text-sm text-[var(--color-gray-600)]">
                   <li>• Clear medicine counselling in plain language</li>
                   <li>• Respectful help with sensitive health concerns</li>
-                  <li>• Practical coordination with GPs and other care providers</li>
+                  <li>• Practical coordination with your GP and other providers</li>
                   <li>• Support across vaccinations, medication reviews, and everyday care</li>
                 </ul>
               </div>
               <div className="rounded-2xl bg-[var(--color-navy)] p-5 text-white">
-                <p className="text-3xl font-serif font-bold">55+ years</p>
-                <p className="mt-2 text-sm text-white/80">Serving Altona North since 1968 with independent, community-based care.</p>
+                <p className="text-3xl font-serif font-bold">Since 1968</p>
+                <p className="mt-2 text-sm text-white/85">Independent, community-based care in Altona North.</p>
               </div>
             </div>
           </div>

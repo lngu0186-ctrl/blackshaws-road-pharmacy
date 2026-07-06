@@ -6,10 +6,8 @@ import { ShopCategories } from './components/sections/ShopCategories'
 import { TrustBar } from './components/sections/TrustBar'
 import { ChemistCareNowSection } from './components/sections/ChemistCareNowSection'
 import { VaccinationsSection } from './components/sections/VaccinationsSection'
-import { GoogleReviewsWidget } from './components/sections/GoogleReviewsWidget'
 import { ServicesSection } from './components/sections/ServicesSection'
 import { AboutSection } from './components/sections/AboutSection'
-import { HealthInfoSection } from './components/sections/HealthInfoSection'
 import { LocationSection } from './components/sections/LocationSection'
 import { PrescriptionPathwaySection } from './components/sections/PrescriptionPathwaySection'
 import { PatientTrustSection } from './components/sections/PatientTrustSection'
@@ -95,18 +93,16 @@ function App() {
               <Route path="/" element={
                 <>
                   <HeroSection />
-                  <PrescriptionPathwaySection />
                   <TrustBar />
                   <ServicesSection />
-                  <ShopCategories />
-                  <ChemistCareNowSection id="chemist-care" />
+                  <PrescriptionPathwaySection />
                   <VaccinationsSection />
-                  <GoogleReviewsWidget />
+                  <ChemistCareNowSection id="chemist-care" />
+                  <ShopCategories />
                   <PatientTrustSection />
                   <AboutSection />
-                  <FaqPreviewSection />
-                  <HealthInfoSection />
                   <LocationSection />
+                  <FaqPreviewSection />
                 </>
               } />
             </Routes>

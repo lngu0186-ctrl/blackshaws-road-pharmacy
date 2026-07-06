@@ -27,8 +27,8 @@ export function FaqPreviewSection() {
         <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
           <div>
             <p className="section-label" style={{ color: 'var(--color-navy)' }}>Frequently asked questions</p>
-            <h2 className="text-[var(--color-navy)]">Practical answers for scripts, bookings and pharmacy care.</h2>
-            <p className="mt-4 text-lg text-[var(--color-text-muted)]">A cleaner FAQ helps reduce friction before patients call. The full page covers prescriptions, services, shopping and general policy notes.</p>
+            <h2 className="text-[var(--color-navy)]">Questions we hear a lot.</h2>
+            <p className="mt-4 text-lg text-[var(--color-text-muted)]">Quick answers about scripts, bookings and pharmacy care. The full FAQ covers prescriptions, services, shopping and store policies.</p>
             <Link to="/faq" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-navy)]">
               View all FAQs <ChevronRight className="h-4 w-4" />
             </Link>

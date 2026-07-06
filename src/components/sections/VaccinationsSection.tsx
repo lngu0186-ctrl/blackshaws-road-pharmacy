@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Button } from '../ui/Button'
 import { Shield, Baby, Users, Heart, BabyIcon, Plane, AlertCircle } from 'lucide-react'
 
@@ -13,17 +13,15 @@ const vaccineTabs = [
 
 export function VaccinationsSection() {
   const [activeTab, setActiveTab] = useState('infants')
-  const ref = useRef(null)
-  const isInView = true
   const activeContent = vaccineTabs.find((tab) => tab.id === activeTab)
 
   return (
     <section id="vaccination" className="section-padding bg-white">
-      <div className="container-custom" ref={ref}>
+      <div className="container-custom">
         <div className="mb-12 max-w-3xl">
           <p className="section-label" style={{ color: 'var(--color-navy)' }}>Immunisation services</p>
-          <h2 className="text-[var(--color-navy)]">Accredited vaccination care for each stage of life.</h2>
-          <p className="mt-4 text-lg text-[var(--color-text-muted)]">We provide a more reassuring, easier-to-navigate vaccination experience for families, adults, travellers and high-risk patients — with trusted pharmacist support at every step.</p>
+          <h2 className="text-[var(--color-navy)]">Vaccinations for every stage of life.</h2>
+          <p className="mt-4 text-lg text-[var(--color-text-muted)]">Book online or ask at the counter. Our accredited pharmacist immunisers look after families, adults, travellers and high-risk patients. Eligibility and vaccine availability vary, so call us if you are not sure.</p>
         </div>
 
         <div className="grid gap-8 lg:grid-cols-[0.74fr_1.26fr] lg:items-start">
@@ -36,7 +34,7 @@ export function VaccinationsSection() {
           </div>
 
           {activeContent && (
-            <div className="rounded-[34px] border border-[var(--color-border)] bg-white p-7 shadow-[0_26px_70px_-44px_rgba(16,24,63,0.25)] md:p-10" style={{ opacity: isInView ? 1 : 0, transform: `translateY(${isInView ? 0 : '16px'})`, transition: 'opacity 0.6s ease, transform 0.6s ease' }}>
+            <div className="rounded-[34px] border border-[var(--color-border)] bg-white p-7 shadow-[0_26px_70px_-44px_rgba(16,24,63,0.25)] md:p-10">
               <div className="flex items-center gap-3">
                 <div className="flex h-13 w-13 items-center justify-center rounded-[20px] bg-[var(--color-navy-soft)] text-[var(--color-navy)]"><activeContent.icon className="h-6 w-6" /></div>
                 <div>

@@ -1,12 +1,14 @@
-import { Link } from 'react-router-dom'
 import { Button } from '../ui/Button'
 import { Clock3, MapPin, Phone } from 'lucide-react'
 import { Logo } from '../layout/Logo'
 import { PhoneMockup } from '../PhoneMockup'
 import { useUploadPrescriptionStore } from '../../stores/uploadPrescriptionStore'
+import { getOpenStatus, pharmacyInfo } from '../../data/pharmacyInfo'
 
 export function HeroSection() {
   const openUpload = useUploadPrescriptionStore((s) => s.open)
+  const openStatus = getOpenStatus()
+
   return (
     <section className="relative overflow-hidden bg-[var(--color-navy-deep)] text-white">
       <div className="absolute inset-0">
@@ -25,12 +27,12 @@ export function HeroSection() {
         <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-white/6 blur-3xl" />
       </div>
 
-      <div className="container-custom relative z-10 py-8 md:py-12">
+      <div className="container-custom relative z-10 py-10 md:py-14">
         <div className="grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="max-w-4xl">
             <div className="flex flex-wrap gap-3">
-              <span className="badge-red">EST. 1968</span>
-              <span className="badge-soft">Alliance Pharmacy member</span>
+              <span className="badge-red">Est. 1968</span>
+              <span className="badge-soft">Open 7 days</span>
             </div>
 
             <div className="mt-6 md:mt-7">
@@ -42,19 +44,27 @@ export function HeroSection() {
               />
             </div>
 
-            <h1 className="mt-7 max-w-4xl text-white md:mt-8">Altona North's Family Chemist since 1968</h1>
+            <h1 className="mt-7 max-w-4xl text-white md:mt-8">Your local pharmacy on Blackshaws Road</h1>
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/85">
+              Prescriptions, vaccinations, and practical health advice for Altona North. Family owned since 1968.
+            </p>
 
-            <div className="mt-8 flex flex-wrap gap-3 text-sm text-white/76">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2"><MapPin className="h-4 w-4" /> 310A Blackshaws Road, Altona North</span>
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2"><Clock3 className="h-4 w-4" /> Open 7 days</span>
-              <a href="tel:0393913257" className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 hover:bg-white/8"><Phone className="h-4 w-4" /> (03) 9391 3257</a>
+            <div className="mt-8 flex flex-wrap gap-3 text-sm text-white/85">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2"><MapPin aria-hidden="true" className="h-4 w-4" /> {pharmacyInfo.addressShort}</span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2">
+                <Clock3 aria-hidden="true" className="h-4 w-4" />
+                <span className={`h-2 w-2 rounded-full ${openStatus.isOpen ? 'bg-emerald-400' : 'bg-amber-400'}`} aria-hidden="true" />
+                {openStatus.label}
+              </span>
+              <a href={pharmacyInfo.phoneHref} className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 hover:bg-white/8"><Phone aria-hidden="true" className="h-4 w-4" /> {pharmacyInfo.phone}</a>
             </div>
 
-            <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+            <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
               <Button variant="red" size="lg" onClick={openUpload}>Upload a prescription</Button>
-              <Link to="/compounding"><Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">Compounding support</Button></Link>
-              <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer"><Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">Book a vaccination</Button></a>
-              <Link to="/contact"><Button variant="ghost" size="lg" className="text-white hover:bg-white/10">Call or contact us</Button></Link>
+              <a href={pharmacyInfo.vaccinationBookingUrl} target="_blank" rel="noopener noreferrer"><Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]">Book a vaccination</Button></a>
+              <a href={pharmacyInfo.phoneHref} className="inline-flex items-center gap-2 text-sm font-semibold text-white/85 underline decoration-white/40 underline-offset-4 hover:text-white sm:ml-2">
+                Or call {pharmacyInfo.phone}
+              </a>
             </div>
           </div>
 
