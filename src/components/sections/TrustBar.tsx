@@ -9,7 +9,7 @@ const facts = [
   {
     icon: CalendarClock,
     title: 'Open 7 days',
-    description: 'Weekdays until 9:00 pm, plus Saturday and Sunday hours.',
+    description: 'Weekdays until 8:00 pm, plus Saturday and Sunday hours.',
   },
   {
     icon: ShieldCheck,

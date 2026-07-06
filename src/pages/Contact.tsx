@@ -7,9 +7,9 @@ import { usePageSeo } from '../lib/seo'
 import { useUploadPrescriptionStore } from '../stores/uploadPrescriptionStore'
 
 const hours = [
-  { label: 'Monday–Friday', value: '8:00 AM – 9:00 PM' },
-  { label: 'Saturday', value: '8:00 AM – 6:00 PM' },
-  { label: 'Sunday', value: '10:00 AM – 5:00 PM' },
+  { label: 'Monday–Friday', value: '8:00 AM – 8:00 PM' },
+  { label: 'Saturday', value: '8:00 AM – 2:00 PM' },
+  { label: 'Sunday', value: '8:00 AM – 1:00 PM' },
 ]
 
 export default function Contact() {
