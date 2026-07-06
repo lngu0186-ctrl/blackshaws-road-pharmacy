@@ -116,7 +116,7 @@ export default function Services() {
         <div className="container-custom">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-white">Need help choosing the right service?</h2>
-            <p className="mt-4 text-lg text-white/76">Our pharmacists can guide you to the most appropriate service, booking pathway or next clinical step — including when a GP or urgent review is more appropriate.</p>
+            <p className="mt-4 text-lg text-white/76">Our pharmacists can guide you to the most appropriate service, booking pathway or next clinical step, including when a GP or urgent review is more appropriate.</p>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <a href="tel:0393913257"><Button variant="outline" size="lg" className="border-white/20 bg-white/10 text-white hover:bg-white hover:text-[var(--color-navy)]"><Phone className="mr-2 h-5 w-5" /> Call: (03) 9391 3257</Button></a>
               <a href="https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist" target="_blank" rel="noopener noreferrer"><Button variant="red" size="lg">Book online where available</Button></a>

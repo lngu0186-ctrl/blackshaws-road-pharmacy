@@ -475,19 +475,19 @@ export default function ProductDetail() {
               <ul className="space-y-3 text-sm text-[var(--color-text-muted)]">
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--color-red)]" />
-                  <span><strong className="text-[var(--color-navy)]">Sourced from authorised distributors</strong> — genuine products with full supply chain traceability</span>
+                  <span><strong className="text-[var(--color-navy)]">Sourced from authorised distributors</strong>, genuine products with full supply chain traceability</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--color-red)]" />
-                  <span><strong className="text-[var(--color-navy)]">Pharmacist advice available</strong> — speak with our team about this product before or after purchase</span>
+                  <span><strong className="text-[var(--color-navy)]">Pharmacist advice available</strong>, speak with our team about this product before or after purchase</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--color-red)]" />
-                  <span><strong className="text-[var(--color-navy)]">Free click & collect</strong> — order online and pick up at 310A Blackshaws Road, Altona North</span>
+                  <span><strong className="text-[var(--color-navy)]">Free click & collect</strong>, order online and pick up at 310A Blackshaws Road, Altona North</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--color-red)]" />
-                  <span><strong className="text-[var(--color-navy)]">Secure checkout</strong> — your payment and personal data are protected</span>
+                  <span><strong className="text-[var(--color-navy)]">Secure checkout</strong>, your payment and personal data are protected</span>
                 </li>
               </ul>
             </div>

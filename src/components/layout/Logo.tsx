@@ -38,7 +38,7 @@ export function Logo({
   return (
     <Link
       to="/"
-      aria-label="Blackshaws Road Pharmacy — return to homepage"
+      aria-label="Blackshaws Road Pharmacy, return to homepage"
       className={cn('inline-flex min-w-0 shrink-0 items-center overflow-hidden focus-visible:outline-none', className)}
     >
       <img

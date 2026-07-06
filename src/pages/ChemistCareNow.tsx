@@ -107,7 +107,7 @@ export default function ChemistCareNow() {
             <p className="section-label !text-white/70">Victorian Government-backed care</p>
             <h1 className="max-w-4xl text-white">Chemist Care Now</h1>
             <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">
-              Faster, more convenient care for eligible everyday conditions — delivered by your
+              Faster, more convenient care for eligible everyday conditions, delivered by your
               local pharmacist with the same clinical rigour and safety you expect from a
               trusted community pharmacy.
             </p>

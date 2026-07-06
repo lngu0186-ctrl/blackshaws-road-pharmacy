@@ -1,26 +1,7 @@
-'use client'
-
 import { MapPin, Phone, Clock, Car } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { BrandSignature } from '../layout/BrandSignature'
-
-const hours = [
-  { day: 'Monday', open: '8:00 AM', close: '9:00 PM' },
-  { day: 'Tuesday', open: '8:00 AM', close: '9:00 PM' },
-  { day: 'Wednesday', open: '8:00 AM', close: '9:00 PM' },
-  { day: 'Thursday', open: '8:00 AM', close: '9:00 PM' },
-  { day: 'Friday', open: '8:00 AM', close: '9:00 PM' },
-  { day: 'Saturday', open: '8:00 AM', close: '6:00 PM' },
-  { day: 'Sunday', open: '10:00 AM', close: '5:00 PM' },
-]
-
-const pharmacyInfo = {
-  address: '310A Blackshaws Road, Altona North VIC 3025',
-  phone: '(03) 9391 3257',
-  mobile: '0406 692 267',
-  email: 'info@blackshawsroadpharmacy.com.au',
-  parking: 'Parking available on Blackshaws Road',
-}
+import { displayHours, getOpenStatus, pharmacyInfo } from '../../data/pharmacyInfo'
 
 export function LocationSection() {
   return (
@@ -43,7 +24,7 @@ export function LocationSection() {
           <div>
             <p className="section-label" style={{ color: 'var(--color-red)' }}>VISIT US</p>
             <h2 className="mb-8" style={{ color: 'var(--color-navy)' }}>
-              Find us in Altona North
+              Find us on Blackshaws Road
             </h2>
             <div className="mb-8">
               <BrandSignature className="max-w-xl" />
@@ -78,16 +59,20 @@ export function LocationSection() {
                   <Clock className="w-5 h-5" style={{ color: 'var(--color-navy)' }} />
                 </div>
                 <div className="flex-grow">
-                  <h4 className="font-semibold mb-3" style={{ color: 'var(--color-navy)' }}>Opening Hours</h4>
+                  <h4 className="font-semibold mb-1" style={{ color: 'var(--color-navy)' }}>Opening Hours</h4>
+                  <p className="mb-3 text-sm font-semibold" style={{ color: getOpenStatus().isOpen ? 'var(--color-sage)' : 'var(--color-red)' }}>{getOpenStatus().label}</p>
                   <div className="space-y-2">
-                    {hours.map((item) => (
-                      <div key={item.day} className="flex justify-between text-sm border-b border-[var(--color-gray-200)] pb-2">
-                        <span className="text-[var(--color-gray-600)] font-medium">{item.day}</span>
-                        <span className="font-semibold" style={{ color: 'var(--color-navy)' }}>
-                          {item.open} – {item.close}
-                        </span>
-                      </div>
-                    ))}
+                    {displayHours.map((item) => {
+                      const isToday = item.day === getOpenStatus().todayHours.day
+                      return (
+                        <div key={item.day} className={`flex justify-between text-sm border-b border-[var(--color-gray-200)] pb-2 ${isToday ? 'font-bold' : ''}`}>
+                          <span className={`font-medium ${isToday ? 'text-[var(--color-navy)]' : 'text-[var(--color-gray-600)]'}`}>{item.day}{isToday ? ' (today)' : ''}</span>
+                          <span className="font-semibold" style={{ color: 'var(--color-navy)' }}>
+                            {item.openLabel} – {item.closeLabel}
+                          </span>
+                        </div>
+                      )
+                    })}
                   </div>
                 </div>
               </div>

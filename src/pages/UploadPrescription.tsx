@@ -257,7 +257,7 @@ export default function UploadPrescription() {
                 </div>
                 <input ref={fileInputRef} type="file" accept=".jpg,.jpeg,.png,.webp,.pdf" multiple onChange={handleFileChange} className="hidden" />
                 <input ref={cameraInputRef} type="file" accept="image/*" capture="environment" onChange={handleFileChange} className="hidden" />
-                <p className="mt-2 text-xs text-[var(--color-text-muted)]">JPG, PNG, WebP or PDF — maximum 10 MB per file</p>
+                <p className="mt-2 text-xs text-[var(--color-text-muted)]">JPG, PNG, WebP or PDF, maximum 10 MB per file</p>
                 {fieldErrors.files && <p className="mt-1 text-xs text-[var(--color-red)]">{fieldErrors.files}</p>}
               </div>
 
@@ -292,7 +292,7 @@ export default function UploadPrescription() {
               <div className="flex items-start gap-3 rounded-2xl bg-[var(--color-surface-alt)] p-4">
                 <Shield className="h-5 w-5 text-[var(--color-navy)] shrink-0 mt-0.5" />
                 <p className="text-xs text-[var(--color-text-muted)]">
-                  <span className="font-semibold text-[var(--color-text-dark)]">Privacy notice:</span> Your health information is handled in accordance with the Australian Privacy Principles under the Privacy Act 1988. We do not store your prescription data beyond processing — it is sent directly to our pharmacist team.
+                  <span className="font-semibold text-[var(--color-text-dark)]">Privacy notice:</span> Your health information is handled in accordance with the Australian Privacy Principles under the Privacy Act 1988. We do not store your prescription data beyond processing, it is sent directly to our pharmacist team.
                 </p>
               </div>
 
@@ -319,7 +319,7 @@ export default function UploadPrescription() {
               <h3 className="font-serif text-xl font-semibold text-[var(--color-navy-deep)]">Tips for a great photo</h3>
               <ul className="mt-4 space-y-3 text-sm text-[var(--color-text-muted)]">
                 {[
-                  'Photograph the entire prescription — all edges visible',
+                  'Photograph the entire prescription, all edges visible',
                   'Use good lighting with no shadows across the text',
                   'Make sure all text and barcodes are sharp and readable',
                   'Include the prescriber’s details and date',

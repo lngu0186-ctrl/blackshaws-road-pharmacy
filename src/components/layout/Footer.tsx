@@ -1,5 +1,6 @@
 import { Phone, Mail, Award, Shield, MapPin, ArrowUpRight, Clock3 } from 'lucide-react'
 import { Logo } from './Logo'
+import { hoursSummary, pharmacyInfo } from '../../data/pharmacyInfo'
 import { useUploadPrescriptionStore } from '../../stores/uploadPrescriptionStore'
 
 type FooterLink = { label: string; href: string; target?: string; action?: 'upload' }
@@ -36,13 +37,11 @@ export function Footer() {
         <div className="mb-14 grid gap-10 rounded-[32px] border border-white/10 bg-white/5 p-8 backdrop-blur-sm lg:grid-cols-[1.3fr_0.8fr_0.8fr_0.9fr]">
           <div>
             <Logo variant="dark" className="h-16 max-w-[260px] md:h-[4.5rem] md:max-w-[320px]" imageClassName="drop-shadow-[0_14px_34px_rgba(0,0,0,0.28)]" />
-            <p className="mt-7 max-w-[34rem] text-base leading-relaxed text-white/74">A trusted Altona North pharmacy blending expert community care with convenient everyday health support, vaccinations and online shopping.</p>
+            <p className="mt-7 max-w-[34rem] text-base leading-relaxed text-white/80">Your local pharmacy in Altona North. Prescriptions, vaccinations, everyday health advice and online shopping, 7 days a week.</p>
             <div className="mt-6 flex flex-wrap gap-3">
+              {/* TODO(owner): confirm membership wording (Alliance Pharmacy vs Independent Pharmacies Australia) */}
               <div className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
-                <Shield className="h-4 w-4 text-[var(--color-red)]" /> Alliance Pharmacy member since 1968
-              </div>
-              <div className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/6 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
-                <Logo variant="dark" className="h-6 w-[6.75rem]" imageClassName="object-contain" /> Community trusted branding
+                <Shield className="h-4 w-4 text-[var(--color-red)]" /> Serving Altona North since 1968
               </div>
             </div>
           </div>
@@ -53,10 +52,18 @@ export function Footer() {
           <div>
             <h4 className="font-serif text-xl font-semibold">Visit or call</h4>
             <div className="mt-6 space-y-4 text-sm text-white/78">
-              <p className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> 310A Blackshaws Road, Altona North VIC 3025</p>
-              <p className="flex items-start gap-3"><Clock3 className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> Monday–Friday 8:00 AM–9:00 PM · Saturday 8:00 AM–6:00 PM · Sunday 10:00 AM–5:00 PM</p>
-              <a href="tel:0393913257" className="flex items-center gap-3 hover:text-white"><Phone className="h-4 w-4 text-[var(--color-red)]" /> (03) 9391 3257</a>
-              <a href="mailto:info@blackshawsroadpharmacy.com.au" className="flex items-center gap-3 hover:text-white"><Mail className="h-4 w-4 text-[var(--color-red)]" /> info@blackshawsroadpharmacy.com.au</a>
+              <p className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 text-[var(--color-red)]" /> {pharmacyInfo.address}</p>
+              <div className="flex items-start gap-3">
+                <Clock3 className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-red)]" />
+                <div className="space-y-1">
+                  {hoursSummary.map((item) => (
+                    <p key={item.label}><span className="font-semibold text-white/90">{item.label}:</span> {item.value}</p>
+                  ))}
+                </div>
+              </div>
+              <a href={pharmacyInfo.phoneHref} className="flex items-center gap-3 hover:text-white"><Phone className="h-4 w-4 text-[var(--color-red)]" /> {pharmacyInfo.phone}</a>
+              {/* TODO(owner): confirm email domain (blackshawsroadpharmacy.com.au vs blackshawspharmacy.com.au) */}
+              <a href={`mailto:${pharmacyInfo.email}`} className="flex items-center gap-3 hover:text-white"><Mail className="h-4 w-4 text-[var(--color-red)]" /> {pharmacyInfo.email}</a>
             </div>
           </div>
         </div>
@@ -90,7 +97,8 @@ export function Footer() {
               <Award className="h-4 w-4 text-[var(--color-red)]" />
               <span>Proud member of Independent Pharmacies Australia</span>
             </div>
-            <p className="text-xs text-white/60">After hours urgent health advice: NURSE-ON-CALL 1300 60 60 24 | Emergency: 000</p>
+            <p className="text-xs text-white/70">Information on this site is general in nature. Always follow the advice of your pharmacist or doctor.</p>
+            <p className="text-xs text-white/70">After hours urgent health advice: NURSE-ON-CALL 1300 60 60 24. In an emergency call 000.</p>
           </div>
           <div className="flex items-center gap-4">
             <div className="inline-flex items-center gap-3 rounded-full border border-white/12 bg-white/6 px-4 py-2">

@@ -24,12 +24,6 @@ export default defineConfig({
             if (id.includes('lucide-react')) {
               return 'ui'
             }
-            if (id.includes('graphql-request')) {
-              return 'shopify'
-            }
-            if (id.includes('framer-motion')) {
-              return 'animation'
-            }
           }
         },
       },

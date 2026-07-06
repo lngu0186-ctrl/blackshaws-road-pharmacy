@@ -27,8 +27,8 @@ export default function HealthServicePlaceholder() {
   const serviceName = slug ? allItems[slug]?.title || titleFromSlug(slug) : 'Health Services'
   const heroTitle = isOverview ? 'Health Services' : serviceName
   const subheading = isOverview
-    ? "We're here to help with pharmacy health services — talk to our team for personalised advice."
-    : `We're here to help with ${serviceName.toLowerCase()} — talk to our team for personalised advice.`
+    ? "We're here to help with pharmacy health services, talk to our team for personalised advice."
+    : `We're here to help with ${serviceName.toLowerCase()}, talk to our team for personalised advice.`
   const body = isOverview
     ? 'Blackshaws Road Pharmacy provides a range of health services for patients in Altona North and surrounding suburbs. For more information or to discuss your needs, please contact us.'
     : `Our pharmacists at Blackshaws Road Pharmacy provide ${serviceName.toLowerCase()} support to patients in Altona North and surrounding suburbs. For more information or to discuss your needs, please contact us.`

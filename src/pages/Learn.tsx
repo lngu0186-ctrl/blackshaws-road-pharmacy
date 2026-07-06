@@ -30,7 +30,7 @@ export default function Learn() {
           <h1 className="text-white">Practical health guidance from your local pharmacy team.</h1>
           <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">
             Evidence-based articles on medications, preventive care, chronic conditions, and
-            everyday health questions — written by pharmacists for our Altona North community.
+            everyday health questions, written by pharmacists for our Altona North community.
           </p>
           <div className="mt-6">
             <BrandSignature tone="dark" className="max-w-xl" />

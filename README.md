@@ -1,132 +1,70 @@
 # Blackshaws Road Pharmacy Website
 
-Premium health-tech pharmacy website inspired by Eucalyptus.health, built with React, TypeScript, Tailwind CSS v4, and Framer Motion.
+Website for Blackshaws Road Pharmacy, an independent community pharmacy at 310A Blackshaws Road, Altona North VIC 3025, serving the area since 1968.
 
-## Features
-
-- **Premium Design System**: Tiempos Headline (Playfair Display) + DM Sans typography, warm neutral palette with eucalyptus greens
-- **TGA Compliant**: Strict adherence to Therapeutic Goods Advertising Code 2021 and AHPRA guidelines
-- **Responsive Layout**: Mobile-first design with breakpoints at 375px, 768px, 1280px, 1440px
-- **Advanced Animations**: Fade-in-up scroll animations, smooth parallax, hover effects using Intersection Observer
-- **Dark Mode**: System-preference aware with manual toggle
-- **Interactive Forms**:
-  - Prescription upload with file preview
-  - Multi-step vaccination booking
-  - FAQ chat widget
-- **Animated Statistics**: Count-up counters triggered on scroll
-- **Accessibility**: Skip-to-content, ARIA labels, keyboard navigation, proper focus states
-- **Rich Metadata**: SEO-friendly with structured data for local business
-
-## Tech Stack
+## Tech stack
 
 - React 19 + TypeScript
 - Vite 8
-- Tailwind CSS v4 (with CSS-first configuration)
-- Framer Motion (for animations)
-- Lucide React (icons)
-- Next Themes (dark mode)
-- Date-fns (date formatting)
+- Tailwind CSS v4 (CSS-first config in `src/index.css` via `@theme`)
+- react-router-dom 7 (SPA routing, lazy-loaded pages)
+- zustand (cart, product cache, prescription-upload modal state)
+- Supabase (prescription upload storage, contact form edge function)
+- Shopify Storefront API (online shop)
+- lucide-react (icons)
 
-## Getting Started
+## Getting started
 
 ```bash
-# Install dependencies
 npm install
-
-# Development server
-npm run dev
-
-# Production build
-npm run build
-
-# Preview production bundle
-npm run preview
+npm run dev       # development server
+npm run build     # typecheck + production build
+npm run preview   # preview production bundle
+npm run lint      # eslint
 ```
 
-## Design System
+## Environment variables
 
-### Colors (CSS Custom Properties)
+Copy `.env.example` to `.env` and fill in:
 
-- `--color-bg`: #F5F0E8 (warm cream)
-- `--color-surface`: #FFFFFF
-- `--color-text`: #1A1A1A
-- `--color-accent`: #2D5A3D (eucalyptus green)
-- `--color-secondary`: #8BAF8F (sage green)
-- `--color-highlight`: #C4956A (terracotta)
-- `--color-muted`: #6B6B6B
-- `--color-border`: #E0D9CE
-- `--color-surface-dark`: #0F1A14 (dark mode background)
+- `VITE_SHOPIFY_STORE_DOMAIN` / `VITE_SHOPIFY_STOREFRONT_TOKEN` — online shop
+- `VITE_SUPABASE_URL` / `VITE_SUPABASE_PUBLISHABLE_KEY` — prescription upload and contact form
 
-### Typography
+Without these, the shop and forms render but their network features are degraded.
 
-- Display: Playfair Display (700-800 weight)
-- Body: DM Sans (400-700 weight)
-- Line-height: 1.7 for body, 1.1 for headlines
-- Max measure: 65ch for readability
+## Design system
 
-## TGA Compliance
+Defined in `src/index.css`:
 
-This website implements strict compliance with Australian pharmacy advertising regulations:
+- **Palette:** deep navy `#10183f` / `#1b2a6b`, brick red `#c0392b`, warm cream `#faf8f4`
+- **Type:** Crimson Pro (display serif) + Inter (body), loaded async from Google Fonts
+- **Components:** utility classes `.btn`, `.card`, `.section-label`, `.container-custom`; 28px card radius; pill buttons
+- Reduced-motion preferences are respected (`prefers-reduced-motion`)
 
-- No therapeutic claims without proper evidence and registration references
-- No pricing for prescription (S4/S8) medicines
-- No specific medication names in promotional content
-- No testimonials making health outcome claims
-- Mandatory health warnings: "Always read the label and follow directions"
-- General information disclaimer clearly displayed
-- Required statement: "If symptoms persist, see your healthcare professional"
-- No comparison claims against other providers
-- Children's health content includes appropriate disclaimer
-
-Key compliant sections:
-- Health Info links to TGA-approved external resources (NPS MedicineWise, HealthDirect)
-- Vaccine booking includes subject-to-stock and qualified provider notes
-- Prescription upload includes TGA compliance note
-- Sticky compliance banner on all pages
-
-## Project Structure
+## Structure
 
 ```
 src/
 ├── components/
-│   ├── layout/
-│   │   ├── Navbar.tsx
-│   │   └── Footer.tsx
-│   ├── sections/
-│   │   ├── HeroSection.tsx
-│   │   ├── TrustBar.tsx
-│   │   ├── ServicesSection.tsx
-│   │   ├── AboutSection.tsx
-│   │   ├── HealthInfoSection.tsx
-│   │   ├── LocationSection.tsx
-│   │   └── TGADisclaimer.tsx
-│   ├── features/
-│   │   ├── PrescriptionUploadForm.tsx
-│   │   ├── VaccinationBooking.tsx
-│   │   └── ChatWidget.tsx
-│   └── ui/
-│       ├── Button.tsx
-│       ├── Card.tsx
-│       └── ThemeToggle.tsx
-├── hooks/
-│   └── useIntersectionObserver.ts
-├── utils/
-│   └── cn.ts (class name merger)
-├── App.tsx
-├── main.tsx
-└── index.css (design system)
+│   ├── layout/     Header (mega menu), Footer, drawers
+│   ├── sections/   Homepage sections (Hero, TrustBar, Services, ...)
+│   ├── features/   Prescription upload, vaccination booking, chat
+│   └── ui/         Button, Card, skeletons
+├── data/           pharmacyInfo (hours/contact source of truth), services, nav, articles
+├── pages/          Lazy-loaded routes
+├── stores/         zustand stores
+├── services/       Shopify client
+└── integrations/   Supabase client
 ```
 
-## Browser Support
+Pharmacy contact details and opening hours live in `src/data/pharmacyInfo.ts`. Change them there, not in components.
 
-- Modern browsers (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
-- CSS custom properties required
-- IntersectionObserver and requestAnimationFrame required
+## Content rules
 
-## License
+- No invented reviews, ratings, statistics, or staff claims. Trust content must be verifiable.
+- Copy follows Australian pharmacy advertising expectations: general information only, no outcome claims, safety-netting lines kept ("If symptoms persist, see your healthcare professional").
+- `TODO(owner)` comments mark facts that need confirmation by the pharmacy owner.
 
-Proprietary. All rights reserved.
+## Deployment
 
----
-
-Built with care for Altona North community since 1968.
+Static SPA build in `dist/`. The host must rewrite unknown paths to `index.html` for client-side routing. Canonical domain: `blackshawspharmacy.com.au`.

@@ -23,12 +23,12 @@ export const learnArticles: LearnArticle[] = [
 <h2>What pharmacists can help with</h2>
 <p>Pharmacists are highly trained medication experts who can assess and treat many common, minor conditions. In Victoria, the Chemist Care Now program allows accredited pharmacists to provide treatment for:</p>
 <ul>
-  <li><strong>Urinary tract infections (UTIs)</strong> — assessment and antibiotic supply where appropriate</li>
-  <li><strong>Contraceptive pill resupply</strong> — continuing supply for women with an existing prescription</li>
-  <li><strong>Shingles</strong> — antiviral treatment for adults 18+</li>
-  <li><strong>Impetigo (school sores)</strong> — topical or oral antibiotic treatment</li>
-  <li><strong>Minor skin infections</strong> — assessment and treatment advice</li>
-  <li><strong>Cold and flu symptoms</strong> — symptom management and product recommendations</li>
+  <li><strong>Urinary tract infections (UTIs)</strong>, assessment and antibiotic supply where appropriate</li>
+  <li><strong>Contraceptive pill resupply</strong>, continuing supply for women with an existing prescription</li>
+  <li><strong>Shingles</strong>, antiviral treatment for adults 18+</li>
+  <li><strong>Impetigo (school sores)</strong>, topical or oral antibiotic treatment</li>
+  <li><strong>Minor skin infections</strong>, assessment and treatment advice</li>
+  <li><strong>Cold and flu symptoms</strong>, symptom management and product recommendations</li>
 </ul>
 <p>Pharmacists can also provide vaccination services, health checks (blood pressure, cholesterol, blood glucose), medication reviews (MedsCheck), and advice on over-the-counter medicines.</p>
 
@@ -158,7 +158,7 @@ export const learnArticles: LearnArticle[] = [
 <p>Small misunderstandings with medicines can lead to missed doses, side effects, or poor symptom control. A MedsCheck can improve confidence, reduce confusion, and help spot issues early before they become bigger problems.</p>
 
 <h2>What should you bring?</h2>
-<p>Bring a list of your medicines if you have one — or even better, bring the actual boxes, inhalers, packs, and supplements you use. The more complete the picture, the more helpful the review.</p>
+<p>Bring a list of your medicines if you have one, or even better, bring the actual boxes, inhalers, packs, and supplements you use. The more complete the picture, the more helpful the review.</p>
 
 <p>If you'd like to book a MedsCheck at Blackshaws Road Pharmacy, call <a href="tel:0393913257">(03) 9391 3257</a> or ask our team in store.</p>
     `.trim(),

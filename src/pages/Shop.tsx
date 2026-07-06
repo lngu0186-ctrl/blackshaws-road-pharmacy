@@ -25,7 +25,7 @@ export default function Shop() {
   const [sortBy, setSortBy] = useState<string>(searchParams.get('sort') || 'featured')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [showMobileFilters, setShowMobileFilters] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(() => Math.max(1, parseInt(searchParams.get('page') || '1', 10) || 1))
 
   const addItem = useCartStore((s) => s.addItem)
   const openCart = useCartStore((s) => s.openCart)
@@ -50,11 +50,6 @@ export default function Shop() {
     if (currentPage > 1) params.set('page', currentPage.toString())
     setSearchParams(params, { replace: true })
   }, [searchQuery, selectedCategoryPath, sortBy, currentPage, setSearchParams])
-
-  useEffect(() => {
-    const pageParam = parseInt(searchParams.get('page') || '1', 10)
-    if (pageParam >= 1) setCurrentPage(pageParam)
-  }, [searchParams])
 
   const filteredProducts = useMemo(() => {
     let result = products.filter((p) => classifyProduct(p).length > 0)

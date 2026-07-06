@@ -82,7 +82,7 @@ export default function ServiceDetail({ slugOverride }: ServiceDetailProps) {
     return <HealthServicesHub />
   }
 
-  // Service not found — show intelligent fallback
+  // Service not found, show intelligent fallback
   if (!service) {
     const navTitle = getNavServiceTitle(slug)
     return (
@@ -119,7 +119,7 @@ export default function ServiceDetail({ slugOverride }: ServiceDetailProps) {
                 ) : (
                   <>
                     <Calendar className="w-4 h-4 mr-2" />
-                    {service.cost.split('—')[0].trim()}
+                    {service.cost.split(',')[0].trim()}
                   </>
                 )}
               </div>
@@ -260,7 +260,7 @@ export default function ServiceDetail({ slugOverride }: ServiceDetailProps) {
 }
 
 /**
- * Related Articles Section — shows relevant health library articles
+ * Related Articles Section, shows relevant health library articles
  * at the bottom of service pages for content enrichment and SEO.
  */
 function RelatedArticlesSection({ serviceSlug }: { serviceSlug: string }) {
@@ -370,7 +370,7 @@ function RelatedArticlesSection({ serviceSlug }: { serviceSlug: string }) {
 }
 
 /**
- * Health Services Hub Page — index/overview of all services
+ * Health Services Hub Page, index/overview of all services
  */
 function HealthServicesHub() {
   return (
@@ -381,7 +381,7 @@ function HealthServicesHub() {
           <h1 className="text-white">Comprehensive pharmacy care for Altona North and surrounds.</h1>
           <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">
             From preventive health checks to medication management, chronic disease support,
-            and specialised care pathways — our pharmacy team provides accessible,
+            and specialised care pathways, our pharmacy team provides accessible,
             professional healthcare services seven days a week.
           </p>
           <div className="mt-6">

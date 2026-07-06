@@ -7,6 +7,7 @@ import { useCartStore } from '../../stores/cartStore'
 import { useScrolled } from '../../hooks/useScrolled'
 import { cn } from '../../utils/cn'
 import { healthServiceGroups } from '../../data/healthServicesNav'
+import { getOpenStatus } from '../../data/pharmacyInfo'
 import { useUploadPrescriptionStore } from '../../stores/uploadPrescriptionStore'
 import type { ReactNode } from 'react'
 
@@ -159,7 +160,7 @@ export function Header() {
         <div className="container-custom flex items-center justify-between py-2 text-[0.8rem] text-white/80">
           <div className="flex items-center gap-5">
             <span className="inline-flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> 310A Blackshaws Road, Altona North</span>
-            <span className="inline-flex items-center gap-2"><Clock3 className="h-3.5 w-3.5" /> Community pharmacy care, 7 days</span>
+            <span className="inline-flex items-center gap-2"><Clock3 className="h-3.5 w-3.5" /> {getOpenStatus().label} · Open 7 days</span>
           </div>
           <a href="tel:+61393913257" className="inline-flex items-center gap-2 font-semibold text-white hover:text-white/85">
             <Phone className="h-3.5 w-3.5" /> (03) 9391 3257

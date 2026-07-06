@@ -15,7 +15,6 @@ export function PrescriptionIframe({ className = 'h-full w-full', title = 'Uploa
   const iframeRef = useRef<HTMLIFrameElement | null>(null)
 
   useEffect(() => {
-    setStatus('loading')
     const t = window.setTimeout(() => {
       setStatus((prev) => (prev === 'loading' ? 'error' : prev))
     }, LOAD_TIMEOUT_MS)
@@ -23,6 +22,7 @@ export function PrescriptionIframe({ className = 'h-full w-full', title = 'Uploa
   }, [attempt])
 
   const retry = () => {
+    setStatus('loading')
     setAttempt((n) => n + 1)
     if (iframeRef.current) {
       // Force reload by resetting src
