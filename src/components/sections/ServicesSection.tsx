@@ -4,7 +4,7 @@ import { Card } from '../ui/Card'
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver'
 
 const services = [
-  { icon: Pill, title: 'Prescriptions & Dispensing', description: 'Accurate dispensing, thoughtful counselling and dependable medication support with the reassurance of a local pharmacy team that knows its community.' },
+  { icon: Pill, title: 'Prescriptions & Dispensing', description: 'Medication counselling and support' },
   { icon: Syringe, title: 'Vaccinations & Immunisations', description: 'Accredited vaccination services spanning flu, travel and key adult protections, with strong eligibility and follow-up guidance.' },
   { icon: Beaker, title: 'Medication Management Reviews', description: 'Structured reviews that help simplify regimens, reduce medication burden and improve outcomes alongside your doctor.' },
   { icon: Shield, title: 'Chemist Care Now', description: 'Government-backed care for a range of eligible common conditions, delivered privately and with safe escalation where needed.', highlight: true },
@@ -25,7 +25,7 @@ export function ServicesSection() {
         <div className="mb-12 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="section-label" style={{ color: 'var(--color-navy)' }}>Our core services</p>
-            <h2 className="max-w-3xl text-[var(--color-navy)]">Comprehensive pharmacy services with a more premium, more human experience.</h2>
+            <h2 className="max-w-3xl text-[var(--color-navy)]">Comprehensive Pharmacy<br />Services</h2>
           </div>
           <p className="max-w-xl text-base text-[var(--color-text-muted)]">From medication support to preventive care, each service is presented clearly so patients can understand what’s available and take the next step confidently.</p>
         </div>

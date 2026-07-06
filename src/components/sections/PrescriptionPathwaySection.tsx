@@ -29,7 +29,7 @@ export function PrescriptionPathwaySection() {
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
             <p className="section-label" style={{ color: 'var(--color-navy)' }}>Prescriptions made easier</p>
-            <h2 className="text-[var(--color-navy)]">A clearer path from prescription upload to pharmacy pickup.</h2>
+            <h2 className="text-[var(--color-navy)]">Upload your prescription here</h2>
             <p className="mt-5 text-lg leading-relaxed text-[var(--color-text-muted)]">
               For patients who want less waiting and more certainty, we offer a simple prescription pathway backed by real pharmacist oversight. It is designed for convenience without sounding like medicine is guaranteed before review.
             </p>

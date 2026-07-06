@@ -2,7 +2,7 @@ import { useCountUp } from '../../hooks/useIntersectionObserver'
 
 const stats = [
   { label: 'Years of care', value: 55, suffix: '+', description: 'Trusted by local families since 1968' },
-  { label: 'Patients served', value: 8000, suffix: '+', description: 'Across scripts, services and daily advice' },
+  { label: 'Patients served', value: 2, suffix: 'M', description: 'Across scripts, services and daily advice' },
   { label: 'Dedicated team', value: 12, suffix: '+', description: 'Pharmacists and support staff' },
   { label: 'Days open', value: 7, suffix: '/7', description: 'Reliable access to community care' },
 ]
