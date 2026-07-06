@@ -21,7 +21,7 @@ export function VaccinationsSection() {
         <div className="mb-12 max-w-3xl">
           <p className="section-label" style={{ color: 'var(--color-navy)' }}>Immunisation services</p>
           <h2 className="text-[var(--color-navy)]">Vaccinations for every stage of life.</h2>
-          <p className="mt-4 text-lg text-[var(--color-text-muted)]">Book online or ask at the counter. Our accredited pharmacist immunisers look after families, adults, travellers and high-risk patients. Eligibility and vaccine availability vary, so call us if you are not sure.</p>
+          <p className="mt-4 text-lg text-[var(--color-text-muted)]">Book online or ask at the counter. Our accredited pharmacist immunisers look after school-aged children (5+), adults, travellers and high-risk patients under the Victorian NIPVIP program. Children under 5 must see their GP or council immunisation service.</p>
         </div>
 
         <div className="grid gap-8 lg:grid-cols-[0.74fr_1.26fr] lg:items-start">
