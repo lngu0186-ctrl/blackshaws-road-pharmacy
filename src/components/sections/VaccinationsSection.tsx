@@ -32,10 +32,10 @@ export function VaccinationsSection() {
                 <tab.icon className="h-5 w-5" /> {tab.label}
               </button>
             ))}
-          </div>
+          </Reveal>
 
           {activeContent && (
-            <div className="rounded-[34px] border border-[var(--color-border)] bg-white p-7 shadow-[0_26px_70px_-44px_rgba(16,24,63,0.25)] md:p-10">
+            <div key={activeTab} className="panel-in rounded-[34px] border border-[var(--color-border)] bg-white p-7 shadow-[0_26px_70px_-44px_rgba(16,24,63,0.25)] md:p-10">
               <div className="flex items-center gap-3">
                 <div className="flex h-13 w-13 items-center justify-center rounded-[20px] bg-[var(--color-navy-soft)] text-[var(--color-navy)]"><activeContent.icon className="h-6 w-6" /></div>
                 <div>
