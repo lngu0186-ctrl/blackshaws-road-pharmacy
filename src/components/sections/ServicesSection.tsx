@@ -1,6 +1,17 @@
+import type { MouseEvent } from 'react'
 import { ArrowRight, FlaskConical, HeartPulse, Leaf, MessageCircle, Package, Pill, ShoppingBag, Syringe } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Reveal } from '../ui/Reveal'
+
+// Delegated handler: feeds the cursor position into the hovered card's
+// --mx/--my custom properties so the CSS spotlight tracks the pointer.
+function trackCardSpotlight(e: MouseEvent<HTMLDivElement>) {
+  const card = (e.target as HTMLElement).closest<HTMLElement>('.card')
+  if (!card) return
+  const rect = card.getBoundingClientRect()
+  card.style.setProperty('--mx', `${e.clientX - rect.left}px`)
+  card.style.setProperty('--my', `${e.clientY - rect.top}px`)
+}
 
 const coreServices = [
   {
@@ -60,7 +71,7 @@ export function ServicesSection() {
           <p className="max-w-xl text-base text-[var(--color-text-muted)]">Walk in, call, or book. Most services need no appointment.</p>
         </Reveal>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3" onMouseMove={trackCardSpotlight}>
           {coreServices.map((service, index) => (
             <Reveal key={service.title} delay={index * 70} className="h-full">
               <Link

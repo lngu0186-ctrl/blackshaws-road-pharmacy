@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Clock3, FileText, PackageCheck, ShieldCheck } from 'lucide-react'
 import { Button } from '../ui/Button'
@@ -48,26 +49,29 @@ export function PrescriptionPathwaySection() {
             </div>
           </Reveal>
 
-          <div className="grid gap-5 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+          <Reveal className="journey grid gap-5 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
             {steps.map((step, index) => (
-              <Reveal key={step.title} delay={index * 130}>
+              <div key={step.title} className="journey-step relative h-full" style={{ '--step-delay': `${index * 220}ms` } as CSSProperties}>
                 <div className="relative h-full rounded-[28px] border border-[var(--color-border)] bg-white p-6 shadow-[0_24px_60px_-46px_rgba(16,24,63,0.2)]">
-                  <span aria-hidden="true" className="absolute right-6 top-6 font-serif text-3xl font-bold text-[var(--color-navy)]/12">{index + 1}</span>
+                  <span aria-hidden="true" className="step-num absolute right-6 top-6 font-serif text-3xl font-bold">{index + 1}</span>
                   <div className="icon-tile flex h-14 w-14 items-center justify-center rounded-[20px] bg-[var(--color-red-soft)] text-[var(--color-red)]"><step.icon className="h-7 w-7" /></div>
                   <h3 className="mt-5 text-2xl text-[var(--color-navy)]"><span className="sr-only">Step {index + 1}: </span>{step.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">{step.description}</p>
                 </div>
-              </Reveal>
+                {index < steps.length - 1 && (
+                  <span aria-hidden="true" className="journey-connector hidden md:block lg:hidden xl:block" />
+                )}
+              </div>
             ))}
-            <Reveal delay={390}>
+            <div className="journey-step h-full" style={{ '--step-delay': '660ms' } as CSSProperties}>
               <Link to="/patient-info" className="group block h-full rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface-alt)] p-6 text-[var(--color-navy)] transition hover:-translate-y-1">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-red)]">Patient information</p>
                 <h3 className="mt-4 text-2xl">Privacy, safety and what to expect</h3>
                 <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-muted)]">Read how we handle prescription requests, health information and pharmacist follow-up.</p>
                 <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold">View patient information <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></div>
               </Link>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

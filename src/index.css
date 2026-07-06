@@ -225,7 +225,6 @@ p { max-width: 72ch; }
 }
 .nav-link:hover,
 .nav-link-active { color: var(--color-navy); }
-.nav-link-active { text-decoration: underline; text-underline-offset: 0.35rem; text-decoration-thickness: 2px; }
 
 .btn-header-primary {
   min-height: 46px;
@@ -339,6 +338,98 @@ p { max-width: 72ch; }
 @keyframes float-gentle { from { transform: translateY(0); } to { transform: translateY(-8px); } }
 .float-gentle { animation: float-gentle 3.4s ease-in-out infinite alternate; }
 
+/* Cinematic hero layer: a single light sweep on load, then slow ambient
+   drift on the glow orbs. All composited transform/opacity. */
+@keyframes light-sweep {
+  from { transform: translateX(-80%) skewX(-14deg); opacity: 0; }
+  20% { opacity: 1; }
+  to { transform: translateX(320%) skewX(-14deg); opacity: 0; }
+}
+.hero-sweep {
+  position: absolute;
+  top: -10%;
+  bottom: -10%;
+  left: 0;
+  width: 32%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.08) 40%, rgba(255,255,255,0.16) 50%, rgba(255,255,255,0.08) 60%, transparent);
+  filter: blur(8px);
+  pointer-events: none;
+  opacity: 0;
+}
+.js-motion .hero-sweep { animation: light-sweep 2.6s var(--ease-out-soft) 0.6s both; }
+
+@keyframes orb-drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(30px, -22px, 0) scale(1.12); }
+}
+@keyframes orb-drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1.08); }
+  to { transform: translate3d(-26px, 18px, 0) scale(1); }
+}
+.orb-a { animation: orb-drift-a 14s ease-in-out infinite alternate; }
+.orb-b { animation: orb-drift-b 18s ease-in-out infinite alternate; }
+
+/* Hero content lifts away slightly slower than the image drifts down,
+   separating the two planes as you scroll. */
+@supports (animation-timeline: scroll(root)) {
+  @keyframes hero-content-drift { to { transform: translateY(-34px); opacity: 0.5; } }
+  .hero-content-parallax {
+    animation: hero-content-drift linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 90vh;
+  }
+}
+
+/* Prescription journey: steps build in sequence once the group enters
+   view; dashed connectors draw between them after each card lands.
+   Container reveal drives everything so the sequence stays coherent. */
+.js-motion .journey.reveal { opacity: 1; transform: none; }
+.js-motion .journey .journey-step {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.65s var(--ease-out-soft) var(--step-delay, 0ms),
+    transform 0.65s var(--ease-out-soft) var(--step-delay, 0ms);
+}
+.js-motion .journey.is-inview .journey-step { opacity: 1; transform: none; }
+
+.journey-connector {
+  position: absolute;
+  top: calc(3.25rem - 1px);
+  right: -2.4rem;
+  width: 3.55rem;
+  height: 2px;
+  z-index: 10;
+  background: repeating-linear-gradient(90deg, var(--color-red) 0 6px, transparent 6px 11px);
+  pointer-events: none;
+}
+.journey-connector::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid var(--color-red);
+  border-right: 2px solid var(--color-red);
+  transform: rotate(45deg);
+}
+.js-motion .journey .journey-connector {
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition:
+    opacity 0.4s ease calc(var(--step-delay, 0ms) + 450ms),
+    transform 0.5s var(--ease-out-soft) calc(var(--step-delay, 0ms) + 450ms);
+}
+.js-motion .journey.is-inview .journey-connector { opacity: 1; transform: scaleX(1); }
+
+.step-num {
+  color: rgba(27, 42, 107, 0.12);
+  transition: color 0.6s ease calc(var(--step-delay, 0ms) + 350ms);
+}
+.journey.is-inview .step-num { color: rgba(192, 57, 43, 0.28); }
+
 /* Mobile drawer choreography */
 @keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes drawer-in { from { transform: translateX(-100%); } to { transform: none; } }
@@ -374,14 +465,93 @@ a:hover > .icon-tile { transform: scale(1.07) rotate(-3deg); }
 .footer-link { transition: transform 200ms var(--ease-out-soft), color 200ms ease; }
 .footer-link:hover { transform: translateX(3px); }
 
+/* Cursor-tracked spotlight on cards: --mx/--my set from a delegated
+   mousemove handler; defaults keep a centred glow where JS never runs. */
+.card { position: relative; }
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(230px circle at var(--mx, 50%) var(--my, 40%), rgba(192, 57, 43, 0.07), transparent 70%);
+  opacity: 0;
+  transition: opacity 350ms ease;
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .card:hover::after { opacity: 1; }
+}
+.card:focus-within {
+  transform: translateY(-4px);
+  border-color: rgba(27, 42, 107, 0.16);
+  box-shadow: 0 28px 70px -38px rgba(14, 20, 45, 0.28);
+}
+
+/* Sheen sweep across filled CTAs on hover. The return transition is
+   only declared on :hover so the sheen never sweeps back on mouse-out. */
+.btn { position: relative; overflow: hidden; }
+.btn-header-primary { position: relative; overflow: hidden; }
+.btn-red::after,
+.btn-primary::after,
+.btn-sage::after,
+.btn-header-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: translateX(-180%) skewX(-18deg);
+  pointer-events: none;
+}
+.btn-red:hover::after,
+.btn-primary:hover::after,
+.btn-sage:hover::after,
+.btn-header-primary:hover::after {
+  transform: translateX(340%) skewX(-18deg);
+  transition: transform 650ms var(--ease-out-soft);
+}
+
+/* Nav links: underline draws in from the left instead of toggling on. */
+.nav-link { position: relative; }
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-red);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 260ms var(--ease-out-soft);
+}
+.nav-link:hover::after,
+.nav-link-active::after { transform: scaleX(1); }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .animate-fade-in-up { animation: none; opacity: 1; }
   .js-motion .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   .js-motion .hero-choreo > * { animation: none; }
   .hero-img-settle, .hero-parallax, .float-gentle { animation: none; }
+  .js-motion .hero-sweep { animation: none; opacity: 0; }
+  .orb-a, .orb-b, .hero-content-parallax { animation: none; }
+  .js-motion .journey .journey-step,
+  .js-motion .journey .journey-connector {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .journey.is-inview .step-num,
+  .step-num { transition: none; }
+  .card::after { display: none; }
+  .btn-red::after, .btn-primary::after, .btn-sage::after, .btn-header-primary::after { display: none; }
   .btn:hover,
-  .card:hover { transform: none; }
+  .card:hover,
+  .card:focus-within { transform: none; }
   *,
   *::before,
   *::after {

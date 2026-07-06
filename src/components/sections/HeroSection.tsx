@@ -23,11 +23,12 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-[var(--color-navy-deep)]/68 md:bg-[var(--color-navy-deep)]/58" />
         <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(16,24,63,0.82)_0%,rgba(16,24,63,0.5)_50%,rgba(16,24,63,0.32)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(10,14,38,0.5)_100%)]" />
-        <div className="absolute -left-28 top-16 h-72 w-72 rounded-full bg-[var(--color-red)]/10 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-white/6 blur-3xl" />
+        <div className="orb-a absolute -left-28 top-16 h-72 w-72 rounded-full bg-[var(--color-red)]/10 blur-3xl" />
+        <div className="orb-b absolute bottom-0 right-0 h-80 w-80 rounded-full bg-white/6 blur-3xl" />
+        <div className="hero-sweep" aria-hidden="true" />
       </div>
 
-      <div className="container-custom relative z-10 py-10 md:py-14">
+      <div className="hero-content-parallax container-custom relative z-10 py-10 md:py-14">
         <div className="grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="hero-choreo max-w-4xl">
             <div className="flex flex-wrap gap-3">
