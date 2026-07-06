@@ -19,7 +19,7 @@ export const pharmacyInfo = {
   phoneHref: 'tel:+61393913257',
   mobile: '0406 692 267',
   mobileHref: 'tel:+61406692267',
-  email: 'info@blackshawsroadpharmacy.com.au',
+  email: 'online@blackshawsroadpharmacy.com.au',
   parking: 'Parking available on Blackshaws Road',
   directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=310A+Blackshaws+Road+Altona+North+VIC+3025',
   vaccinationBookingUrl: 'https://www.medadvisor.com.au/Network/BlackshawsRoadNightChemist',

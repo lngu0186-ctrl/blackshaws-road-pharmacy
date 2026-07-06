@@ -32,7 +32,7 @@ serve(async (req) => {
     }
 
     const smtpPass = Deno.env.get("SMTP2GO_PASSWORD");
-    const adminEmail = Deno.env.get("ADMIN_EMAIL") || "info@blackshawsroadpharmacy.com.au";
+    const adminEmail = Deno.env.get("ADMIN_EMAIL") || "online@blackshawsroadpharmacy.com.au";
 
     if (!smtpPass) {
       return new Response(
