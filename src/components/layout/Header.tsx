@@ -7,15 +7,15 @@ import { useCartStore } from '../../stores/cartStore'
 import { useScrolled } from '../../hooks/useScrolled'
 import { cn } from '../../utils/cn'
 import { healthServiceGroups } from '../../data/healthServicesNav'
-import { getOpenStatus } from '../../data/pharmacyInfo'
+import { getOpenStatus, pharmacyInfo } from '../../data/pharmacyInfo'
 import { useUploadPrescriptionStore } from '../../stores/uploadPrescriptionStore'
 import type { ReactNode } from 'react'
 
+// The logo links home, so the desktop nav skips a Home item to fit the 1280px container.
 const navLinks: Array<{ href: string; label: string; isAnchor?: boolean }> = [
-  { href: '/', label: 'Home' },
   { href: '/prescriptions', label: 'Prescriptions' },
   { href: '/health-services', label: 'Health Services' },
-  { href: '/learn', label: 'Health Library' },
+  { href: '/learn', label: 'Learn' },
   { href: '/plant-based-therapies', label: 'Plant Based' },
   { href: '/compounding', label: 'Compounding' },
   { href: '/shop', label: 'Shop' },
@@ -74,7 +74,6 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false)
   const [expandedMobileGroup, setExpandedMobileGroup] = useState<string | null>(null)
-  const [searchQuery, setSearchQuery] = useState('')
   const [mobileSearchQuery, setMobileSearchQuery] = useState('')
   const cartCount = useCartStore((s) => s.items.reduce((sum, i) => sum + i.quantity, 0))
   const openCart = useCartStore((s) => s.openCart)
@@ -171,7 +170,7 @@ export function Header() {
       <div className={cn('transition-all duration-300', scrolled || !isHome ? 'border-b border-[var(--color-border)] bg-[rgba(255,253,250,0.96)] backdrop-blur-xl shadow-[0_20px_40px_-36px_rgba(16,24,63,0.55)]' : 'bg-[rgba(255,253,250,0.88)] backdrop-blur-xl')}>
         <div className="container-custom flex h-[var(--header-height-mobile)] items-center justify-between gap-3 md:h-[var(--header-height-desktop)] md:gap-4">
           <div className="flex min-w-0 items-center gap-2.5 md:gap-5">
-            <button onClick={() => setMobileMenuOpen(true)} className="icon-btn md:!hidden" aria-label="Open menu">
+            <button onClick={() => setMobileMenuOpen(true)} className="icon-btn xl:!hidden" aria-label="Open menu">
               <Menu className="h-5 w-5" />
             </button>
             <Logo
@@ -181,7 +180,7 @@ export function Header() {
             />
           </div>
 
-          <nav className="hidden items-center gap-8 md:flex">
+          <nav className="hidden items-center gap-5 xl:flex">
             {navLinks.map((link) => {
               if (link.href === '/health-services') {
                 return (
@@ -361,25 +360,11 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2 md:gap-3">
-            <form
-              onSubmit={(e) => handleSearchSubmit(e, searchQuery)}
-              role="search"
-              className="hidden lg:flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-white px-3 py-1.5 focus-within:border-[var(--color-navy)] focus-within:ring-2 focus-within:ring-[var(--color-navy)]/20"
-            >
-              <Search className="h-4 w-4 text-[var(--color-navy)]" aria-hidden="true" />
-              <input
-                type="search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search…"
-                aria-label="Search the site"
-                className="w-32 bg-transparent text-sm text-[var(--color-navy)] placeholder:text-[var(--color-text-muted)] focus:outline-none xl:w-44"
-              />
-            </form>
-            <Link to="/search" className="icon-btn lg:hidden" aria-label="Search">
+            <Link to="/search" className="icon-btn" aria-label="Search">
               <Search className="h-5 w-5" />
             </Link>
-            <a href="tel:+61393913257" className="hidden rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-semibold text-[var(--color-navy)] transition-colors hover:bg-[var(--color-navy-soft)] md:inline-flex">
+            {/* Phone number also appears in the top bar at md+, so this button hides once the full nav needs the room */}
+            <a href={pharmacyInfo.phoneHref} className="hidden rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-semibold text-[var(--color-navy)] transition-colors hover:bg-[var(--color-navy-soft)] md:inline-flex xl:hidden">
               Call the pharmacy
             </a>
             <button onClick={openCart} className="icon-btn relative" aria-label={`Shopping cart with ${cartCount} items`}>

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Phone, MapPin, MessageSquare, Send, Loader2 } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { BrandSignature } from '../components/layout/BrandSignature'
-import { supabase } from '../integrations/supabase/client'
+import { isSupabaseConfigured, supabase } from '../integrations/supabase/client'
 import { usePageSeo } from '../lib/seo'
 import { useUploadPrescriptionStore } from '../stores/uploadPrescriptionStore'
 
@@ -32,6 +32,10 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!isSupabaseConfigured) {
+      setSubmitError('The online form is not available right now. Please call us on (03) 9391 3257 or email us instead.')
+      return
+    }
     setIsSubmitting(true)
     setSubmitError(null)
 

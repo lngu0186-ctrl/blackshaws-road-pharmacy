@@ -378,11 +378,10 @@ function HealthServicesHub() {
       <section className="section-padding-lg bg-[linear-gradient(135deg,var(--color-navy-deep),var(--color-navy))] text-white">
         <div className="container-custom max-w-5xl">
           <p className="section-label !text-white/70">Health Services</p>
-          <h1 className="text-white">Comprehensive pharmacy care for Altona North and surrounds.</h1>
-          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/78">
-            From preventive health checks to medication management, chronic disease support,
-            and specialised care pathways, our pharmacy team provides accessible,
-            professional healthcare services seven days a week.
+          <h1 className="text-white">Health services for Altona North and surrounds.</h1>
+          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/85">
+            Health checks, medication support, chronic condition care and more,
+            available from our pharmacy team seven days a week.
           </p>
           <div className="mt-6">
             <BrandSignature tone="dark" className="max-w-xl" />
