@@ -27,22 +27,22 @@ export const pharmacyInfo = {
 
 // Index 0 = Sunday, matching Date.getDay()
 export const weeklyHours: DayHours[] = [
-  { day: 'Sunday', openMin: 10 * 60, closeMin: 17 * 60, openLabel: '10:00 am', closeLabel: '5:00 pm' },
-  { day: 'Monday', openMin: 8 * 60, closeMin: 21 * 60, openLabel: '8:00 am', closeLabel: '9:00 pm' },
-  { day: 'Tuesday', openMin: 8 * 60, closeMin: 21 * 60, openLabel: '8:00 am', closeLabel: '9:00 pm' },
-  { day: 'Wednesday', openMin: 8 * 60, closeMin: 21 * 60, openLabel: '8:00 am', closeLabel: '9:00 pm' },
-  { day: 'Thursday', openMin: 8 * 60, closeMin: 21 * 60, openLabel: '8:00 am', closeLabel: '9:00 pm' },
-  { day: 'Friday', openMin: 8 * 60, closeMin: 21 * 60, openLabel: '8:00 am', closeLabel: '9:00 pm' },
-  { day: 'Saturday', openMin: 8 * 60, closeMin: 18 * 60, openLabel: '8:00 am', closeLabel: '6:00 pm' },
+  { day: 'Sunday', openMin: 8 * 60, closeMin: 13 * 60, openLabel: '8:00 am', closeLabel: '1:00 pm' },
+  { day: 'Monday', openMin: 8 * 60, closeMin: 20 * 60, openLabel: '8:00 am', closeLabel: '8:00 pm' },
+  { day: 'Tuesday', openMin: 8 * 60, closeMin: 20 * 60, openLabel: '8:00 am', closeLabel: '8:00 pm' },
+  { day: 'Wednesday', openMin: 8 * 60, closeMin: 20 * 60, openLabel: '8:00 am', closeLabel: '8:00 pm' },
+  { day: 'Thursday', openMin: 8 * 60, closeMin: 20 * 60, openLabel: '8:00 am', closeLabel: '8:00 pm' },
+  { day: 'Friday', openMin: 8 * 60, closeMin: 20 * 60, openLabel: '8:00 am', closeLabel: '8:00 pm' },
+  { day: 'Saturday', openMin: 8 * 60, closeMin: 14 * 60, openLabel: '8:00 am', closeLabel: '2:00 pm' },
 ]
 
 /** Hours ordered Monday first, for display tables. */
 export const displayHours: DayHours[] = [...weeklyHours.slice(1), weeklyHours[0]]
 
 export const hoursSummary = [
-  { label: 'Monday to Friday', value: '8:00 am to 9:00 pm' },
-  { label: 'Saturday', value: '8:00 am to 6:00 pm' },
-  { label: 'Sunday', value: '10:00 am to 5:00 pm' },
+  { label: 'Monday to Friday', value: '8:00 am to 8:00 pm' },
+  { label: 'Saturday', value: '8:00 am to 2:00 pm' },
+  { label: 'Sunday', value: '8:00 am to 1:00 pm' },
 ]
 
 export interface OpenStatus {
